@@ -1,0 +1,84 @@
+
+/* Contêiner principal */
+.question-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #121212; /* Fundo escuro */
+    color: #e0e0e0; /* Texto claro */
+    text-align: center;
+    box-sizing: border-box; /* Inclui padding no cálculo do tamanho */
+}
+
+/* Título */
+.user-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #bb86fc; /* Roxo claro */
+}
+
+/* Título */
+.question-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #bb86fc; /* Roxo claro */
+}
+
+/* Caixa de texto */
+.question-textarea {
+    width: 100%;
+    max-width: 600px;
+    height: 120px;
+    padding: 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #e0e0e0; /* Texto claro */
+    background-color: #1e1e1e; /* Fundo escuro */
+    border: 1px solid #bb86fc; /* Borda roxa */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    resize: none; /* Remove o redimensionamento */
+}
+
+.question-textarea::placeholder {
+    color: #757575; /* Cinza claro */
+}
+
+/* Botão */
+.question-button {
+    background-color: #bb86fc; /* Roxo claro */
+    color: #121212; /* Texto escuro */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.question-button:hover {
+    background-color: #9a67ea; /* Roxo mais escuro */
+}
+
+.question-button:disabled {
+    background-color: #5e35b1;
+    cursor: not-allowed;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .question-textarea {
+        width: 90%; /* Ajusta a largura para telas menores */
+    }
+
+    .question-title {
+        font-size: 1.5rem; /* Reduz o tamanho do título */
+    }
+}

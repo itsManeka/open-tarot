@@ -1,0 +1,80 @@
+/* Contêiner principal */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #121212; /* Fundo escuro */
+    color: #e0e0e0; /* Texto claro */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Título */
+.login-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #bb86fc; /* Roxo claro */
+}
+
+/* Campos de entrada */
+.login-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #e0e0e0; /* Texto claro */
+    background-color: #1e1e1e; /* Fundo escuro */
+    border: 1px solid #bb86fc; /* Borda roxa */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.login-input::placeholder {
+    color: #757575; /* Cinza claro */
+}
+
+/* Botões */
+.login-button {
+    background-color: #bb86fc; /* Roxo claro */
+    color: #121212; /* Texto escuro */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-button:hover {
+    background-color: #9a67ea; /* Roxo mais escuro */
+}
+
+.login-button:disabled {
+    background-color: #5e35b1;
+    cursor: not-allowed;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .login-input {
+        width: 90%; /* Ajusta a largura para telas menores */
+    }
+
+    .login-button {
+        width: 90%; /* Ajusta a largura para telas menores */
+    }
+
+    .login-title {
+        font-size: 1.8rem; /* Reduz o tamanho do título */
+    }
+}

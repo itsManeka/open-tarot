@@ -1,0 +1,87 @@
+/* Contêiner principal */
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: hsl(0, 0%, 7%); /* Fundo escuro */
+    color: #e0e0e0; /* Texto claro */
+}
+
+/* Cabeçalho */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    padding: 1rem;
+    width: 100%;
+    background-color: #1e1e1e; /* Fundo escuro */
+    left: 0;
+}
+
+/* Menu hambúrguer */
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: #1e1e1e; /* Fundo escuro */
+    position: absolute;
+    top: 5rem;
+    right: 0;
+    width: 8rem;
+    height: 100%;
+    z-index: 1000;
+}
+
+.app-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #bb86fc; /* Roxo claro */
+    margin: 0;
+    margin-left: 3rem; /* Adiciona margem à esquerda */
+}
+
+/* Botão hambúrguer */
+.hamburger-button {
+    background: none;
+    border: none;
+    color: #e0e0e0; /* Texto claro */
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-right: 3rem;
+}
+
+.hamburger-button:hover {
+    color: #bb86fc; /* Roxo claro */
+}
+
+.hamburger-menu a,
+.hamburger-menu button {
+    font-size: 1rem;
+    color: #e0e0e0; /* Texto claro */
+    text-decoration: none;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.hamburger-menu a:hover,
+.hamburger-menu button:hover {
+    color: #bb86fc; /* Roxo claro */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .app-title {
+        font-size: 1.2rem; /* Reduz o tamanho do título em telas menores */
+    }
+
+    .hamburger-button {
+        font-size: 1.2rem; /* Reduz o tamanho do botão hambúrguer */
+    }
+}
