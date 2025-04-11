@@ -29,6 +29,12 @@ export default function Tarot() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        if (!question) {
+            navigate('/question');
+        }
+    }, [question, navigate]);
+
+    useEffect(() => {
         const shuffled = [...tarotDeck].sort(() => Math.random() - 0.5);
         setSelectedCards(shuffled.slice(0, 3));
     }, []);
@@ -118,11 +124,11 @@ export default function Tarot() {
     return (
         <div className="tarot-container">
             {/* Título no topo */}
-            <h1 className="text-3xl font-bold mb-4">Leitura</h1>
+            <h2 className="text-3xl font-bold mb-4">Leitura</h2>
 
             {/* Pergunta */}
             <div className="question-box">
-                <h2 className="question-text">{question || "Sem pergunta definida"}</h2>
+                <p className="question-text">{question || "Sem pergunta definida"}</p>
             </div>
 
             {/* Cartas */}

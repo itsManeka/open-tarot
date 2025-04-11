@@ -6,6 +6,7 @@ import History from "./pages/History";
 import AuthGuard from "./components/AuthGuard";
 import Question from './pages/Question';
 import Layout from "./components/Layout";
+import Profile from './pages/Profile';
 
 export default function App() {
     return (
@@ -14,6 +15,14 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
+                    <Route
+                        path="/profile"
+                        element={
+                            <AuthGuard>
+                                <Profile />
+                            </AuthGuard>
+                        }
+                    />
                     <Route
                         path="/question"
                         element={

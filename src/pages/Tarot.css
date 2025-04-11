@@ -5,16 +5,16 @@
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
-    padding: 20px;
-    background-color: #121212; /* Fundo escuro */
-    color: #e0e0e0; /* Texto claro */
+    padding: 5rem;
+    background-color: #121212;
+    color: #e0e0e0; 
     text-align: center;
-    width: 100%; /* Garante que ocupe toda a largura */
-    box-sizing: border-box; /* Inclui padding no cálculo do tamanho */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Título no topo */
-h1 {
+h2 {
     margin-bottom: 20px;
     color: #bb86fc; /* Roxo claro */
 }
@@ -27,7 +27,6 @@ h1 {
     margin-bottom: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 600px;
 }
 
 .question-text {
@@ -44,14 +43,13 @@ h1 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
     width: 100%;
-    max-width: 800px;
 }
 
 .cards-container {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+    gap: 50px;
+    flex-wrap: wrap;
 }
 
 /* Estilo das cartas */
@@ -141,9 +139,11 @@ h1 {
 
 /* Caixa de interpretações */
 .interpretations-container {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
-    max-width: 600px;
 }
 
 .interpretation-box {
@@ -153,21 +153,47 @@ h1 {
     margin-bottom: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     text-align: left;
-    color: #e0e0e0; /* Texto claro */
+    color: #e0e0e0;
+    width: 100%;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
+    .tarot-container {
+        padding: 2rem;
+    }
+
     .cards-container {
-        flex-direction: column; /* Alinha as cartas verticalmente em telas menores */
+        flex-direction: row;
+        gap: 10px;
     }
 
     .card {
-        width: 120px;
-        height: 180px;
+        width: 70px;
+        height: 126px;
+        border-radius: 6px;
+    }
+
+    .card-front,
+    .card-back {
+        border-radius: 6px;
     }
 
     .card-container {
-        width: 120px;
+        width: 80px;
+    }
+
+    .card-name {
+        font-size: 0.7rem !important;
+    }
+    
+    .button-container {
+        gap: 10px;
+    }
+
+    .reveal-button {
+        font-size: 0.8rem;
+        min-width: 160px;
+        padding: 8px 18px;
     }
 }

@@ -27,6 +27,8 @@ dist-ssr
 # Firebase
 firebase-debug.log
 .firebaserc
+hosting.*.cache
+firebase-hosting-*.yml
 
 # Build output
 build/

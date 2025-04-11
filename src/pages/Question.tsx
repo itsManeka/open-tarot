@@ -1,12 +1,9 @@
-import { auth } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useAuthState } from "react-firebase-hooks/auth";
 import './Question.css';
 
 export default function Question() {
     const [question, setQuestion] = useState('');
-    const [user] = useAuthState(auth);
     const navigate = useNavigate();
 
     const continuar = async () => {
@@ -15,9 +12,6 @@ export default function Question() {
 
     return (
         <div className="question-container">
-            <h2 className="user-name">
-                Olá, {user?.displayName || "Visitante"}!
-            </h2><br />
             <h2 className="question-title">
                 Sobre qual assunto você quer saber?
             </h2><br />

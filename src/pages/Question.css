@@ -1,39 +1,28 @@
-
 /* Contêiner principal */
 .question-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
-    padding: 20px;
+    padding: 6rem;
     background-color: #121212; /* Fundo escuro */
     color: #e0e0e0; /* Texto claro */
     text-align: center;
+    width: 100%;
     box-sizing: border-box; /* Inclui padding no cálculo do tamanho */
 }
 
 /* Título */
-.user-name {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #bb86fc; /* Roxo claro */
-}
-
-/* Título */
 .question-title {
-    font-size: 3rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-weight: normal;
     margin-bottom: 20px;
     color: #bb86fc; /* Roxo claro */
 }
 
 /* Caixa de texto */
 .question-textarea {
-    width: 100%;
-    max-width: 600px;
-    height: 120px;
     padding: 15px;
     font-size: 1rem;
     font-family: inherit;
@@ -43,7 +32,10 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
-    resize: none; /* Remove o redimensionamento */
+    resize: none;
+    width: 80%;
+    min-height: 30vh;
+    box-sizing: border-box;
 }
 
 .question-textarea::placeholder {
@@ -75,9 +67,9 @@
 /* Responsividade */
 @media (max-width: 768px) {
     .question-textarea {
-        width: 90%; /* Ajusta a largura para telas menores */
+        width: 100%;
     }
-
+    
     .question-title {
         font-size: 1.5rem; /* Reduz o tamanho do título */
     }
