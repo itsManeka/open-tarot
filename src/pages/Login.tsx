@@ -1,4 +1,5 @@
-import { auth, provider } from '../services/firebase';
+import { auth, db, provider } from '../services/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -29,16 +30,27 @@ export default function Login() {
     const registerEmail = async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
-            navigate('/');
+            navigate('/profile');
         } catch {
             alert('Erro ao registrar');
         }
     };
 
-    const loginGoogle = async () => {
+    const loginGoogle = async () => { 
         try {
             await signInWithPopup(auth, provider);
-            navigate('/');
+
+            const user = auth.currentUser;
+            if (user) {
+                const profileRef = doc(db, 'profile', user.uid);
+                const profileSnap = await getDoc(profileRef);
+
+                if (profileSnap.exists()) {
+                    navigate('/');
+                } else {
+                    navigate('/profile');
+                }
+            }
         } catch {
             alert('Erro ao logar com Google');
         }
