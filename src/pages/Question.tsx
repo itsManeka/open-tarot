@@ -1,10 +1,30 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from '../services/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import './Question.css';
 
 export default function Question() {
     const [question, setQuestion] = useState('');
     const navigate = useNavigate();
+    const [user] = useAuthState(auth);
+    const [isProfileExists, setIsProfileExists] = useState(false);
+    
+    useEffect(() => {
+        if (!user) return;
+
+        const fetchReadings = async () => {
+            const profileRef = doc(db, 'profile', user.uid);
+            const profileSnap = await getDoc(profileRef);
+
+            if (profileSnap.exists()) {
+                setIsProfileExists(true);
+            }
+        };
+
+        fetchReadings();
+    }, [user]);
 
     const continuar = async () => {
         navigate('/tarot', { state: { question } });
@@ -12,9 +32,16 @@ export default function Question() {
 
     return (
         <div className="question-container">
-            <h2 className="question-title">
-                Sobre qual assunto você quer saber?
-            </h2><br />
+            <div className="question-header">
+                <h2 className="question-title">
+                    Sobre qual assunto você quer saber?
+                </h2><br />
+                {!isProfileExists && (
+                    <p className="question-info">
+                        Dica: preencha o <a href="/profile" className="question-info-link">seu perfil</a> para deixar a leitura mais precisa.
+                    </p>
+                )}
+            </div>
             <textarea
                 className="question-textarea"
                 value={question}
