@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { auth, db, provider } from '../services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
@@ -58,6 +59,9 @@ export default function Login() {
 
     return (
         <div className="login-container">
+            <Helmet>
+                <meta name="robots" content="noindex" />
+            </Helmet>
             <h2 className="login-title">Login / Cadastro</h2>
             <input
                 type="email"
