@@ -4,6 +4,7 @@ import { auth, db } from "../services/firebase";
 import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import "./Layout.css";
+import AdBanner from './AdBanner';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [user] = useAuthState(auth);
@@ -71,6 +72,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Conteúdo principal */}
             <main>{children}</main>
+
+            <div>
+                {/* Anúncios apenas fora da tela de login */}
+                {!isLoginPage && <AdBanner />}
+            </div>
         </div>
     );
 }

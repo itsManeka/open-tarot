@@ -6,11 +6,14 @@ import { useState, useEffect } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 import './Profile.css';
+import { StringHelper } from '../utils/stringHelper';
 
 const apiKey = import.meta.env.VITE_MAPS_API_KEY;
 const libraries: ('places')[] = ['places'];
 
 export default function Profile() {
+    const [mapaAstral, setMapaAstral] = useState<any | null>(null);
+    const [dadosOriginais, setDadosOriginais] = useState({ dataNascimento: '', horarioNascimento: '', localNascimento: '' });
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [pronomes, setPronomes] = useState<string[]>([]);
@@ -20,8 +23,10 @@ export default function Profile() {
     const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [message, setMessage] = useState('');
+    const [errMessage, setErrMessage] = useState('');
     const [errors, setErrors] = useState({ nome: '', dataNascimento: '', horarioNascimento: '' });
     const [user] = useAuthState(auth);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     const { isLoaded } = useJsApiLoader({
@@ -34,6 +39,8 @@ export default function Profile() {
             navigate('/login');
             return;
         }
+
+        setIsLoading(true);
 
         const fetchProfile = async () => {
             const profileRef = doc(db, 'profile', user.uid);
@@ -51,11 +58,76 @@ export default function Profile() {
                 const [firstName, ...lastName] = user.displayName?.split(' ') || [];
                 setNome(firstName || '');
                 setSobrenome(lastName.join(' ') || '');
+                setIsEditing(true);
             }
         };
 
         fetchProfile();
+
+        setDadosOriginais({
+            dataNascimento,
+            horarioNascimento,
+            localNascimento
+        });
+
+        const carregarMapaAstral = async () => {
+            const mapaRef = doc(db, 'mapas_astro', user.uid);
+            const mapaSnap = await getDoc(mapaRef);
+
+            if (mapaSnap.exists()) {
+                setMapaAstral(mapaSnap.data());
+            }
+        };
+
+        carregarMapaAstral();
+
+        setIsLoading(false);
     }, [user, navigate]);
+
+    const buscarMapaAstral = async () => {
+        if (!user) return;
+
+        try {
+            const geocoder = new window.google.maps.Geocoder();
+
+            const results = await new Promise<google.maps.GeocoderResult[]>((resolve, reject) => {
+                geocoder.geocode({ address: localNascimento }, (results, status) => {
+                    if (status === 'OK' && results && results[0]) {
+                        resolve(results);
+                    } else {
+                        reject(new Error(`Geocode failed: ${status}`));
+                    }
+                });
+            });
+
+            if (results && results[0]) {
+                const location = results[0].geometry.location;
+                const latitude = location.lat();
+                const longitude = location.lng();
+
+                const res = await fetch(`${import.meta.env.VITE_ASTRO_API}/mapa-astral`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        date: dataNascimento,
+                        time: horarioNascimento,
+                        lat: latitude,
+                        lng: longitude
+                    }),
+                });
+
+                const data = await res.json();
+
+                return data;
+            }
+
+            return null;
+        } catch (err) {
+            console.error('Erro ao buscar mapa astral', err);
+            setErrMessage('Não foi possível calcular o mapa astral.');
+            return null;
+        }
+    };
 
     const validarDados = () => {
         const newErrors = { nome: '', dataNascimento: '', horarioNascimento: '' };
@@ -91,14 +163,13 @@ export default function Profile() {
 
     const removerPronome = (pronome: string) => {
         const p = pronomes.filter((p) => p.trim().toLowerCase() !== pronome.trim().toLowerCase());
-        console.log('pronomes', pronomes);
-        console.log('p', p);
-        console.log('pronome', pronome);
         setPronomes(p);
     };
 
     const salvarDados = async () => {
         if (!user) return;
+
+        setIsLoading(true);
 
         if (!validarDados()) {
             return;
@@ -114,8 +185,31 @@ export default function Profile() {
             localNascimento,
         });
 
+        if (
+            dataNascimento !== dadosOriginais.dataNascimento ||
+            horarioNascimento !== dadosOriginais.horarioNascimento ||
+            localNascimento !== dadosOriginais.localNascimento
+        ) {
+            setMessage('Calculando mapa astral (Pode demorar alguns segundos)...');
+
+            const novoMapa = await buscarMapaAstral();
+            if (novoMapa) {
+                const mapaRef = doc(db, 'mapas_astro', user.uid);
+                await setDoc(mapaRef, novoMapa);
+                setMapaAstral(novoMapa);
+            }
+        }
+
+        setDadosOriginais({
+            dataNascimento,
+            horarioNascimento,
+            localNascimento
+        });
+
         setMessage('Perfil atualizado com sucesso!');
         setIsEditing(false);
+
+        setIsLoading(false);
 
         setTimeout(() => setMessage(''), 3000);
     };
@@ -221,18 +315,69 @@ export default function Profile() {
                         />
                     </Autocomplete>
                 </label>
-                <div className="profile-buttons">
-                    {isEditing ? (
-                        <button onClick={salvarDados} className="profile-button">
-                            Salvar
-                        </button>
-                    ) : (
-                        <button onClick={() => setIsEditing(true)} className="profile-button">
-                            Editar
-                        </button>
+            </div>
+            {mapaAstral && (
+                <div className="mapa-astral-signos">
+                    {mapaAstral?.signos && (
+                        <>
+                            <div className="mapa-astral-item">
+                                <p className="mapa-astral-posicao">Sol</p>
+                                <img
+                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.solar).toLowerCase()}.svg`}
+                                    alt={`Signo Solar: ${mapaAstral.signos.solar}`}
+                                    className="mapa-astral-image"
+                                />
+                                <p className="mapa-astral-nome">{mapaAstral.signos.solar}</p>
+                            </div>
+                            <div className="mapa-astral-item">
+                                <p className="mapa-astral-posicao">Lua</p>
+                                <img
+                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.lunar).toLowerCase()}.svg`}
+                                    alt={`Signo Lunar: ${mapaAstral.signos.lunar}`}
+                                    className="mapa-astral-image"
+                                />
+                                <p className="mapa-astral-nome">{mapaAstral.signos.lunar}</p>
+                            </div>
+                            <div className="mapa-astral-item">
+                                <p className="mapa-astral-posicao">Asc</p>
+                                <img
+                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.ascendente).toLowerCase()}.svg`}
+                                    alt={`Ascendente: ${mapaAstral.signos.ascendente}`}
+                                    className="mapa-astral-image"
+                                />
+                                <p className="mapa-astral-nome">{mapaAstral.signos.ascendente}</p>
+                            </div>
+                            <div className="mapa-astral-item">
+                                <p className="mapa-astral-posicao">MdC</p>
+                                <img
+                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.meioDoCeu).toLowerCase()}.svg`}
+                                    alt={`Meio do Céu: ${mapaAstral.signos.meioDoCeu}`}
+                                    className="mapa-astral-image"
+                                />
+                                <p className="mapa-astral-nome">{mapaAstral.signos.meioDoCeu}</p>
+                            </div>
+                        </>
                     )}
                 </div>
-                {message && <p className="profile-message">{message}</p>}
+            )}
+            {errMessage && <p className="error-message">{errMessage}</p>}
+            {message && <p className="profile-message">{message}</p>}
+            <div className="profile-buttons">
+                {isEditing ? (
+                    <button
+                        onClick={salvarDados}
+                        disabled={isLoading}
+                        className="profile-button">
+                        {isLoading ? "Carregando" : "Salvar"}
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => setIsEditing(true)}
+                        disabled={isLoading}
+                        className="profile-button">
+                        {isLoading ? "Carregando" : "Editar"}
+                    </button>
+                )}
             </div>
         </div>
     );
