@@ -31,4 +31,21 @@ export const PromptHelper = {
         Traga sabedoria, clareza e orientação, como faria um verdadeiro mestre do Tarot.
         `;
     },
+
+    generateSignPredictionPrompt: (sign: string) => {
+        const data = new Date();
+        const formatado = new Intl.DateTimeFormat('pt-BR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        }).format(data);
+        
+        return `
+        Você é um astrólogo experiente, com profundo conhecimento em astrologia tradicional e moderna.
+        Escreva uma previsão breve e inspiradora para o signo de ${sign}, referente ao dia ${formatado}.
+        Use uma linguagem acolhedora e sábia, como se estivesse falando diretamente com uma pessoa desse signo.
+        Mantenha um tom místico, porém leve e acessível.
+        Destaque a energia do momento e ofereça um conselho útil.
+        Limite a previsão a no máximo 3 frases curtas.`;
+    },
 };
