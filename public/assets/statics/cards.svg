@@ -1,0 +1,55 @@
+<svg width="300" height="320" viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Sombra -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#5e35b1" flood-opacity="0.4" />
+    </filter>
+
+    <!-- Padrão de estrelas -->
+    <pattern id="stars" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1.2" fill="#bb86fc" />
+    </pattern>
+  </defs>
+
+  <!-- Cartas empilhadas -->
+  <g>
+    <rect x="36" y="36" width="160" height="240" rx="12" fill="#5e35b1" stroke="#bb86fc" stroke-width="1" />
+    <rect x="40" y="40" width="160" height="240" rx="12" fill="#5e35b1" stroke="#bb86fc" stroke-width="1" />
+    <rect x="44" y="44" width="160" height="240" rx="12" fill="#5e35b1" stroke="#bb86fc" stroke-width="1" />
+    <rect x="48" y="48" width="160" height="240" rx="12" fill="#5e35b1" stroke="#bb86fc" stroke-width="1" />
+    <rect x="52" y="52" width="160" height="240" rx="12" fill="#5e35b1" stroke="#bb86fc" stroke-width="1" />
+    <rect x="56" y="56" width="160" height="240" rx="12" fill="#5e35b1" stroke="#bb86fc" stroke-width="1" />
+  </g>
+
+  <!-- Carta do topo -->
+  <rect x="60" y="60" width="160" height="240" rx="12" fill="#5e35b1" stroke="#bb86fc" stroke-width="2" filter="url(#shadow)" />
+
+  <!-- Moldura interna decorada -->
+  <rect x="66" y="66" width="148" height="228" rx="10" fill="none" stroke="#bb86fc" stroke-width="1" />
+  <rect x="72" y="72" width="136" height="216" rx="8" fill="url(#stars)" opacity="0.1" />
+
+  <!-- Ornamento: Sol -->
+  <g>
+    <circle cx="140" cy="160" r="28" fill="none" stroke="#bb86fc" stroke-width="1.5" />
+    <circle cx="140" cy="160" r="10" fill="#bb86fc" />
+    <g stroke="#bb86fc" stroke-width="1.2">
+      <line x1="140" y1="128" x2="140" y2="120" />
+      <line x1="140" y1="192" x2="140" y2="200" />
+      <line x1="110" y1="160" x2="102" y2="160" />
+      <line x1="170" y1="160" x2="178" y2="160" />
+      <line x1="157" y1="143" x2="165" y2="135" />
+      <line x1="123" y1="143" x2="115" y2="135" />
+      <line x1="157" y1="177" x2="165" y2="185" />
+      <line x1="123" y1="177" x2="115" y2="185" />
+    </g>
+  </g>
+
+  <!-- Conjunto de estrelas decorativas -->
+  <g fill="#bb86fc" opacity="0.9">
+    <polygon points="100,180 102,186 108,186 103,190 105,196 100,192 95,196 97,190 92,186 98,186" />
+    <polygon points="170,210 172,214 176,214 173,217 174,221 170,219 166,221 167,217 164,214 168,214" />
+    <circle cx="115" cy="145" r="2" />
+    <circle cx="130" cy="220" r="1.5" />
+    <circle cx="150" cy="250" r="1.8" />
+  </g>
+</svg>

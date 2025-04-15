@@ -1,0 +1,59 @@
+<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .card {
+      fill: #5E35B1;
+      stroke: black;
+      stroke-width: 2;
+      rx: 8;
+      ry: 8;
+    }
+
+    .card-1 {
+      animation: fakeShuffle 4s infinite;
+      animation-delay: 0s;
+    }
+
+    .card-2 {
+      animation: fakeShuffle 4s infinite;
+      animation-delay: 1s;
+    }
+
+    .card-3 {
+      animation: fakeShuffle 4s infinite;
+      animation-delay: 2s;
+    }
+
+    .card-4 {
+      animation: fakeShuffle 4s infinite;
+      animation-delay: 3s;
+    }
+
+    @keyframes fakeShuffle {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      20% {
+        transform: translate(20px, -60px) scale(1.05) rotate(5deg);
+        opacity: 1;
+      }
+      40% {
+        transform: translate(-20px, -60px) scale(0.95) rotate(-5deg);
+        opacity: 1;
+      }
+      60% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.4;
+      }
+      100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <rect x="120" y="50" width="60" height="100" class="card card-1"/>
+  <rect x="120" y="50" width="60" height="100" class="card card-2"/>
+  <rect x="120" y="50" width="60" height="100" class="card card-3"/>
+  <rect x="120" y="50" width="60" height="100" class="card card-4"/>
+</svg>

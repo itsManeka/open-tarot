@@ -1,0 +1,71 @@
+.newsgrid-box {
+    margin-top: 8px;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.newsgrid-box h3 {
+    margin: 0;
+}
+
+/* Grid com 3 colunas */
+.newsgrid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Estilo dos itens */
+.newsgrid-item {
+    background-color: #121212;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.newsgrid-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7);
+}
+
+.newsgrid-image {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+}
+
+.newsgrid-title {
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #bb86fc;
+}
+
+/* Estilo do "ver mais" */
+.see-more .more-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #bb86fc;
+    background-color: #1f1f1f;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .newsgrid-container {
+        display: flex;
+        flex-direction: column;
+    }
+}

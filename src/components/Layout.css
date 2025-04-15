@@ -18,11 +18,12 @@
     padding-top: 6rem;
     padding-right: 1rem;
     background-color: #1e1e1e; /* Fundo escuro */
-    position: absolute;
+    position: fixed;
     right: 0;
     width: 12rem;
     height: 100%;
     box-sizing: border-box;
+    z-index: 998;
 }
 
 /* Cabeçalho */
@@ -30,13 +31,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
     padding: 0.2rem;
     padding-top: 0;
     width: 100%;
+    position: fixed;
     background-color: #1e1e1e; /* Fundo escuro */
     left: 0;
     box-sizing: border-box;
+    z-index: 999;
 }
 
 .app-container {
@@ -70,7 +72,23 @@
     font-weight: normal;
     color: #bb86fc; /* Roxo claro */
     margin: 0;
-    padding: 1rem;
+    padding: 1rem 0.8rem 1rem 0.8rem;
+}
+
+.layout-divisor {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #bb86fc; /* Roxo claro */
+    margin: 0;
+    padding: 0;
+}
+
+.layout-home {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #bb86fc; /* Roxo claro */
+    margin: 0;
+    padding: 1rem 0.8rem 1rem 0.8rem;
 }
 
 /* Botão hambúrguer */
@@ -108,9 +126,18 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
+    .layout-divisor {
+        font-size: 0.8rem;
+    }
+
+    .layout-home {
+        font-size: 0.8rem;
+        padding: 0.8rem 0.4rem 0.8rem 0.4rem;
+    }
+
     .user-name {
         font-size: 0.8rem;
-        padding: 0.8rem;
+        padding: 0.8rem 0.4rem 0.8rem 0.4rem;
     }
 
     .app-icon {

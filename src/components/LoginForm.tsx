@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet';
 import { useState, useEffect } from 'react';
 import { auth, db, provider } from '../services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
@@ -65,9 +64,6 @@ export default function LoginForm() {
 
     return (
         <div className="login-form">
-            <Helmet>
-                <meta name="robots" content="noindex" />
-            </Helmet>
             <h3>{isRegister ? 'Cadastrar' : 'Entrar'}</h3>
             <input
                 type="email"

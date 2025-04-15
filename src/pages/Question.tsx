@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../services/firebase';
@@ -38,7 +38,7 @@ export default function Question() {
                 </h2><br />
                 {!isProfileExists && (
                     <p className="question-info">
-                        Dica: preencha o <a href="/profile" className="question-info-link">seu perfil</a> para deixar a leitura mais precisa.
+                        Dica: preencha o <Link to="/profile" className="question-info-link">seu perfil</Link> para deixar a leitura mais precisa.
                     </p>
                 )}
             </div>

@@ -1,0 +1,132 @@
+/* Página genérica de informações */
+.info-page {
+    display: flex;
+    flex-direction: column;
+    padding: 70px 30px 30px 30px;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #e0e0e0;
+}
+
+/* Imagem Header */
+.info-page img {
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: 0;
+}
+
+/* Título principal */
+.info-page h1 {
+    font-size: 2.5rem;
+    color: #bb86fc;
+    margin-bottom: 5px;
+}
+
+/* Tags */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.tag {
+    background-color: #333;
+    color: #bb86fc;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+}
+
+/* Meta (autor + data) */
+.meta {
+    display: flex;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+/* Seções */
+.info-page .section {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Título das seções */
+.info-page .section h2 {
+    font-size: 1.5rem;
+    color: #bb86fc;
+    margin-bottom: 10px;
+}
+
+/* Parágrafos */
+.info-page .section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Links */
+.info-page .section a {
+    color: #bb86fc;
+    text-decoration: underline;
+}
+
+/* Rodapé */
+.footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.footer p {
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+/* Ícones sociais */
+.social-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    font-size: 0.9rem;
+    background-color: #2a2a2a;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #bb86fc;
+    transition: background 0.3s;
+}
+
+.social-links a:hover {
+    background-color: #3c3c3c;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .info-page {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+    .info-page h1 {
+        font-size: 2rem;
+    }
+
+    .info-page .section h2 {
+        font-size: 1.25rem;
+    }
+}
