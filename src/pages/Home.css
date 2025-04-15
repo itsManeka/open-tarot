@@ -1,0 +1,40 @@
+.home-page {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 40px;
+    padding: 2rem;
+    background-color: #121212;
+    color: #e0e0e0;
+    box-sizing: border-box;
+}
+
+.home-header {
+    margin: 0;
+    text-align: center;
+    max-width: 560px;
+}
+
+.site-logo {
+    width: 100px;
+}
+
+.site-title {
+    font-size: 2rem;
+    color: #bb86fc;
+}
+
+.site-description {
+    color: #e0e0e0;
+    text-align: justify;
+}
+
+.home-cards-container {
+    padding: 0;
+    margin: 0;
+    max-width: 900px;
+    box-sizing: border-box;
+    width: 100%;
+}

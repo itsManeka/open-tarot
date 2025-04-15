@@ -1,0 +1,68 @@
+.tarotlink-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    max-width: 900px;
+    box-sizing: border-box;
+}
+
+.tarotlink-content {
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    padding: 20px 40px 20px 40px;
+    color: #e0e0e0;
+    width: 100%;
+    align-items: start;
+    box-sizing: border-box;
+}
+
+.tarotlink-subcontent {
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tarotlink-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tarotlink-image {
+    width: 280px;
+    height: 280px;
+}
+
+/* Botão */
+.taotlink-button {
+    margin-top: 10px;
+    background-color: #bb86fc; /* Roxo claro */
+    color: #121212; /* Texto escuro */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.taotlink-button:hover {
+    background-color: #9a67ea; /* Roxo mais escuro */
+}
+
+.taotlink-button:disabled {
+    background-color: #5e35b1;
+    cursor: not-allowed;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .tarotlink-box {
+        display: flex;
+        flex-direction: column;
+    }
+}

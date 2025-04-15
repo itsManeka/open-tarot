@@ -1,0 +1,34 @@
+.imageuploader-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: #121212;
+    color: #e0e0e0;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.imageuploader-button {
+    background-color: #bb86fc; /* Roxo claro */
+    color: #121212; /* Texto escuro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.imageuploader-input {
+    padding: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #e0e0e0; /* Texto claro */
+    background-color: #1e1e1e; /* Fundo escuro */
+    border: 1px solid #bb86fc; /* Borda roxa */
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}

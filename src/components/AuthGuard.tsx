@@ -1,17 +1,18 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navigate } from "react-router-dom";
 import { auth } from "../services/firebase";
+import Loading from "./Loading";
 
 export default function AuthGuard({ children }: { children: React.ReactElement }) {
     const [user, loading] = useAuthState(auth);
 
     if (loading) {
-        return <p>Carregando...</p>; // Exibe um carregamento enquanto verifica o estado
+        return (<Loading />);
     }
 
     if (!user) {
-        return <Navigate to="/login" replace />; // Redireciona para login se não estiver logado
+        return <Navigate to="/login" replace />;
     }
 
-    return children; // Renderiza o conteúdo protegido
+    return children;
 }

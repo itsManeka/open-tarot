@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../services/firebase"
 import { useEffect, useState, useRef } from "react";
 import { tarotDeck, TarotCard } from "../data/tarotDeck";
-import { sendMessageToGPT } from "../services/openai";
+import { sendMessageToAI } from "../services/aiEngine";
 import { PromptHelper } from "../utils/promptHelper";
 import "./Tarot.css";
 
@@ -89,7 +89,7 @@ export default function Tarot() {
             "",
             true
         );
-        const interpretation = await sendMessageToGPT(prompt);
+        const interpretation = await sendMessageToAI(prompt);
         
         setConclusion(interpretation);
         setIsFinalized(true);
@@ -112,7 +112,7 @@ export default function Tarot() {
             false
         );
 
-        const interpretation = await sendMessageToGPT(prompt);
+        const interpretation = await sendMessageToAI(prompt);
         setRevealedCards([
             ...revealedCards,
             { card: currentCard, interpretation },
@@ -124,7 +124,7 @@ export default function Tarot() {
     return (
         <div className="tarot-container">
             {/* Título no topo */}
-            <h2 className="text-3xl font-bold mb-4">Leitura</h2>
+            <h2 className="tarot-titulo">Leitura</h2>
 
             {/* Pergunta */}
             <div className="question-box">

@@ -7,8 +7,8 @@
     justify-content: flex-start;
     min-height: 100vh;
     padding: 2rem;
-    background-color: #121212; /* Fundo escuro */
-    color: #e0e0e0; /* Texto claro */
+    background-color: #121212;
+    color: #e0e0e0;
     text-align: center;
     box-sizing: border-box;
 }

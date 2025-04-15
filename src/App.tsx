@@ -7,13 +7,34 @@ import AuthGuard from "./components/AuthGuard";
 import Question from './pages/Question';
 import Layout from "./components/Layout";
 import Profile from './pages/Profile';
+import InfoPage from './pages/InfoPage';
+import InfoMaker from './pages/InfoMaker';
+import News from './pages/News';
+import AdmGuard from './components/AdmGuard';
 
 export default function App() {
     return (
         <BrowserRouter>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/news" element={<News />} />
+                    <Route
+                        path="/infomaker"
+                        element={
+                            <AdmGuard>
+                                <InfoMaker />
+                            </AdmGuard>
+                        }
+                    />
+                    <Route path="/info/:slug" element={<InfoPage />} />
+                    <Route 
+                        path="/"
+                        element={
+                            <AuthGuard>
+                                <Home />
+                            </AuthGuard>
+                        }
+                    />
                     <Route path="/login" element={<Login />} />
                     <Route
                         path="/profile"
