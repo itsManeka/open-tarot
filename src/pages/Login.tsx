@@ -33,16 +33,13 @@ export default function Login() {
                 <LoginForm />
             </div>
             <div className="login-info">
-                <div className="info-box">
+                <div className="login-info-box">
                     <h3>A História do Tarot</h3>
                     <p>O Tarot é muito mais do que um simples conjunto de cartas com imagens misteriosas — ele é um símbolo da busca humana por autoconhecimento, significado e conexão com o invisível. Sua origem envolve enigmas, tradição e transformação cultural ao longo dos séculos.</p>
-                    <button onClick={onClickAbout} className="info-button">Saiba mais</button>
+                    <button onClick={onClickAbout} className="login-info-button">Saiba mais</button>
                 </div>
                 <NewsGrid />
             </div>
-            <footer className="login-footer">
-                {/* Rodapé será implementado no futuro */}
-            </footer>
         </div>
     );
 }

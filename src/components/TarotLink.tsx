@@ -23,7 +23,7 @@ export default function TarotLink() {
                             Nosso site oferece uma experiência mágica e acessível, onde cada carta traz um novo olhar sobre sua jornada.`}</p>
                         <p>{`Tire um momento para si e receba interpretações únicas através de Inteligência Artificial que podem iluminar seu caminho.`}</p>
                         <button
-                            className="taotlink-button"
+                            className="tarotlink-button"
                             onClick={consultar}
                         >
                             Faça sua tiragem

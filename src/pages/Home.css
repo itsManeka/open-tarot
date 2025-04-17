@@ -4,11 +4,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 40px;
+    gap: 10px;
     padding: 2rem;
     background-color: #121212;
     color: #e0e0e0;
     box-sizing: border-box;
+}
+
+.home-page a {
+    transition: color 0.3s ease;
+}
+
+.home-page a:hover {
+    color: #d0aaff;
 }
 
 .home-header {
@@ -17,24 +25,37 @@
     max-width: 560px;
 }
 
-.site-logo {
+.home-site-logo {
     width: 100px;
 }
 
-.site-title {
+.home-title {
     font-size: 2rem;
     color: #bb86fc;
 }
 
-.site-description {
-    color: #e0e0e0;
-    text-align: justify;
+.home-description {
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
 .home-cards-container {
-    padding: 0;
-    margin: 0;
-    max-width: 900px;
-    box-sizing: border-box;
     width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+@media (max-width: 480px) {
+    .home-site-logo {
+        width: 70px;
+    }
+
+    .home-site-title {
+        font-size: 1.5rem;
+    }
+
+    .home-page {
+        padding: 1rem;
+    }
 }

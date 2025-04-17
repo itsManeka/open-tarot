@@ -17,7 +17,7 @@ export type PageContent = {
     title: string;
     img: string;
     sections: Section[];
-    visibility: "public" | "members" | "premium";
+    visibility: "public" | "members" | "premium" | "institutional";
     createdAt: string;
     author: string;
     tags: string[];
@@ -28,4 +28,9 @@ export type PageWithId = PageContent & { id: string };
 
 export type NewsCardProps = {
     page: PageContent & { id: string };
+};
+
+export type ImageOption = {
+    label: string;
+    url: string;
 };

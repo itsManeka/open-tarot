@@ -7,6 +7,7 @@ import './InfoPage.css';
 import Loading from "../components/Loading";
 import { PageContent } from "../types/types";
 import { SOCIAL_BASES } from "../types/enums";
+import { NiceHelmet } from "../components/NiceHelmet";
 
 export default function InfoPage() {
     const [user, loading] = useAuthState(auth);
@@ -30,7 +31,7 @@ export default function InfoPage() {
 
     if (isLoading || loading) return <Loading />;
 
-    if (!user && content?.visibility !== "public") return (
+    if (!user && (content?.visibility !== "public" && content?.visibility !== "institutional")) return (
         <div className="info-page">
             <h1>Não autorizado</h1>
             <div className="section">
@@ -52,6 +53,10 @@ export default function InfoPage() {
 
     return (
         <div className="info-page">
+            <NiceHelmet
+                title={content.title}
+                meta={[{name: "description", content: content.sections?.[0]?.body.slice(0, 57) + "..."}]}
+            />
             <img src={content.img} alt={content.title} />
             <h1>{content.title}</h1>
 

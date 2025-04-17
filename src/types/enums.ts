@@ -6,4 +6,6 @@ export const SOCIAL_BASES: Record<string, string> = {
     bsky: "https://bsky.app/profile/",
     youtube: "https://youtube.com/@",
     linkedin: "https://linkedin.com/in/",
+    threads: "https://www.threads.net/@",
+    email: "",
 };

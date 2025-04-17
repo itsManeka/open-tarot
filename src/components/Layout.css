@@ -3,8 +3,10 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: hsl(0, 0%, 7%); /* Fundo escuro */
-    color: #e0e0e0; /* Texto claro */
+    background-color: hsl(0, 0%, 7%);
+    /* Fundo escuro */
+    color: #e0e0e0;
+    /* Texto claro */
     box-sizing: border-box;
     overflow: auto;
 }
@@ -17,7 +19,8 @@
     padding: 1rem;
     padding-top: 6rem;
     padding-right: 1rem;
-    background-color: #1e1e1e; /* Fundo escuro */
+    background-color: #1e1e1e;
+    /* Fundo escuro */
     position: fixed;
     right: 0;
     width: 12rem;
@@ -35,7 +38,8 @@
     padding-top: 0;
     width: 100%;
     position: fixed;
-    background-color: #1e1e1e; /* Fundo escuro */
+    background-color: #1e1e1e;
+    /* Fundo escuro */
     left: 0;
     box-sizing: border-box;
     z-index: 999;
@@ -62,7 +66,8 @@
 .app-title {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #bb86fc; /* Roxo claro */
+    color: #bb86fc;
+    /* Roxo claro */
     margin: 0;
     padding: 1rem;
 }
@@ -70,7 +75,8 @@
 .user-name {
     font-size: 1.5rem;
     font-weight: normal;
-    color: #bb86fc; /* Roxo claro */
+    color: #bb86fc;
+    /* Roxo claro */
     margin: 0;
     padding: 1rem 0.8rem 1rem 0.8rem;
 }
@@ -78,7 +84,8 @@
 .layout-divisor {
     font-size: 1.5rem;
     font-weight: normal;
-    color: #bb86fc; /* Roxo claro */
+    color: #bb86fc;
+    /* Roxo claro */
     margin: 0;
     padding: 0;
 }
@@ -86,7 +93,8 @@
 .layout-home {
     font-size: 1.5rem;
     font-weight: normal;
-    color: #bb86fc; /* Roxo claro */
+    color: #bb86fc;
+    /* Roxo claro */
     margin: 0;
     padding: 1rem 0.8rem 1rem 0.8rem;
 }
@@ -95,7 +103,8 @@
 .hamburger-button {
     background: none;
     border: none;
-    color: #e0e0e0; /* Texto claro */
+    color: #e0e0e0;
+    /* Texto claro */
     font-size: 1.5rem;
     cursor: pointer;
     transition: color 0.3s;
@@ -103,13 +112,15 @@
 }
 
 .hamburger-button:hover {
-    color: #bb86fc; /* Roxo claro */
+    color: #bb86fc;
+    /* Roxo claro */
 }
 
 .hamburger-menu a,
 .hamburger-menu button {
     font-size: 1rem;
-    color: #e0e0e0; /* Texto claro */
+    color: #e0e0e0;
+    /* Texto claro */
     text-decoration: none;
     margin-bottom: 1rem;
     margin-top: 1rem;
@@ -121,7 +132,39 @@
 
 .hamburger-menu a:hover,
 .hamburger-menu button:hover {
-    color: #bb86fc; /* Roxo claro */
+    color: #bb86fc;
+    /* Roxo claro */
+}
+
+.footer {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 1rem 2rem;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #bb86fc;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    color: #757575;
 }
 
 /* Responsividade */

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import "./Layout.css";
 import AdBanner from './AdBanner';
+import { CookieBanner } from "./CookieBanner";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const navigate = useNavigate();
@@ -122,6 +123,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div>
                 {<AdBanner />}
             </div>
+
+            <footer className="footer">
+                <CookieBanner />
+
+                <div className="footer-links">
+                    <Link to="/info/sobre-nos">Sobre</Link>
+                    <Link to="/info/politica-de-privacidade">Política de Privacidade</Link>
+                    <Link to="/info/termos-de-uso">Termos de Uso</Link>
+                    <Link to="/info/contato">Contato</Link>
+                </div>
+                <p className="footer-copy">© {new Date().getFullYear()} Open Tarot. Todos os direitos reservados.</p>
+            </footer>
         </div>
     );
 }

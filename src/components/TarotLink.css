@@ -3,7 +3,6 @@
     flex-direction: column;
     width: 100%;
     gap: 20px;
-    max-width: 900px;
     box-sizing: border-box;
 }
 
@@ -37,7 +36,7 @@
 }
 
 /* Botão */
-.taotlink-button {
+.tarotlink-button {
     margin-top: 10px;
     background-color: #bb86fc; /* Roxo claro */
     color: #121212; /* Texto escuro */
@@ -50,11 +49,11 @@
     transition: background-color 0.3s;
 }
 
-.taotlink-button:hover {
+.tarotlink-button:hover {
     background-color: #9a67ea; /* Roxo mais escuro */
 }
 
-.taotlink-button:disabled {
+.tarotlink-button:disabled {
     background-color: #5e35b1;
     cursor: not-allowed;
 }

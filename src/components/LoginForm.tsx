@@ -24,8 +24,26 @@ export default function LoginForm() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             navigate('/');
-        } catch {
-            alert('Erro ao logar');
+        } catch (error: any) {
+            switch (error.code) {
+                case 'auth/invalid-email':
+                    alert('Email inválido.');
+                    break;
+                case 'auth/user-disabled':
+                    alert('Usuário desativado.');
+                    break;
+                case 'auth/user-not-found':
+                    alert('Usuário não encontrado.');
+                    break;
+                case 'auth/wrong-password':
+                    alert('Senha incorreta.');
+                    break;
+                case 'auth/invalid-credential':
+                    alert('Credenciais inválidas.');
+                    break;
+                default:
+                    alert(`Erro ao logar: ${error.message}`);
+            }
         }
     };
 
@@ -37,8 +55,20 @@ export default function LoginForm() {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             navigate('/profile');
-        } catch {
-            alert('Erro ao registrar');
+        } catch (error: any) {
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    alert('Este email já está em uso.');
+                    break;
+                case 'auth/invalid-email':
+                    alert('Email inválido.');
+                    break;
+                case 'auth/weak-password':
+                    alert('Senha muito fraca. Use ao menos 6 caracteres.');
+                    break;
+                default:
+                    alert(`Erro ao registrar: ${error.message}`);
+            }
         }
     };
 
@@ -62,39 +92,52 @@ export default function LoginForm() {
         }
     };
 
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        isRegister ? handleRegister() : handleLogin()
+    };
+
     return (
-        <div className="login-form">
+        <form
+            className="login-form"
+        >
             <h3>{isRegister ? 'Cadastrar' : 'Entrar'}</h3>
             <input
                 type="email"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="login-input"
+                className="login-form-input"
+                autoComplete="email"
             />
             <input
                 type="password"
+                name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Senha"
-                className="login-input"
+                className="login-form-input"
+                autoComplete={isRegister ? "new-password" : "current-password"}
             />
-            {isRegister && (
-                <input
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Repita a senha"
-                    className="login-input"
-                />
-            )}
+            <input
+                type="password"
+                name="confirm-password"
+                value={confirmPassword}
+                style={{display: isRegister ? "" : "None"}}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Repita a senha"
+                className="login-form-input"
+                autoComplete="new-password"
+            />
             <button
-                onClick={isRegister ? handleRegister : handleLogin}
-                className="login-button"
+                type="submit"
+                className="login-form-button"
+                onClick={handleSubmit}
             >
                 {isRegister ? 'Cadastrar' : 'Entrar'}
             </button>
-            <div className="login-links">
+            <div className="login-form-links">
                 <span onClick={() => setIsRegister(false)} className={!isRegister ? 'active' : ''}>
                     Entrar
                 </span>
@@ -103,10 +146,14 @@ export default function LoginForm() {
                     Cadastrar
                 </span>
             </div>
-            <p className="login-or">ou</p>
-            <button onClick={handleGoogleLogin} className="login-button google">
+            <p className="login-form-or">ou</p>
+            <button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="login-form-button google"
+            >
                 Login com Google
             </button>
-        </div>
+        </form>
     );
 }

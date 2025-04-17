@@ -1,0 +1,81 @@
+.infosectioneditor-input {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    border: 1px solid #bb86fc;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+/* Caixa de texto */
+.infosectioneditor-textarea {
+    padding: 15px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #e0e0e0; /* Texto claro */
+    background-color: #1e1e1e; /* Fundo escuro */
+    border: 1px solid #bb86fc; /* Borda roxa */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    resize: none;
+    width: 100%;
+    min-height: 30vh;
+    box-sizing: border-box;
+}
+
+.infosectioneditor-textarea::placeholder {
+    color: #757575; /* Cinza claro */
+}
+
+.infosectioneditor-input,
+.infosectioneditor-textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #888;
+    background: #1c1c1c;
+    color: #f0f0f0;
+    margin-top: 4px;
+    margin-bottom: 12px;
+}
+
+.infosectioneditor-textarea {
+    min-height: 250px;
+    resize: vertical;
+}
+
+
+/* Seções */
+.infomaker-page .infosectioneditor-section {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Título das seções */
+.infomaker-page .infosectioneditor-section h2 {
+    font-size: 1.5rem;
+    color: #bb86fc;
+    margin-bottom: 10px;
+}
+
+/* Parágrafos */
+.infomaker-page .infosectioneditor-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Links */
+.infomaker-page .infosectioneditor-section a {
+    color: #bb86fc;
+    text-decoration: underline;
+}

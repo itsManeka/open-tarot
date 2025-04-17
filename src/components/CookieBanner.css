@@ -1,0 +1,52 @@
+.cookiebanner-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #1e1e1e; /* Fundo escuro */
+    color: #e0e0e0; /* Texto claro */
+    font-size: 0.6rem;
+    padding: 0.5rem;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.cookiebanner-content {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.2rem;
+}
+
+.cookiebanner-button {
+    background: #bb86fc; /* Cor de destaque */
+    border: none;
+    padding: 0.5rem;
+    color: #1e1e1e; /* Texto escuro */
+    font-weight: bold;
+    font-size: 0.6rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.cookiebanner-button:hover {
+    background: #9a6bd8; /* Cor de destaque ao passar o mouse */
+}
+
+.cookiebanner-link {
+    color: #bb86fc; /* Cor de destaque */
+    text-decoration: underline;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.cookiebanner-link:hover {
+    color: #9a6bd8; /* Cor de destaque ao passar o mouse */
+}

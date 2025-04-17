@@ -20,7 +20,7 @@ export default function NewsGrid() {
                 collection(db, 'pages'),
                 where('visibility', 'in', visibilityFilter),
                 orderBy('createdAt', 'desc'),
-                limit(5)
+                limit(7)
             );
 
             const snapshot = await getDocs(q);

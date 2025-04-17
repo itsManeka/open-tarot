@@ -1,18 +1,35 @@
 /* Estilo geral da página de login */
 .login-page {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    background-color: #121212;
+    min-height: 100vh;
 }
 
 /* Coluna esquerda (logo e descrição) */
 .login-left {
+    flex: 1;
+    max-width: 300px;
     min-width: 250px;
+    padding: 30px;
     text-align: left;
-    max-width: 250px;
-    padding-left: 30px;
-    padding-top: 30px;
+}
+
+/* Coluna direita (formulário de login) */
+.login-right {
+    flex: 1;
+    max-width: 400px;
+    min-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
 .login-logo {
@@ -23,62 +40,93 @@
 .login-title {
     font-size: 2rem;
     color: #bb86fc;
+    margin: 0;
 }
 
 .login-description {
     font-size: 1rem;
     color: #e0e0e0;
     margin-top: 10px;
+    line-height: 1.5;
 }
 
 .login-description a {
     color: #bb86fc;
     text-decoration: none;
+    font-weight: bold;
 }
 
-/* Coluna direita (formulário de login) */
-.login-right {
-    min-width: 300px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 20px;
+.login-description a:hover {
+    text-decoration: underline;
 }
 
 /* Informações adicionais */
 .login-info {
-    margin: 20px;
+    width: 100%;
+    margin-top: 40px;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
-.info-box {
+.login-info-box {
     margin-top: 10px;
     border-radius: 8px;
     background-color: #1e1e1e;
     padding: 30px;
     color: #e0e0e0;
-    display: flex;
-    flex-wrap: wrap;
     text-align: justify;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.info-box h3 {
+.login-info-box h3 {
     margin: 0;
+    font-size: 1.25rem;
+    color: #ffffff;
 }
 
-.info-button {
+.login-info-button {
     background-color: #bb86fc;
     color: #121212;
     border: none;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 10px 20px;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
 }
 
-/* Rodapé */
-.login-footer {
-    margin-top: 20px;
-    text-align: center;
-    color: #757575;
+.login-info-button:hover {
+    background-color: #a56de2;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .login-page {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .login-left,
+    .login-right {
+        max-width: 100%;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .login-description {
+        text-align: center;
+    }
+
+    .login-info-box {
+        text-align: left;
+    }
+
+    .login-info-button {
+        align-self: center;
+    }
 }

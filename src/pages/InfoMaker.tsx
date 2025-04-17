@@ -2,16 +2,28 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import ImageUploader from "../components/ImageUploader";
-import { Footer, Section, PageContent } from "../types/types";
-import { SOCIAL_BASES } from "../types/enums";
+import { ImageOption, SocialLink, Footer, Section, PageContent } from "../types/types";
 import { StringHelper } from "../utils/stringHelper";
 import './InfoMaker.css';
+import InfoSectionManager from "../components/InfoSectionManager";
+import InfoFooterEditor from "../components/InfoFooterEditor"
 
 export default function InfoMaker() {
+    const [imageOptions, setImageOptions] = useState<ImageOption[]>([]);
+    const [imageChoice, setImageChoice] = useState("existing"); // existing | new | url
     const [urlImage, setUrlImage] = useState("");
+
+    const onChangeImageChoice = (choice: string) => {
+        setImageChoice(choice);
+        if (choice !== "new") {
+            setUrlImage(choice)
+        } else {
+            setUrlImage("")
+        }
+    }
+
     const [title, setTitle] = useState("");
     const [sections, setSections] = useState<Section[]>([]);
-    const [editingSection, setEditingSection] = useState<number | null>(null);
     const [newSectionHeading, setNewSectionHeading] = useState("");
     const [newSectionBody, setNewSectionBody] = useState("");
     const [salvando, setSalvando] = useState(false);
@@ -24,13 +36,16 @@ export default function InfoMaker() {
     const [customIdExists, setCustomIdExists] = useState(false);
     const [idTouched, setIdTouched] = useState(false);
 
-    const [visibility, setVisibility] = useState<"public" | "members" | "premium">("public");
+    const [visibility, setVisibility] = useState<"public" | "members" | "premium" | "institutional">("public");
     const [authorName, setAuthorName] = useState("");
 
     const [tags, setTags] = useState<string[]>([]);
     const [newTag, setNewTag] = useState("");
 
-    const [newSocial, setNewSocial] = useState({ type: "site", url: "" });
+    const [newSocial, setNewSocial] = useState<SocialLink>({
+        type: "site",
+        url: ""
+    });
 
     const [createdAt, setCreatedAt] = useState<string | null>(null);
 
@@ -50,6 +65,12 @@ export default function InfoMaker() {
             title: doc.data().title || "(Sem título)"
         }));
         setPagesList(docs);
+
+        const options = snapshot.docs.map(doc => ({
+            label: doc.id,
+            url: doc.data().img
+        }));
+        setImageOptions(options);
     };
 
     const imageLoaded = (imageUrl: string) => {
@@ -63,32 +84,6 @@ export default function InfoMaker() {
         }]);
         setNewSectionHeading("");
         setNewSectionBody("");
-    };
-
-    const removeSection = (index: number) => {
-        setSections(sections.filter((_, i) => i !== index));
-    };
-
-    const editSection = (index: number) => {
-        if (editingSection === index) {
-            setEditingSection(null);
-        } else {
-            setEditingSection(index);
-        }
-    }
-
-    const moveSection = (index: number, direction: "up" | "down") => {
-        const newSections = [...sections];
-        const newIndex = direction === "up" ? index - 1 : index + 1;
-        if (newIndex < 0 || newIndex >= sections.length) return;
-        [newSections[index], newSections[newIndex]] = [newSections[newIndex], newSections[index]];
-        setSections(newSections);
-    };
-
-    const onChangeSection = (index: number, field: "heading" | "body", value: string) => {
-        const newSections = [...sections];
-        newSections[index][field] = value;
-        setSections(newSections);
     };
 
     const handleSave = async () => {
@@ -107,7 +102,7 @@ export default function InfoMaker() {
             alert("O título não pode estar vazio.");
             return;
         }
-        
+
         if (title.trim().length < 3 || title.length > 100) {
             alert("O título deve ter entre 3 e 100 caracteres.");
             return;
@@ -168,7 +163,7 @@ export default function InfoMaker() {
             setTags([]);
             setNewSectionHeading("");
             setNewSectionBody("");
-            setFooter({ description: "", socialLinks: [] }); 
+            setFooter({ description: "", socialLinks: [] });
         } else {
             const selectedDoc = await getDoc(doc(db, "pages", value));
             if (selectedDoc.exists()) {
@@ -255,21 +250,36 @@ export default function InfoMaker() {
 
             {urlImage && <img src={urlImage} alt={title} />}
 
-            <label>
+            <label className="infomaker-label">
                 Imagem de header:
-                <ImageUploader imageLoaded={imageLoaded} />
+                <select
+                    className="infomaker-input"
+                    value={imageChoice}
+                    onChange={(e) => onChangeImageChoice(e.target.value)}
+                >
+                    <option value="existing" disabled>Escolha uma imagem existente ou faça upload</option>
+                    {imageOptions.map((img, idx) => (
+                        <option key={idx} value={img.url}>{img.label}</option>
+                    ))}
+                    <option value="new">Nova imagem (upload)</option>
+                </select>
+
+                {imageChoice === "new" && (
+                    <ImageUploader imageLoaded={imageLoaded} />
+                )}
             </label>
 
             <label>
                 Visibilidade:
                 <select
                     value={visibility}
-                    onChange={(e) => setVisibility(e.target.value as "public" | "members" | "premium")}
+                    onChange={(e) => setVisibility(e.target.value as "public" | "members" | "premium" | "institutional")}
                     className="infomaker-input"
                 >
                     <option value="public">Pública</option>
                     <option value="members">Apenas membros</option>
                     <option value="premium">Premium</option>
+                    <option value="institutional">Institucional</option>
                 </select>
             </label>
 
@@ -294,82 +304,26 @@ export default function InfoMaker() {
                 />
             </label>
 
-            <label>
-                Preview:
-            </label>
-
-            <h1>{title}</h1>
-
-            {sections.map((section, i) => (
-                <div key={i} className="section">
-                    {(editingSection === i) ?
-                        (<div>
-                            <input
-                                type="text"
-                                value={section.heading}
-                                onChange={(e) => onChangeSection(i, "heading", e.target.value)}
-                                className="infomaker-input"
-                                placeholder="Título da seção"
-                            />
-                            <textarea
-                                value={section.body}
-                                onChange={(e) => onChangeSection(i, "body", e.target.value)}
-                                className="infomaker-textarea"
-                                placeholder="Conteúdo"
-                            />
-                        </div>) :
-                        (<div>
-                            <h2>{section.heading}</h2>
-                            {section.body.split("\\n").map((line, j) => (
-                                <p key={j}>{line}</p>
-                            ))}
-                        </div>)
-                    }
-                    <div className="section-actions">
-                        <button onClick={() => moveSection(i, "up")} disabled={i === 0 || editingSection != null}>↑</button>
-                        <button onClick={() => moveSection(i, "down")} disabled={i === sections.length - 1 || editingSection != null}>↓</button>
-                        <button onClick={() => removeSection(i)} disabled={editingSection != null}>Remover</button>
-                        <button onClick={() => editSection(i)}>{(editingSection === i) ? ("Ok") : ("Editar")}</button>
-                    </div>
-                </div>
-            ))}
-
-            <label>
-                Nova Seção:
-                <input
-                    type="text"
-                    value={newSectionHeading}
-                    onChange={(e) => setNewSectionHeading(e.target.value)}
-                    className="infomaker-input"
-                    placeholder="Título"
-                />
-                <textarea
-                    className="infomaker-textarea"
-                    value={newSectionBody}
-                    onChange={e => setNewSectionBody(e.target.value)}
-                    placeholder="Corpo da seção"
-                />
-            </label>
-
-            <button onClick={addSection} className="infomaker-button">
-                Adicionar seção
-            </button>
-
-            <button
-                onClick={cleanNewSection}
-                className="infomaker-button"
-            >
-                Limpar seção atual
-            </button>
+            <InfoSectionManager
+                sections={sections}
+                title={title}
+                newSectionHeading={newSectionHeading}
+                newSectionBody={newSectionBody}
+                onAddSection={addSection}
+                onCleanSection={cleanNewSection}
+                onNewSectionBody={setNewSectionBody}
+                onNewSectionHeader={setNewSectionHeading}
+                onChangeSection={setSections}
+            />
 
             <label>
                 Tags:
             </label>
             <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
                 {tags.map((tag, idx) => (
-                    <span key={idx} style={{ background: "#bb86fc", color: "#121212", padding: "5px 10px", borderRadius: "8px" }}>
+                    <span key={idx} className="infomaker-tag">
                         {tag}
-                        <button onClick={() => setTags(tags.filter((_, i) => i !== idx))} style={{ marginLeft: "5px", background: "none", border: "none", cursor: "pointer" }}>×</button>
+                        <button onClick={() => setTags(tags.filter((_, i) => i !== idx))}>×</button>
                     </span>
                 ))}
             </div>
@@ -390,92 +344,12 @@ export default function InfoMaker() {
                 placeholder="Pressione Enter para adicionar"
             />
 
-            <fieldset className="infomaker-fieldset">
-                <legend>Rodapé do autor (opcional)</legend>
-
-                <label>
-                    Descrição:
-                    <textarea
-                        className="infomaker-textarea"
-                        value={footer.description}
-                        onChange={(e) =>
-                            setFooter({ ...footer, description: e.target.value })
-                        }
-                        placeholder="Ex: Astróloga desde 2012. Especialista em tarot evolutivo."
-                    />
-                </label>
-
-                <label>Redes sociais / site:</label>
-
-                <div className="infomaker-socials-list">
-                    {footer.socialLinks.map((item, idx) => (
-                        <div key={idx} className="infomaker-social-item">
-                            <span>
-                                {item.type}:{" "}
-                                <a href={item.url} target="_blank" rel="noopener noreferrer">
-                                    {item.url}
-                                </a>
-                            </span>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    const updated = footer.socialLinks.filter((_, i) => i !== idx);
-                                    setFooter({ ...footer, socialLinks: updated });
-                                }}
-                            >
-                                ×
-                            </button>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="infomaker-social-form">
-                    <select
-                        className="infomaker-select"
-                        value={newSocial.type}
-                        onChange={(e) => {
-                            const selected = e.target.value;
-                            setNewSocial({
-                                type: selected,
-                                url: SOCIAL_BASES[selected] || "",
-                            });
-                        }}
-                    >
-                        {Object.keys(SOCIAL_BASES).map((key) => (
-                            <option key={key} value={key}>
-                                {key}
-                            </option>
-                        ))}
-                    </select>
-
-                    <input
-                        type="text"
-                        className="infomaker-input"
-                        value={newSocial.url}
-                        onChange={(e) =>
-                            setNewSocial({ ...newSocial, url: e.target.value })
-                        }
-                        placeholder="Cole ou edite o link"
-                    />
-
-                    <button
-                        type="button"
-                        onClick={() => {
-                            if (newSocial.url.trim() && StringHelper.isValidUrl(newSocial.url)) {
-                                setFooter({
-                                    ...footer,
-                                    socialLinks: [...footer.socialLinks, newSocial],
-                                });
-                                setNewSocial({ type: "site", url: "" });
-                            } else {
-                                alert("URL inválida");
-                            }
-                        }}
-                    >
-                        +
-                    </button>
-                </div>
-            </fieldset>
+            <InfoFooterEditor
+                footer={footer}
+                social={newSocial}
+                setFooter={setFooter}
+                setSocial={setNewSocial}
+            />
 
             <button onClick={handleSave} disabled={salvando} className="infomaker-button">
                 {salvando ? "Salvando..." : "Salvar publicação"}

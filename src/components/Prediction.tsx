@@ -15,11 +15,13 @@ export default function Prediction() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let isMounted = true;
+
         const fetchPredictions = async () => {
             setIsLoading(true);
             try {
 
-                if (!user) return;
+                if (!user || !isMounted) return;
 
                 const hoje = new Date();
                 const dataFormatada = hoje.toISOString().split('T')[0];
@@ -55,36 +57,37 @@ export default function Prediction() {
         };
 
         fetchPredictions();
+        return () => { isMounted = false; };
     }, [user]);
 
     return (
         <div className="prediction-container">
             {isLoading ? (
-                <div className="loading-content">
+                <div className="prediction-loading-content">
                     <img
                         src={`/assets/animations/loading.svg`}
                         alt={`Carregando...`}
-                        className="loading-image"
+                        className="prediction-loading-image"
                     />
                 </div>
             ) : (
                 <div className="prediction-content">
-                    <h2>Previsão do diária</h2>
+                    <h2>Previsão diária</h2>
                     {mapaAstral ? (
-                        <div className="map-content">
-                            <div className="signo-box">
+                        <div className="prediction-map-content">
+                            <div className="prediction-signo-box">
                                 <img
                                     src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.solar).toLowerCase()}.svg`}
                                     alt={`Signo Solar: ${mapaAstral.signos.solar}`}
-                                    className="signo-image"
+                                    className="prediction-signo-image"
                                 />
-                                <p className="signo-nome">{mapaAstral.signos.solar}</p>
+                                <p className="prediction-signo-nome">{mapaAstral.signos.solar}</p>
                             </div>
-                            <p>{prediction}</p>
+                            <p>{prediction || 'Nenhuma previsão disponível no momento.'}</p>
                         </div>
                     ) : (
-                        <div className="map-content">
-                            <p>Preencha o <Link to="/profile" className="question-info-link">seu perfil</Link> com data, horário e local de nascimento para saber a previsão diária para seu signo.</p>
+                        <div className="prediction-map-content">
+                            <p>Preencha o <Link to="/profile" className="prediction-info-link">seu perfil</Link> com data, horário e local de nascimento para saber a previsão diária para seu signo.</p>
                         </div>
                     )}
                 </div>
