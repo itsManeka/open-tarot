@@ -127,36 +127,36 @@ export default function Tarot() {
             <h2 className="tarot-titulo">Leitura</h2>
 
             {/* Pergunta */}
-            <div className="question-box">
-                <p className="question-text">{question || "Sem pergunta definida"}</p>
+            <div className="tarot-question-box">
+                <p className="tarot-question-text">{question || "Sem pergunta definida"}</p>
             </div>
 
             {/* Cartas */}
-            <div className="table-box">
-                <div className="cards-container">
+            <div className="tarot-table-box">
+                <div className="tarot-cards-container">
                     {selectedCards.map((card, index) => {
                         const revealed = revealedCards[index];
                         const isFlipped = index < currentIndex;
                         const imgSrc = revealed ? card.image : "/assets/tarot/back.jpg";
                         return (
-                            <div key={index} className={`card-container ${isFlipped ? "flipped" : ""}`}>
-                                <div className="card">
-                                    <div className="card-front">
+                            <div key={index} className={`tarot-card-container ${isFlipped ? "flipped" : ""}`}>
+                                <div className="tarot-card">
+                                    <div className="tarot-card-front">
                                         <img
                                             src={imgSrc}
                                             alt={revealed ? card.name : "Carta virada"}
-                                            className="card-image"
+                                            className="tarot-card-image"
                                         />
                                     </div>
-                                    <div className="card-back">
+                                    <div className="tarot-card-back">
                                         <img
                                             src="/assets/tarot/back.jpg"
                                             alt="Carta virada"
-                                            className="card-image"
+                                            className="tarot-card-image"
                                         />
                                     </div>
                                 </div>
-                                <p className="card-name">
+                                <p className="tarot-card-name">
                                     {revealed ? card.name : "Carta não revelada"}
                                 </p>
                             </div>
@@ -166,15 +166,15 @@ export default function Tarot() {
             </div>
 
             {/* Interpretações */}
-            <div className="interpretations-container">
+            <div className="tarot-interpretations-container">
                 {revealedCards.map((c, i) => (
-                    <div key={i} className="interpretation-box">
+                    <div key={i} className="tarot-interpretation-box">
                         <strong>Carta {i + 1}: {c.card.name}</strong>
                         <p>{c.interpretation}</p>
                     </div>
                 ))}
                 {isFinalized && (
-                    <div className="interpretation-box">
+                    <div className="tarot-interpretation-box">
                         <strong>Conclusão:</strong>
                         <p>{conclusion}</p>
                     </div>
@@ -183,11 +183,11 @@ export default function Tarot() {
 
             {/* Botão para revelar próxima carta */}
             {!isFinalized && (
-                <div className="button-container" ref={scrollRef}>
+                <div className="tarot-button-container" ref={scrollRef}>
                     <button
                         onClick={currentIndex > 2 ? readConclusion : handleReveal}
                         disabled={isLoading}
-                        className="reveal-button"
+                        className="tarot-reveal-button"
                     >
                         {isLoading ? "Interpretando..." : currentIndex > 2 ? "Conclusão" : "Revelar próxima carta"}
                     </button>
@@ -196,17 +196,17 @@ export default function Tarot() {
 
             {/* Botão para salvar no histórico */}
             {isFinalized && !isSaved && (
-                <div className="button-container" ref={scrollRef}>
+                <div className="tarot-button-container" ref={scrollRef}>
                     <button
                         onClick={saveReading}
                         disabled={isLoading}
-                        className="reveal-button"
+                        className="tarot-reveal-button"
                     >
                         {isLoading ? "Salvando..." : "Salvar no histórico"}
                     </button>
                     <button
                         onClick={newReading}
-                        className="reveal-button"
+                        className="tarot-reveal-button"
                     >
                         Nova Leitura
                     </button>
@@ -214,22 +214,22 @@ export default function Tarot() {
             )}
 
             {isSaved && (
-                <div className="question-box">
+                <div className="tarot-question-box">
                     Tiragem salva com sucesso!
                 </div>
             )}
 
             {isSaved && (
-                <div className="button-container" ref={scrollRef}>
+                <div className="tarot-button-container" ref={scrollRef}>
                     <button
                         onClick={history}
-                        className="reveal-button"
+                        className="tarot-reveal-button"
                     >
                         Ir para histórico
                     </button>
                     <button
                         onClick={newReading}
-                        className="reveal-button"
+                        className="tarot-reveal-button"
                     >
                         Nova leitura
                     </button>

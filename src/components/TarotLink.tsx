@@ -26,7 +26,7 @@ export default function TarotLink() {
                             className="tarotlink-button"
                             onClick={consultar}
                         >
-                            Faça sua tiragem
+                            Comece sua tiragem
                         </button>
                     </div>
                 </div>

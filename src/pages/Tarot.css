@@ -7,7 +7,7 @@
     min-height: 100vh;
     padding: 5rem;
     background-color: #121212;
-    color: #e0e0e0; 
+    color: #e0e0e0;
     text-align: center;
     width: 100%;
     box-sizing: border-box;
@@ -20,8 +20,9 @@
 }
 
 /* Caixa da pergunta */
-.question-box {
-    background-color: #1e1e1e; /* Fundo escuro */
+.tarot-question-box {
+    background-color: #1e1e1e;
+    /* Fundo escuro */
     padding: 15px 20px;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -29,23 +30,25 @@
     width: 100%;
 }
 
-.question-text {
+.tarot-question-text {
     font-size: 1.5rem;
     font-style: italic;
-    color: #e0e0e0; /* Verde claro */
+    color: #e0e0e0;
+    /* Verde claro */
 }
 
 /* Caixa da mesa */
-.table-box {
-    background-color: #2c2c2c; /* Fundo que simula madeira escura */
+.tarot-table-box {
+    background-color: #2c2c2c;
+    /* Fundo que simula madeira escura */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     width: 100%;
 }
 
-.cards-container {
+.tarot-cards-container {
     display: flex;
     justify-content: center;
     gap: 50px;
@@ -53,7 +56,7 @@
 }
 
 /* Estilo das cartas */
-.card-container {
+.tarot-card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,20 +66,40 @@
     margin: 0;
 }
 
-.card {
+.tarot-card-container:nth-child(1n).flipped {
+    animation: pulse 0.6s ease-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.tarot-card {
     width: 150px;
     height: 271px;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.6s;
+    border-radius: 12px;
 }
 
-.card-container.flipped .card {
+.tarot-card-container.flipped .tarot-card {
+    box-shadow: 0 0 15px rgba(187, 134, 252, 0.5);
     transform: rotateY(180deg);
 }
 
-.card-front,
-.card-back {
+.tarot-card-front,
+.tarot-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -85,29 +108,31 @@
     overflow: hidden;
 }
 
-.card-image {
+.tarot-card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
 }
 
-.card-front {
+.tarot-card-front {
     transform: rotateY(180deg);
 }
 
-.card-back {
-    background-color: #1e1e1e; /* Fundo escuro */
+.tarot-card-back {
+    background-color: #1e1e1e;
+    /* Fundo escuro */
 }
 
-.card-name {
+.tarot-card-name {
     margin-top: 10px;
     font-size: 0.9rem;
     color: #e0e0e0;
-    min-height: 20px; /* Garante espaço mesmo quando não revelada */
+    min-height: 20px;
+    /* Garante espaço mesmo quando não revelada */
 }
 
-.button-container {
+.tarot-button-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -116,29 +141,36 @@
 }
 
 /* Botão para revelar próxima carta */
-.reveal-button {
+.tarot-reveal-button {
     background-color: #bb86fc;
-    color: #121212; /* Texto escuro */
+    color: #121212;
+    /* Texto escuro */
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s ease;
     min-width: 200px;
 }
 
-.reveal-button:hover {
-    background-color: #9a67ea; /* Roxo mais escuro */
+.tarot-reveal-button:hover {
+    background-color: #9a67ea;
+    /* Roxo mais escuro */
 }
 
-.reveal-button:disabled {
-    background-color: #5e35b1;
+.tarot-reveal-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.tarot-reveal-button:disabled {
+    background-color: #3a2c6e;
+    color: #888;
     cursor: not-allowed;
 }
 
 /* Caixa de interpretações */
-.interpretations-container {
+.tarot-interpretations-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -146,9 +178,12 @@
     width: 100%;
 }
 
-.interpretation-box {
-    background-color: #1e1e1e; /* Fundo escuro */
+.tarot-interpretation-box {
+    background-color: #1e1e1e;
+    /* Fundo escuro */
     padding: 15px 20px;
+    padding-left: 16px;
+    border-left: 4px solid #bb86fc;
     border-radius: 8px;
     margin-bottom: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
@@ -163,35 +198,35 @@
         padding: 2rem;
     }
 
-    .cards-container {
+    .tarot-cards-container {
         flex-direction: row;
         gap: 10px;
     }
 
-    .card {
+    .tarot-card {
         width: 70px;
         height: 126px;
         border-radius: 6px;
     }
 
-    .card-front,
-    .card-back {
+    .tarot-card-front,
+    .tarot-card-back {
         border-radius: 6px;
     }
 
-    .card-container {
+    .tarot-card-container {
         width: 80px;
     }
 
-    .card-name {
+    .tarot-card-name {
         font-size: 0.7rem !important;
     }
-    
-    .button-container {
+
+    .tarot-button-container {
         gap: 10px;
     }
 
-    .reveal-button {
+    .tarot-reveal-button {
         font-size: 0.8rem;
         min-width: 160px;
         padding: 8px 18px;

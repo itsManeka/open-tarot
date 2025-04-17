@@ -22,22 +22,25 @@
     color: #e0e0e0;
     width: 100%;
     box-sizing: border-box;
+    max-width: 500px;
 }
 
 .tarotlink-box {
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 40px;
 }
 
 .tarotlink-image {
-    width: 280px;
-    height: 280px;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
 }
 
 /* Botão */
 .tarotlink-button {
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: #bb86fc; /* Roxo claro */
     color: #121212; /* Texto escuro */
     padding: 10px 20px;
@@ -50,12 +53,17 @@
 }
 
 .tarotlink-button:hover {
-    background-color: #9a67ea; /* Roxo mais escuro */
+    background-color: #9a67ea;
 }
 
 .tarotlink-button:disabled {
     background-color: #5e35b1;
     cursor: not-allowed;
+}
+
+.tarotlink-button:focus {
+    outline: 2px solid #bb86fc;
+    outline-offset: 2px;
 }
 
 /* Responsividade */
