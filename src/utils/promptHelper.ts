@@ -1,5 +1,7 @@
+import { getBrazilDate } from "./dateHelper";
+
 export const PromptHelper = {
-    generateTarotPrompt: (question: string, revealedCards: { name: string; interpretation: string }[], currentCardName: string, isFinalCard : boolean) => {
+    generateTarotPrompt: (question: string, revealedCards: { name: string; interpretation: string }[], currentCardName: string, isFinalCard: boolean) => {
         const previousContext = revealedCards
             .map((c, i) => `Carta ${i + 1}: ${c.name} - ${c.interpretation}`)
             .join("\n");
@@ -18,8 +20,8 @@ export const PromptHelper = {
         ${previousContext || "(Nenhuma carta revelada ainda)"}
 
         ${isFinalCard
-        ? `As três cartas foram reveladas. Agora, ofereça uma interpretação completa da tiragem, conectando o passado, o presente e o futuro. Finalize com uma conclusão clara e significativa sobre o que essa leitura representa para a pergunta feita.`
-        : `Agora, revele e interprete a próxima carta: ${currentCardName}
+                ? `As três cartas foram reveladas. Agora, ofereça uma interpretação completa da tiragem, conectando o passado, o presente e o futuro. Finalize com uma conclusão clara e significativa sobre o que essa leitura representa para a pergunta feita.`
+                : `Agora, revele e interprete a próxima carta: ${currentCardName}
 
         Relacione o significado da carta com a pergunta feita e com o que já foi revelado anteriormente.`}
 
@@ -33,19 +35,27 @@ export const PromptHelper = {
     },
 
     generateSignPredictionPrompt: (sign: string) => {
-        const data = new Date();
-        const formatado = new Intl.DateTimeFormat('pt-BR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        }).format(data);
-        
+        const data = getBrazilDate();
+        const diasDaSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+        const hoje = new Date();
+        const diaSemana = diasDaSemana[hoje.getDay()];
+
+        const coresDoDia = ['azul', 'verde', 'vermelho', 'dourado', 'roxo', 'prata', 'laranja'];
+        const cor = coresDoDia[Math.floor(Math.random() * coresDoDia.length)];
+
         return `
         Você é um astrólogo experiente, com profundo conhecimento em astrologia tradicional e moderna.
-        Escreva uma previsão breve e inspiradora para o signo de ${sign}, referente ao dia ${formatado}.
-        Use uma linguagem acolhedora e sábia, como se estivesse falando diretamente com uma pessoa desse signo.
-        Mantenha um tom místico, porém leve e acessível.
-        Destaque a energia do momento e ofereça um conselho útil.
-        Limite a previsão a no máximo 3 frases curtas.`;
+        Hoje é ${diaSemana}, dia ${data}, e você está preparando a previsão diária para o signo de ${sign}, considerando o fuso horário de Brasília (UTC-3).
+        Crie uma previsão breve e inspiradora, com no máximo 3 frases curtas. Evite repetir estruturas de dias anteriores.
+        
+        Use um tom acolhedor, místico e sábio. Destaque a energia do momento, traga uma reflexão, e inclua um conselho prático.
+        
+        Inspire-se neste estilo de frases:
+        - "A Lua em Câncer suaviza os desafios do dia com ternura."
+        - "Marte em trígono com Vênus convida à harmonia nos relacionamentos."
+        - "O dia traz oportunidades disfarçadas para quem escuta a intuição."
+
+        Sugira uma cor que pode favorecer esse signo hoje: "${cor}".
+        `;
     },
 };

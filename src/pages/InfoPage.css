@@ -2,7 +2,7 @@
 .info-page {
     display: flex;
     flex-direction: column;
-    padding: 70px 30px 30px 30px;
+    padding: 0px 30px 30px 30px;
     gap: 20px;
     max-width: 800px;
     margin: 0 auto;
@@ -28,8 +28,13 @@
     margin-bottom: 5px;
 }
 
+.info-page-cover {
+    width: 100%;
+    max-width: 100vw;
+}
+
 /* Tags */
-.tags {
+.info-page-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -37,7 +42,7 @@
     margin-bottom: 10px;
 }
 
-.tag {
+.info-page-tag {
     background-color: #333;
     color: #bb86fc;
     padding: 4px 10px;
@@ -46,7 +51,7 @@
 }
 
 /* Meta (autor + data) */
-.meta {
+.info-page-meta {
     display: flex;
     gap: 12px;
     font-size: 0.9rem;
@@ -55,7 +60,7 @@
 }
 
 /* Seções */
-.info-page .section {
+.info-page .info-page-section {
     background-color: #1e1e1e;
     border-radius: 12px;
     padding: 20px;
@@ -63,45 +68,46 @@
 }
 
 /* Título das seções */
-.info-page .section h2 {
+.info-page .info-page-section h2 {
     font-size: 1.5rem;
     color: #bb86fc;
     margin-bottom: 10px;
 }
 
 /* Parágrafos */
-.info-page .section p {
+.info-page .info-page-section p {
     font-size: 1rem;
     line-height: 1.6;
     margin-bottom: 10px;
+    color: #ddd;
 }
 
 /* Links */
-.info-page .section a {
+.info-page .info-page-section a {
     color: #bb86fc;
     text-decoration: underline;
 }
 
 /* Rodapé */
-.footer {
+.info-page-footer {
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid #333;
 }
 
-.footer p {
+.info-page-footer p {
     margin-bottom: 10px;
     color: #ccc;
 }
 
 /* Ícones sociais */
-.social-links {
+.info-page-social-links {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
 }
 
-.social-links a {
+.info-page-social-links a {
     font-size: 0.9rem;
     background-color: #2a2a2a;
     padding: 6px 12px;
@@ -111,8 +117,13 @@
     transition: background 0.3s;
 }
 
-.social-links a:hover {
+.info-page-social-links a:hover {
     background-color: #3c3c3c;
+}
+
+.info-page-social-links a:focus  {
+    outline: 2px solid #bb86fc;
+    outline-offset: 2px;
 }
 
 /* Responsividade */
@@ -126,7 +137,7 @@
         font-size: 2rem;
     }
 
-    .info-page .section h2 {
+    .info-page .info-page-section h2 {
         font-size: 1.25rem;
     }
 }

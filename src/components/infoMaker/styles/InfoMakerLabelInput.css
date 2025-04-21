@@ -1,0 +1,51 @@
+.info-maker-label-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-maker-label-form label {
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 1rem;
+    color: #e0e0e0;
+}
+
+.info-maker-label-input {
+    padding: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    border: 1px solid #bb86fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.info-maker-label-input:disabled {
+    background-color: #2c2c2c;
+    color: #757575;
+}
+
+.info-maker-label-input:focus {
+    border-color: #03dac6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
+}
+
+.info-maker-label.error {
+    color: #ff6b6b;
+}
+
+.info-maker-label.alert {
+    color: rgb(236, 124, 76);
+}
+
+.info-maker-label.success {
+    color: #03dac6;
+}

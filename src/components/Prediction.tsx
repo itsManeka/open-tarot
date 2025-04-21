@@ -7,6 +7,7 @@ import { StringHelper } from '../utils/stringHelper';
 import { sendMessageToAI } from "../services/aiEngine";
 import { PromptHelper } from "../utils/promptHelper";
 import './Prediction.css';
+import { getBrazilDate } from '../utils/dateHelper';
 
 export default function Prediction() {
     const [user] = useAuthState(auth);
@@ -23,8 +24,7 @@ export default function Prediction() {
 
                 if (!user || !isMounted) return;
 
-                const hoje = new Date();
-                const dataFormatada = hoje.toISOString().split('T')[0];
+                const hoje = getBrazilDate();
                 
                 const mapaRef = doc(db, 'mapas_astro', user.uid);
                 const mapaSnap = await getDoc(mapaRef);
@@ -33,7 +33,7 @@ export default function Prediction() {
                     setMapaAstral(mapaSnap.data());
                     const signo = mapaSnap.data().signos.solar;
 
-                    const predictRef = doc(db, 'daily_predictions', `${signo}_${dataFormatada}`);
+                    const predictRef = doc(db, 'daily_predictions', `${signo}_${hoje}`);
                     const predictSnap = await getDoc(predictRef);
 
                     if (predictSnap.exists()) {
@@ -45,7 +45,7 @@ export default function Prediction() {
                         await setDoc(predictRef, {
                             prediction: novaPredicao,
                             signo: signo,
-                            data: dataFormatada
+                            data: hoje
                         });
                         setPrediction(novaPredicao);
                     }

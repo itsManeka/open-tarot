@@ -2,7 +2,8 @@ import { useState } from "react";
 import "./ImageUploader.css";
 
 export default function ImageUploader({imageLoaded}: {imageLoaded: (imageUrl: string) => void}) {
-    const [resultUrl, setResultUrl] = useState("");
+    const [status, setStatus] = useState("");
+    const [result, setResult] = useState("");
     const [file, setFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [choice, setChoice] = useState("select");
@@ -32,31 +33,33 @@ export default function ImageUploader({imageLoaded}: {imageLoaded: (imageUrl: st
             });
 
             const data = await res.json();
-            setResultUrl(data.secure_url);
+            setResult(data.secure_url);
             imageLoaded(data.secure_url);
+            setStatus("success");
         } catch (error) {
-            console.error("Error uploading image:", error);
+            setResult(`Erro ao carregar imagem: ${error}`);
+            setStatus("error");
         }
         setLoading(false);
     };
 
     return (
-        <div>
-            <select
-                className="imageuploader-input"
-                value={choice}
-                onChange={(e) => setChoice(e.target.value)}
-            >
-                <option value="select">Upload de Arquivo</option>
-                <option value="url">Upload de URL</option>
-            </select>
-            <div className="imageuploader-container">
+        <div className="image-uploader-container">
+            <div className="image-uploader-container-label">
+                <select
+                    className="image-uploader-input"
+                    value={choice}
+                    onChange={(e) => setChoice(e.target.value)}
+                >
+                    <option value="select">Upload de Arquivo</option>
+                    <option value="url">Upload de URL</option>
+                </select>
                 {choice == "select" && (
                     <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => onFileChange(e.target.files?.[0] || null)}
-                        className="imageuploader-input"
+                        className="image-uploader-input"
                     />
                 )}
                 {choice == "url" && (
@@ -64,20 +67,18 @@ export default function ImageUploader({imageLoaded}: {imageLoaded: (imageUrl: st
                         value={url}
                         placeholder="Cole a URL da imagem..."
                         onChange={(e) => setUrl(e.target.value)}
-                        className="imageuploader-input"
+                        className="image-uploader-input"
                     />
                 )}
                 <button
                     onClick={handleUpload}
                     disabled={(!file && choice == "select") || (!url && choice == "url") || loading}    
-                    className="imageuploader-button"
+                    className="image-uploader-button"
                 >
                     {loading ? "Enviando..." : "Upload"}
                 </button>
             </div>
-            <div className="imageuploader-container">
-                {resultUrl && (<p>Imagem carregada em: {resultUrl}</p>)}
-            </div>
+            {result && <small className={`image-uploader-result ${status}`}>Imagem carregada em: {result}</small>}
         </div>
     );
 };

@@ -5,12 +5,15 @@ import ImageUploader from "../components/ImageUploader";
 import { ImageOption, SocialLink, Footer, Section, PageContent } from "../types/types";
 import { StringHelper } from "../utils/stringHelper";
 import './InfoMaker.css';
-import InfoSectionManager from "../components/InfoSectionManager";
-import InfoFooterEditor from "../components/InfoFooterEditor"
+import InfoSectionManager from "../components/infoMaker/InfoSectionManager";
+import InfoFooterEditor from "../components/infoMaker/InfoFooterEditor"
+import InfoMakerLabelInput from "../components/infoMaker/InfoMakerLabelInput";
+import InfoMakerTag from "../components/infoMaker/InfoMakerTag";
+import { formatDateForDisplay } from "../utils/dateHelper";
 
 export default function InfoMaker() {
     const [imageOptions, setImageOptions] = useState<ImageOption[]>([]);
-    const [imageChoice, setImageChoice] = useState("existing"); // existing | new | url
+    const [imageChoice, setImageChoice] = useState("existing");
     const [urlImage, setUrlImage] = useState("");
 
     const onChangeImageChoice = (choice: string) => {
@@ -40,7 +43,6 @@ export default function InfoMaker() {
     const [authorName, setAuthorName] = useState("");
 
     const [tags, setTags] = useState<string[]>([]);
-    const [newTag, setNewTag] = useState("");
 
     const [newSocial, setNewSocial] = useState<SocialLink>({
         type: "site",
@@ -59,6 +61,8 @@ export default function InfoMaker() {
     }, []);
 
     const fetchPages = async () => {
+        setCreatedAt(new Date().toISOString());
+
         const snapshot = await getDocs(collection(db, "pages"));
         const docs = snapshot.docs.map(doc => ({
             id: doc.id,
@@ -164,6 +168,7 @@ export default function InfoMaker() {
             setNewSectionHeading("");
             setNewSectionBody("");
             setFooter({ description: "", socialLinks: [] });
+            setCreatedAt(new Date().toISOString())
         } else {
             const selectedDoc = await getDoc(doc(db, "pages", value));
             if (selectedDoc.exists()) {
@@ -202,51 +207,37 @@ export default function InfoMaker() {
             </label>
 
             {isNewPage && (
-                <label>
-                    ID do documento:
-                    <input
-                        type="text"
-                        value={customId}
-                        onChange={async (e) => {
-                            const raw = e.target.value;
-                            const cleaned = StringHelper.sanitizeId(raw);
-                            setCustomId(cleaned);
-                            setIdTouched(true);
+                <InfoMakerLabelInput
+                    label="ID do documento:"
+                    value={customId}
+                    onChange={async (e) => {
+                                const raw = e.target.value;
+                                const cleaned = StringHelper.sanitizeId(raw);
+                                setCustomId(cleaned);
+                                setIdTouched(true);
 
-                            if (cleaned) {
-                                const docRef = doc(db, "pages", cleaned);
-                                const snapshot = await getDoc(docRef);
-                                setCustomIdExists(snapshot.exists());
-                            } else {
-                                setCustomIdExists(false);
-                            }
-                        }}
-                        className="infomaker-input"
-                        placeholder="ex: como-funciona"
-                    />
-                    {idTouched && (
-                        <small style={{ color: !StringHelper.isValidId(customId) ? "red" : customIdExists ? "orange" : "green" }}>
-                            {!StringHelper.isValidId(customId)
-                                ? "ID inválido (use apenas letras minúsculas, números e hífens)"
-                                : customIdExists
-                                    ? "Este ID já existe. Escolha outro."
-                                    : "ID válido e disponível"}
-                        </small>
-                    )}
-                </label>
+                                if (cleaned) {
+                                    const docRef = doc(db, "pages", cleaned);
+                                    const snapshot = await getDoc(docRef);
+                                    setCustomIdExists(snapshot.exists());
+                                } else {
+                                    setCustomIdExists(false);
+                                }
+                    }}
+                    placeholder="ex: como-funciona"
+                    validation={!StringHelper.isValidId(customId) ? "error" : customIdExists ? "alert" : "success" }
+                    message={idTouched
+                                ? !StringHelper.isValidId(customId)
+                                    ? "ID inválido (use apenas letras minúsculas, números e hífens)"
+                                    : customIdExists
+                                        ? "Este ID já existe. Escolha outro."
+                                        : "ID válido e disponível"
+                                : null}
+                />
             )}
 
-            {!isNewPage && pageId && (
-                <p style={{ fontSize: "0.9em", color: "#888" }}>
-                    ID: {pageId}
-                </p>
-            )}
-
-            {createdAt && (
-                <p style={{ fontSize: "0.9em", color: "#888" }}>
-                    Criado em: {new Date(createdAt).toLocaleString()}
-                </p>
-            )}
+            {pageId && (<p>ID: {pageId}</p>)}
+            {createdAt && (<p>Criado em: {formatDateForDisplay(createdAt)}</p>)}
 
             {urlImage && <img src={urlImage} alt={title} />}
 
@@ -268,7 +259,7 @@ export default function InfoMaker() {
                     <ImageUploader imageLoaded={imageLoaded} />
                 )}
             </label>
-
+            
             <label>
                 Visibilidade:
                 <select
@@ -282,27 +273,9 @@ export default function InfoMaker() {
                     <option value="institutional">Institucional</option>
                 </select>
             </label>
-
-            <label>
-                Título:
-                <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="infomaker-input"
-                />
-            </label>
-
-            <label>
-                Nome do autor (opcional):
-                <input
-                    type="text"
-                    value={authorName}
-                    onChange={(e) => setAuthorName(e.target.value)}
-                    className="infomaker-input"
-                    placeholder="Ex: Maria Taróloga"
-                />
-            </label>
+            
+            <InfoMakerLabelInput label="Título:" value={title} placeholder="Ex: A história do Tarot" onChange={async (e) => setTitle(e.target.value)} />
+            <InfoMakerLabelInput label="Nome do autor (opcional):" value={authorName} placeholder="Ex: Márcia Sensitiva" onChange={async (e) => setAuthorName(e.target.value)} />
 
             <InfoSectionManager
                 sections={sections}
@@ -316,32 +289,9 @@ export default function InfoMaker() {
                 onChangeSection={setSections}
             />
 
-            <label>
-                Tags:
-            </label>
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
-                {tags.map((tag, idx) => (
-                    <span key={idx} className="infomaker-tag">
-                        {tag}
-                        <button onClick={() => setTags(tags.filter((_, i) => i !== idx))}>×</button>
-                    </span>
-                ))}
-            </div>
-            <input
-                type="text"
-                value={newTag}
-                onChange={(e) => setNewTag(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" && newTag.trim()) {
-                        e.preventDefault();
-                        if (!tags.includes(newTag.trim())) {
-                            setTags([...tags, newTag.trim()]);
-                        }
-                        setNewTag("");
-                    }
-                }}
-                className="infomaker-input"
-                placeholder="Pressione Enter para adicionar"
+            <InfoMakerTag
+                tags={tags}
+                setTags={setTags}
             />
 
             <InfoFooterEditor

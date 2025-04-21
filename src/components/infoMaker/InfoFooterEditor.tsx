@@ -1,7 +1,7 @@
-import { SOCIAL_BASES } from "../types/enums";
-import { SocialLink, Footer } from "../types/types";
-import { StringHelper } from "../utils/stringHelper";
-import './InfoFooterEditor.css'
+import { SOCIAL_BASES } from "../../types/enums";
+import { SocialLink, Footer } from "../../types/types";
+import { StringHelper } from "../../utils/stringHelper";
+import './styles/InfoFooterEditor.css'
 
 interface InfoFooterEditorProps {
     footer: Footer
@@ -39,6 +39,7 @@ export default function InfoFooterEditor({ footer, social, setFooter, setSocial 
                             </a>
                         </span>
                         <button
+                            className="infofootereditor-remove-button"
                             type="button"
                             onClick={() => {
                                 const updated = footer.socialLinks.filter((_, i) => i !== idx);
@@ -82,6 +83,7 @@ export default function InfoFooterEditor({ footer, social, setFooter, setSocial 
 
                 <button
                     type="button"
+                    className="infofootereditor-button"
                     onClick={() => {
                         if (social.url.trim() && StringHelper.isValidUrl(social.url)) {
                             setFooter({

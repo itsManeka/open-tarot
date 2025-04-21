@@ -1,34 +1,28 @@
-/* Página genérica de informações */
 .infomaker-page {
     display: flex;
     flex-direction: column;
-    padding: 90px 30px 30px 30px;
-    gap: 5px;
+    gap: 8px;
+    padding: 30px;
     max-width: 800px;
     margin: 0 auto;
     color: #e0e0e0;
-}
-
-/* Imagem Header*/
-.infomaker-page img {
-    display: block;
-    margin: 0;
-    padding: 0;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0px;
-    max-height: 200px;
-    max-width: none;
-    width: 100vw;
-    object-fit: cover;
     box-sizing: border-box;
 }
 
-.infomaker-page label {
-    margin-top: 5px;
-    font-weight: bold;
+.infomaker-page p {
+    margin: 2px 0;
+    color:#777
+}
+
+.infomaker-page img {
     display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: 0;
 }
 
 /* Título principal */
@@ -38,38 +32,50 @@
     margin-bottom: 10px;
 }
 
-.infomaker-input {
-    margin-top: 10px;
-    padding: 10px;
+/* Labels */
+.infomaker-page label {
+    margin-top: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+/* Inputs e Textareas - estilo unificado */
+.infomaker-input,
+.infomaker-textarea {
+    width: 100%;
+    padding: 12px;
     font-size: 1rem;
     font-family: inherit;
-    color: #e0e0e0;
-    background-color: #1e1e1e;
+    background: #1c1c1c;
+    color: #f0f0f0;
     border: 1px solid #bb86fc;
     border-radius: 8px;
-    width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    margin-top: 6px;
+    margin-bottom: 16px;
     box-sizing: border-box;
 }
 
-/* Caixa de texto */
+/* Textarea específico */
 .infomaker-textarea {
-    padding: 15px;
-    font-size: 1rem;
-    font-family: inherit;
-    color: #e0e0e0; /* Texto claro */
-    background-color: #1e1e1e; /* Fundo escuro */
-    border: 1px solid #bb86fc; /* Borda roxa */
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
-    margin-top: 20px;
-    resize: none;
-    width: 100%;
-    min-height: 30vh;
-    box-sizing: border-box;
+    min-height: 250px;
+    resize: vertical;
 }
 
+.infomaker-textarea:disabled,
+.infomaker-input:disabled {
+    background-color: #2c2c2c;
+    color: #757575;
+}
+
+.infomaker-textarea:focus,
+.infomaker-input:focus {
+    border-color: #03dac6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
+}
+
+/* Botões padrão */
 .infomaker-button {
     padding: 12px 20px;
     background-color: #bb86fc;
@@ -88,47 +94,11 @@
     transform: scale(1.02);
 }
 
-.infomaker-input,
-.infomaker-textarea {
-    width: 100%;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #888;
-    background: #1c1c1c;
-    color: #f0f0f0;
-    margin-top: 4px;
-    margin-bottom: 12px;
-}
-
-.infomaker-textarea {
-    min-height: 250px;
-    resize: vertical;
-}
-
 .infomaker-social-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background: #292929;
     padding: 6px 10px;
     border-radius: 6px;
-    align-items: center;
-}
-
-.infomaker-tag {
-    background: #bb86fc;
-    color: #121212;
-    padding: 5px 10px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.infomaker-tag button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    color: #121212;
 }

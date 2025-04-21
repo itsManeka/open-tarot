@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { auth, db } from '../services/firebase';
 import { PageContent } from '../types/types';
@@ -12,7 +12,7 @@ type PageWithId = PageContent & { id: string };
 export default function News() {
     const [user] = useAuthState(auth);
 
-    const visibilityFilter = user ? ["public", "members"] : ["public"];
+    const visibilityFilter = useMemo(() => (user ? ["public", "members"] : ["public"]), [user]);
 
     const [isLoading, setIsLoading] = useState(false);
     const [allPages, setAllPages] = useState<PageWithId[]>([]);
@@ -43,7 +43,7 @@ export default function News() {
         };
 
         fetchPages();
-    }, []);
+    }, [visibilityFilter]);
 
     const filteredPages = selectedTag
         ? allPages.filter(p => p.tags?.includes(selectedTag))
@@ -51,33 +51,38 @@ export default function News() {
 
     const visiblePages = filteredPages.slice(0, visibleCount);
 
-    const handleTagClick = (tag: string) => {
+    const handleTagClick = (tag: string | null) => {
         if (tag === selectedTag) {
-            setSelectedTag(null); // desfaz o filtro
+            setSelectedTag(null);
         } else {
             setSelectedTag(tag);
-            setVisibleCount(6); // resetar visibilidade
+            setVisibleCount(6);
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     if (isLoading) return <Loading />;
 
+    {!visiblePages.length && (
+        <p className="news-no-content-message">Nenhuma publicação encontrada.</p>
+    )}
+
     return (
         <div className="news-container">
             <h1 className="news-title">Publicações</h1>
 
-            <div className="tag-filter">
+            <div className="news-tag-filter">
                 <button
-                    className={!selectedTag ? 'tag active' : 'tag'}
-                    onClick={() => handleTagClick('')}
+                    className={!selectedTag ? 'news-tag active' : 'news-tag'}
+                    onClick={() => handleTagClick(null)}
                 >
                     Todas
                 </button>
                 {tags.map(tag => (
                     <button
                         key={tag}
-                        className={selectedTag === tag ? 'tag active' : 'tag'}
+                        aria-pressed={selectedTag === tag}
+                        className={selectedTag === tag ? 'news-tag active' : 'news-tag'}
                         onClick={() => handleTagClick(tag)}
                     >
                         {tag}
@@ -92,7 +97,7 @@ export default function News() {
             </div>
 
             {visibleCount < filteredPages.length && (
-                <div className="load-more">
+                <div className="news-load-more">
                     <button onClick={() => setVisibleCount(v => v + 6)}>Carregar mais</button>
                 </div>
             )}

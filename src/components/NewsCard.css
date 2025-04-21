@@ -1,4 +1,4 @@
-.page-card {
+.newscard-page-card {
     background-color: #1e1e1e;
     border-radius: 12px;
     overflow: hidden;
@@ -8,43 +8,54 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.page-card:hover {
+.newscard-page-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6);
 }
 
-.page-img {
+.newscard-page-img {
     height: 180px;
     background-size: cover;
     background-position: center;
+    aspect-ratio: 16/9;
 }
 
-.page-content {
+.newscard-page-content {
     padding: 20px;
     display: flex;
     flex-direction: column;
     height: 100%;
 }
 
-.page-content h2 {
+.newscard-page-content h2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     font-size: 1.4rem;
     margin-bottom: 10px;
     color: #ffffff;
+    line-clamp: 1;
 }
 
-.page-snippet {
+.newscard-page-snippet {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     font-size: 0.95rem;
     color: #cccccc;
     margin-bottom: 10px;
+    line-clamp: 3;
 }
 
-.page-date {
+.newscard-page-date {
     font-size: 0.8rem;
     color: #999;
     margin-bottom: 15px;
 }
 
-.page-button {
+.newscard-page-button {
     background-color: #bb86fc;
     color: #121212;
     border: none;
@@ -56,6 +67,11 @@
     align-self: flex-start;
 }
 
-.page-button:hover {
+.newscard-page-button:hover {
     background-color: #a75efc;
+}
+
+.newscard-page-button:focus {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
 }

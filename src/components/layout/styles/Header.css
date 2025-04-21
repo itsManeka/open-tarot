@@ -1,0 +1,85 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2b2b2b;
+    padding: 0.5rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1500;
+}
+
+.app-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.app-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.app-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #e0e0e0;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.layout-home,
+.user-name {
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #e0e0e0;
+    transition: color 0.2s;
+}
+
+.app-title:hover,
+.layout-home:hover,
+.user-name:hover {
+    color: #d0aaff;
+}
+
+.layout-divisor {
+    font-size: 1rem;
+    color: #bb86fc;
+    font-weight: normal;
+}
+
+.hamburger-button {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #bb86fc;
+}
+
+.hamburger-button:hover {
+    transform: scale(1.2);
+}
+
+@media (max-width: 480px) {
+    .app-title {
+        font-size: 0.7rem;
+    }
+
+    .layout-divisor {
+        font-size: 0.6rem;
+    }
+
+    .layout-home,
+    .user-name {
+        font-size: 0.58rem;
+    }
+
+    .hamburger-button {
+        font-size: 1rem;
+    }
+}

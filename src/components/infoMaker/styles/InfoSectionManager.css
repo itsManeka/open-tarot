@@ -1,60 +1,76 @@
-.image-uploader-container {
+.info-section-manager-container {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     gap: 8px;
     width: 100%;
     box-sizing: border-box;
 }
 
-.image-uploader-container-label {
+.info-section-manager-container label {
     gap: 8px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
     text-align: left;
     font-size: 1rem;
     color: #e0e0e0;
-    width: 100%;
+}
+
+.info-section-manager-input {
+    font-family: inherit;
     box-sizing: border-box;
 }
 
-.image-uploader-input {
-    min-height: 40px;
+.info-section-manager-textarea {
     font-family: inherit;
+    resize: none;
+    min-height: 30vh;
+    box-sizing: border-box;
+}
+
+.info-section-manager-input,
+.info-section-manager-textarea {
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 1rem;    
+    width: 100%;
     padding: 8px;
     border-radius: 8px;
     border: 1px solid #bb86fc;
     background-color: #1e1e1e;
-    width: 100%;
     color: #e0e0e0;
     margin-top: 4px;
     margin-bottom: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
-    box-sizing: border-box;
 }
 
-.image-uploader-input:focus {
+.info-section-manager-input:focus,
+.info-section-manager-textarea:focus {
     border-color: #03dac6;
     outline: none;
     box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
 }
 
-.image-uploader-input:disabled {
+.info-section-manager-input:disabled,
+.info-section-manager-textarea:disabled {
     background-color: #2c2c2c;
     color: #757575;
 }
 
-.image-uploader-input::placeholder {
+.info-section-manager-input::placeholder,
+.info-section-manager-textarea::placeholder {
     color: #757575;
 }
 
-.image-uploader-button {
-    min-height: 40px;
+.info-section-manager-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-section-manager-button {
     margin-top: 4px;
     margin-bottom: 12px;
     background-color: #bb86fc;
@@ -67,24 +83,16 @@
     transition: background-color 0.3s;
 }
 
-.image-uploader-button:hover {
+.info-section-manager-button:hover {
     background-color: #9a67ea;
 }
 
-.image-uploader-button:hover:not(:disabled) {
+.info-section-manager-button:hover:not(:disabled) {
     transform: translateY(-2px);
 }
 
-.image-uploader-button:disabled {
+.info-section-manager-button:disabled {
     background-color: #5e35b1;
     transform: scale(1.03);
     cursor: not-allowed;
-}
-
-.image-uploader-result.error {
-    color: #ff6b6b;
-}
-
-.image-uploader-result.success {
-    color: #03dac6;
 }

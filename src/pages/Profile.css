@@ -1,6 +1,5 @@
 /* Contêiner principal */
 .profile-container {
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,7 +17,7 @@
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #bb86fc; /* Roxo claro */
+    color: #bb86fc;
 }
 
 /* Formulário */
@@ -30,7 +29,7 @@
     max-width: 400px;
 }
 
-label {
+.profile-form label {
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -42,17 +41,17 @@ label {
     padding: 10px;
     font-size: 1rem;
     font-family: inherit;
-    color: #e0e0e0; /* Texto claro */
-    background-color: #1e1e1e; /* Fundo escuro */
-    border: 1px solid #bb86fc; /* Borda roxa */
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    border: 1px solid #bb86fc;
     border-radius: 8px;
     width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 .profile-input:disabled {
-    background-color: #2c2c2c; /* Fundo mais escuro para inputs desabilitados */
-    color: #757575; /* Texto cinza claro */
+    background-color: #2c2c2c;
+    color: #757575;
 }
 
 /* Botões */
@@ -64,8 +63,10 @@ label {
 }
 
 .profile-button {
-    background-color: #bb86fc; /* Roxo claro */
-    color: #121212; /* Texto escuro */
+    background-color: #bb86fc;
+    /* Roxo claro */
+    color: #121212;
+    /* Texto escuro */
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
@@ -76,30 +77,43 @@ label {
 }
 
 .profile-button:hover {
-    background-color: #9a67ea; /* Roxo mais escuro */
+    background-color: #9a67ea;
+}
+
+.profile-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.profile-button:disabled {
+    background-color: #5e35b1;
+    transform: scale(1.03);
+    cursor: not-allowed;
 }
 
 /* Mensagem de sucesso */
 .profile-message {
     margin-top: 1rem;
     font-size: 1rem;
-    color: #03dac6; /* Verde claro */
+    color: #03dac6;
+    /* Verde claro */
 }
 
 /* Estilo para mensagens de erro */
-.error-message {
-    color: #ff6b6b; /* Vermelho claro */
+.profile-error-message {
+    color: #ff6b6b;
+    /* Vermelho claro */
     font-size: 0.9rem;
     margin-top: 5px;
 }
 
 /* Estilo para inputs com erro */
-.input-error {
-    border-color: #ff6b6b; /* Vermelho claro */
+.profile-input-error {
+    border-color: #ff6b6b;
+    /* Vermelho claro */
 }
 
 /* Contêiner de tags */
-.tags-container {
+.profile-tags-container {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -107,7 +121,7 @@ label {
 }
 
 /* Estilo das tags */
-.tag {
+.profile-tag {
     display: flex;
     align-items: center;
     background-color: #bb86fc;
@@ -117,8 +131,12 @@ label {
     padding-left: 0.8rem;
 }
 
+.profile-tag:hover {
+    background-color: #9a67ea;
+}
+
 /* Botão para remover tags */
-.remove-tag-button {
+.profile-remove-tag-button {
     background: none;
     border: none;
     color: #121212;
@@ -128,8 +146,12 @@ label {
     padding: 0.5rem;
 }
 
+.profile-remove-tag-button:hover {
+    color: #ff6b6b;
+}
+
 /* Campo de entrada para novas tags */
-.tag-input {
+.profile-tag-input {
     border: 1px solid #bb86fc;
     border-radius: 8px;
     padding: 0.5rem;
@@ -139,31 +161,37 @@ label {
     color: #e0e0e0;
 }
 
+.profile-input:focus,
+.profile-tag-input:focus {
+    border-color: #03dac6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
+}
+
 /* Contêiner dos signos */
-.mapa-astral-signos {
+.profile-mapa-astral-signos {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     margin-top: 0.5rem;
-    margin-left: 1rem;
     width: 100%;
 }
 
 /* Item individual do signo */
-.mapa-astral-item {
+.profile-mapa-astral-item {
     align-items: center;
     width: 100px;
 }
 
 /* Posição do signo (Sol, Lua, etc.) */
-.mapa-astral-posicao {
+.profile-mapa-astral-posicao {
     font-size: 0.9rem;
     color: #bb86fc;
 }
 
 /* Imagem do signo */
-.mapa-astral-image {
+.profile-mapa-astral-image {
     width: 50px;
     height: 50px;
     object-fit: contain;
@@ -171,7 +199,43 @@ label {
 }
 
 /* Nome do signo */
-.mapa-astral-nome {
+.profile-mapa-astral-nome {
     font-size: 0.9rem;
     color: #e0e0e0;
+}
+
+.profile-input,
+.profile-button,
+.profile-tag,
+.profile-remove-tag-button {
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+    .profile-mapa-astral-signos {
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        justify-content: center;
+    }
+    
+    .profile-mapa-astral-image {
+        width: 35px;
+        height: 35px;
+        object-fit: contain;
+        border-radius: 50%;
+    }
+
+    .profile-mapa-astral-item {
+        margin-bottom: 1rem;
+        width: 70px;
+    }
+
+    .profile-mapa-astral-nome {
+        font-size: 0.7rem;
+    }
+
+    .profile-mapa-astral-posicao {
+        font-size: 0.7rem;
+    }
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './CookieBanner.css';
+import './styles/CookieBanner.css';
 
 export function CookieBanner() {
     const [accepted, setAccepted] = useState(() => {

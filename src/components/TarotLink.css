@@ -56,6 +56,10 @@
     background-color: #9a67ea;
 }
 
+.tarotlink-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
 .tarotlink-button:disabled {
     background-color: #5e35b1;
     cursor: not-allowed;

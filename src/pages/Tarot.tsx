@@ -68,6 +68,7 @@ export default function Tarot() {
                     interpretation: c.interpretation,
                 })),
                 conclusion: conclusion,
+                question: question,
             });
             setIsSaved(true);
         } catch (error: any) {

@@ -12,7 +12,7 @@ export default function Home() {
                 <img src="/vite.svg" alt="Logo" className="home-site-logo" />
                 <h1 className="home-site-title">Open Tarot</h1>
                 <p className="home-site-description">
-                    O Open Tarot é um site onde você pode realizar tiragem e interpretação de Tarot utilizando a Inteligência da Artificial. Veja aqui como funciona: <Link to="/info/como-funciona">saiba mais</Link>.
+                    O Open Tarot é um site onde você pode realizar tiragem e interpretação de Tarot utilizando a Inteligência da Artificial. Veja como funciona: <Link to="/info/como-funciona">saiba mais</Link>.
                 </p>
             </div>
             <div className="home-cards-container">

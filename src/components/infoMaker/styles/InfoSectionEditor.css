@@ -1,0 +1,168 @@
+.info-section-editor-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 8px;
+    margin: 0;
+    color: #e0e0e0;
+    box-sizing: border-box;
+}
+
+.info-section-editor-container label {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 1rem;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.info-section-editor-container h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #bb86fc;
+}
+
+/* Estilos gerais para input e textarea */
+.info-section-editor-input,
+.info-section-editor-textarea {
+    padding: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    border: 1px solid #bb86fc;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Especificação para o textarea */
+.info-section-editor-textarea {
+    padding: 15px;
+    min-height: 30vh;
+    resize: vertical;
+}
+
+/* Placeholder nos inputs e textarea */
+.info-section-editor-input::placeholder,
+.info-section-editor-textarea::placeholder {
+    color: #757575; /* Cinza claro */
+}
+
+/* Estilos de foco para inputs e textareas */
+.info-section-editor-input:focus,
+.info-section-editor-textarea:focus {
+    outline: 2px solid #bb86fc;
+}
+
+/* Estilos de seção */
+.info-section-editor-section {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* Título das seções */
+.info-section-editor-section h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    color: #bb86fc;
+    margin-bottom: 10px;
+}
+
+/* Parágrafos dentro das seções */
+.info-section-editor-section p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Estilo de links dentro das seções */
+.info-section-editor-section a {
+    color: #bb86fc;
+    text-decoration: underline;
+}
+
+.info-section-editor-button {
+    background-color: #bb86fc;
+    color: #121212;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-right: 5px;
+}
+
+.info-section-editor-button button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.info-section-editor-button button:hover {
+    background-color: #a75efc;
+}
+
+.info-section-editor-button button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}
+
+.info-section-editor-remove-button {
+    background-color: #ff6b6b;
+    color: #121212;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-right: 5px;
+}
+
+.info-section-editor-remove-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.info-section-editor-remove-button:hover {
+    background-color: #ff4848;
+}
+
+.info-section-editor-remove-button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}
+
+.info-section-editor-section-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+/* Ajustes para responsividade */
+@media (max-width: 768px) {
+    .info-section-editor-input,
+    .info-section-editor-textarea {
+        padding: 8px;
+    }
+
+    .info-section-editor-section-actions {
+        flex-direction: column;
+    }
+
+    .info-section-editor-section-actions button {
+        margin-bottom: 5px;
+    }
+}

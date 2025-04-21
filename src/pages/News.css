@@ -5,7 +5,7 @@ html {
 .news-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 70px 20px;
+    padding: 20px 20px;
 }
 
 .news-title {
@@ -15,7 +15,7 @@ html {
     margin-bottom: 30px;
 }
 
-.tag-filter {
+.news-tag-filter {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -23,7 +23,7 @@ html {
     margin-bottom: 30px;
 }
 
-.tag {
+.news-tag {
     padding: 6px 14px;
     border-radius: 20px;
     border: 1px solid #bb86fc;
@@ -34,13 +34,19 @@ html {
     transition: all 0.2s ease;
 }
 
-.tag:hover {
-    background-color: #bb86fc33;
+.news-tag:hover {
+    background-color: #bb86fc22;
+    border-color: #d5b6ff; 
 }
 
-.tag.active {
+.news-tag.active {
     background-color: #bb86fc;
     color: #121212;
+}
+
+.news-tag:focus {
+    outline: 2px solid #bb86fc;
+    outline-offset: 2px;
 }
 
 .news-grid {
@@ -50,12 +56,12 @@ html {
     margin-bottom: 40px;
 }
 
-.load-more {
+.news-load-more {
     text-align: center;
     margin-bottom: 40px;
 }
 
-.load-more button {
+.news-load-more button {
     background-color: #bb86fc;
     color: #121212;
     border: none;
@@ -66,6 +72,20 @@ html {
     transition: background-color 0.2s ease;
 }
 
-.load-more button:hover {
+.news-load-more button:hover {
     background-color: #a75efc;
+    box-shadow: 0 2px 6px rgba(187, 134, 252, 0.4);
+}
+
+.news-no-content-message {
+    text-align: center;
+    color: #888;
+    font-size: 1rem;
+    margin: 20px 0 60px;
+}
+
+@media (max-width: 360px) {
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
 }

@@ -1,6 +1,6 @@
 import InfoSectionEditor from "./InfoSectionEditor";
-import { Section } from "../types/types"
-import './InfoSectionManager.css'
+import { Section } from "../../types/types"
+import './styles/InfoSectionManager.css'
 
 interface InfoSectionManagerProps {
     title: string
@@ -16,7 +16,7 @@ interface InfoSectionManagerProps {
 
 export default function InfoSectionManager({ sections, title, newSectionHeading, newSectionBody, onNewSectionHeader, onNewSectionBody, onAddSection, onCleanSection, onChangeSection}: InfoSectionManagerProps) {
     return(
-        <div>
+        <form className="info-section-manager-container">
             <InfoSectionEditor sections={sections} title={title} onChange={onChangeSection} />
 
             <label>
@@ -25,27 +25,29 @@ export default function InfoSectionManager({ sections, title, newSectionHeading,
                     type="text"
                     value={newSectionHeading}
                     onChange={(e) => onNewSectionHeader(e.target.value)}
-                    className="infosectionmanager-input"
-                    placeholder="Título"
+                    className="info-section-manager-input"
+                    placeholder="Título da seção"
                 />
                 <textarea
-                    className="infosectionmanager-textarea"
+                    className="info-section-manager-textarea"
                     value={newSectionBody}
                     onChange={e => onNewSectionBody(e.target.value)}
                     placeholder="Corpo da seção"
                 />
             </label>
 
-            <button onClick={onAddSection} className="infosectionmanager-button">
-                Adicionar seção
-            </button>
+            <div className="info-section-manager-button-container">
+                <button onClick={onAddSection} className="info-section-manager-button">
+                    Adicionar seção
+                </button>
 
-            <button
-                onClick={onCleanSection}
-                className="infosectionmanager-button"
-            >
-                Limpar seção atual
-            </button>
-        </div>
+                <button
+                    onClick={onCleanSection}
+                    className="info-section-manager-button"
+                >
+                    Limpar seção atual
+                </button>
+            </div>
+        </form>
     );
 }

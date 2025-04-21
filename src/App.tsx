@@ -5,7 +5,7 @@ import Tarot from './pages/Tarot';
 import History from "./pages/History";
 import AuthGuard from "./components/AuthGuard";
 import Question from './pages/Question';
-import Layout from "./components/Layout";
+import Layout from "./components/layout/Layout";
 import Profile from './pages/Profile';
 import InfoPage from './pages/InfoPage';
 import InfoMaker from './pages/InfoMaker';

@@ -8,6 +8,9 @@ export const sendMessageToAI = async (message: string) => {
     const chat = model.startChat({
         generationConfig: {
             maxOutputTokens: 512,
+            temperature: 0.9,
+            topP: 0.95,
+            topK: 40,
         },
     });
 

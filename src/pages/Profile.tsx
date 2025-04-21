@@ -7,6 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 import './Profile.css';
 import { StringHelper } from '../utils/stringHelper';
+import Loading from "../components/Loading";
 
 const apiKey = import.meta.env.VITE_MAPS_API_KEY;
 const libraries: ('places')[] = ['places'];
@@ -226,7 +227,7 @@ export default function Profile() {
     };
 
     if (!isLoaded) {
-        return <div>Carregando...</div>;
+        return <Loading />
     }
 
     return (
@@ -242,7 +243,7 @@ export default function Profile() {
                         disabled={!isEditing}
                         className={`profile-input ${errors.nome ? 'input-error' : ''}`}
                     />
-                    {errors.nome && <span className="error-message">{errors.nome}</span>}
+                    {errors.nome && <span className="profile-error-message">{errors.nome}</span>}
                 </label>
                 <label>
                     Sobrenome:
@@ -256,13 +257,13 @@ export default function Profile() {
                 </label>
                 <div>
                     <label>Pronomes:</label>
-                    <div className="tags-container">
+                    <div className="profile-tags-container">
                         {pronomes.map((pronome, index) => (
-                            <span key={index} className="tag">
+                            <span key={index} className="profile-tag">
                                 {pronome}
                                 <button
                                     type="button"
-                                    className="remove-tag-button"
+                                    className="profile-remove-tag-button"
                                     disabled={!isEditing}
                                     onClick={() => removerPronome(pronome)}
                                 >
@@ -273,7 +274,7 @@ export default function Profile() {
                         {isEditing && pronomes.length < 3 && (
                             <input
                                 type="text"
-                                className="tag-input"
+                                className="profile-tag-input"
                                 placeholder="Digite e pressione Enter"
                                 onKeyDown={adicionarPronome}
                             />
@@ -289,7 +290,7 @@ export default function Profile() {
                         disabled={!isEditing}
                         className={`profile-input ${errors.dataNascimento ? 'input-error' : ''}`}
                     />
-                    {errors.dataNascimento && <span className="error-message">{errors.dataNascimento}</span>}
+                    {errors.dataNascimento && <span className="profile-error-message">{errors.dataNascimento}</span>}
                 </label>
                 <label>
                     Horário de Nascimento:
@@ -300,7 +301,7 @@ export default function Profile() {
                         disabled={!isEditing}
                         className={`profile-input ${errors.horarioNascimento ? 'input-error' : ''}`}
                     />
-                    {errors.horarioNascimento && <span className="error-message">{errors.horarioNascimento}</span>}
+                    {errors.horarioNascimento && <span className="profile-error-message">{errors.horarioNascimento}</span>}
                 </label>
                 <label>
                     Local de Nascimento:
@@ -317,50 +318,50 @@ export default function Profile() {
                 </label>
             </div>
             {mapaAstral && (
-                <div className="mapa-astral-signos">
+                <div className="profile-mapa-astral-signos">
                     {mapaAstral?.signos && (
                         <>
-                            <div className="mapa-astral-item">
-                                <p className="mapa-astral-posicao">Sol</p>
+                            <div className="profile-mapa-astral-item">
+                                <p className="profile-mapa-astral-posicao">Sol</p>
                                 <img
                                     src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.solar).toLowerCase()}.svg`}
                                     alt={`Signo Solar: ${mapaAstral.signos.solar}`}
-                                    className="mapa-astral-image"
+                                    className="profile-mapa-astral-image"
                                 />
-                                <p className="mapa-astral-nome">{mapaAstral.signos.solar}</p>
+                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.solar}</p>
                             </div>
-                            <div className="mapa-astral-item">
-                                <p className="mapa-astral-posicao">Lua</p>
+                            <div className="profile-mapa-astral-item">
+                                <p className="profile-mapa-astral-posicao">Lua</p>
                                 <img
                                     src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.lunar).toLowerCase()}.svg`}
                                     alt={`Signo Lunar: ${mapaAstral.signos.lunar}`}
-                                    className="mapa-astral-image"
+                                    className="profile-mapa-astral-image"
                                 />
-                                <p className="mapa-astral-nome">{mapaAstral.signos.lunar}</p>
+                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.lunar}</p>
                             </div>
-                            <div className="mapa-astral-item">
-                                <p className="mapa-astral-posicao">Asc</p>
+                            <div className="profile-mapa-astral-item">
+                                <p className="profile-mapa-astral-posicao">Asc</p>
                                 <img
                                     src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.ascendente).toLowerCase()}.svg`}
                                     alt={`Ascendente: ${mapaAstral.signos.ascendente}`}
-                                    className="mapa-astral-image"
+                                    className="profile-mapa-astral-image"
                                 />
-                                <p className="mapa-astral-nome">{mapaAstral.signos.ascendente}</p>
+                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.ascendente}</p>
                             </div>
-                            <div className="mapa-astral-item">
-                                <p className="mapa-astral-posicao">MdC</p>
+                            <div className="profile-mapa-astral-item">
+                                <p className="profile-mapa-astral-posicao">MdC</p>
                                 <img
                                     src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.meioDoCeu).toLowerCase()}.svg`}
                                     alt={`Meio do Céu: ${mapaAstral.signos.meioDoCeu}`}
-                                    className="mapa-astral-image"
+                                    className="profile-mapa-astral-image"
                                 />
-                                <p className="mapa-astral-nome">{mapaAstral.signos.meioDoCeu}</p>
+                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.meioDoCeu}</p>
                             </div>
                         </>
                     )}
                 </div>
             )}
-            {errMessage && <p className="error-message">{errMessage}</p>}
+            {errMessage && <p className="profile-error-message">{errMessage}</p>}
             {message && <p className="profile-message">{message}</p>}
             <div className="profile-buttons">
                 {isEditing ? (
