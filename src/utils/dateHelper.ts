@@ -7,6 +7,25 @@ export function getBrazilDate(): string {
     return dataFormatada;
 }
 
+export function getBrazilDateTime(): string {
+    const agora = new Date();
+    const opcoes: Intl.DateTimeFormatOptions = {
+        timeZone: 'America/Sao_Paulo',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+    };
+
+    const formatado = agora.toLocaleString('pt-BR', opcoes);
+
+    const [data, hora] = formatado.split(', ');
+    const dataFormatada = data.split('/').join('-');
+
+    return `${dataFormatada} às ${hora}`;
+}
+
 export function formatDateForDisplay(dateStrOrDate: string | Date): string {
     const date = typeof dateStrOrDate === 'string' ? new Date(dateStrOrDate) : dateStrOrDate;
 

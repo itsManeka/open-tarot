@@ -1,0 +1,81 @@
+.daily-card-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.daily-card-content {
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    color: #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.daily-card-box {
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    align-items: start;
+    border-radius: 8px;
+    padding: 0;
+    margin: 10px;
+}
+
+.daily-card-info-box {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.daily-card-image {
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    border-radius: 12px;
+}
+
+.daily-card-nome {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #bb86fc;
+}
+
+.daily-card-loading-content {
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.daily-card-loading-image {
+    margin-top: 40px;
+    width: 200px;
+    height: 200px;
+}
+
+@media (max-width: 600px) {
+    .daily-card-box {
+        flex-direction: column;
+    }
+
+    .daily-card-loading-image {
+        width: 150px;
+        height: 150px;
+    }
+}

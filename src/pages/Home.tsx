@@ -3,6 +3,7 @@ import Prediction from '../components/Prediction';
 import TarotLink from '../components/TarotLink';
 import NewsGrid from '../components/NewsGrid';
 import './Home.css';
+import DailyCard from '../components/DailyCard';
 
 export default function Home() {
 
@@ -16,8 +17,11 @@ export default function Home() {
                 </p>
             </div>
             <div className="home-cards-container">
+                <DailyCard />
+            </div>
+            <div className="home-cards-container">
                 <Prediction />
-            </div>    
+            </div>
             <div className="home-cards-container">  
                 <TarotLink />
             </div>

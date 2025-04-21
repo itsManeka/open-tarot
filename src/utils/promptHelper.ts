@@ -1,4 +1,4 @@
-import { getBrazilDate } from "./dateHelper";
+import { getBrazilDateTime } from "./dateHelper";
 
 export const PromptHelper = {
     generateTarotPrompt: (question: string, revealedCards: { name: string; interpretation: string }[], currentCardName: string, isFinalCard: boolean) => {
@@ -35,7 +35,7 @@ export const PromptHelper = {
     },
 
     generateSignPredictionPrompt: (sign: string) => {
-        const data = getBrazilDate();
+        const data = getBrazilDateTime();
         const diasDaSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
         const hoje = new Date();
         const diaSemana = diasDaSemana[hoje.getDay()];
@@ -58,4 +58,43 @@ export const PromptHelper = {
         Sugira uma cor que pode favorecer esse signo hoje: "${cor}".
         `;
     },
+
+    generateTarotCardOfTheDayPrompt: (cardName: string) => {
+        const date = getBrazilDateTime();
+
+        return `
+        Você é um guia espiritual e tarólogo experiente, com sensibilidade simbólica e linguagem inspiradora.
+        A carta do Tarot escolhida para hoje, dia ${date}, é: **${cardName}**.
+        
+        Interprete essa carta como se fosse uma mensagem pessoal e única para quem está lendo agora.
+        Use uma linguagem acolhedora, poética e leve, como se estivesse oferecendo sabedoria através de um ritual diário.
+        
+        Conecte a energia da carta com o momento presente e ofereça um conselho prático ou uma reflexão emocional.
+        Use no máximo **3 frases curtas**.
+        
+        Inspire-se em frases como:
+        - “O Louco convida você a dar o primeiro passo, mesmo sem saber o destino.”
+        - “A Imperatriz pede que você se cuide como cuidaria de alguém que ama profundamente.”
+        - “O Eremita sussurra: o silêncio de hoje trará respostas que só você pode ouvir.”
+        
+        Evite frases genéricas ou repetições. Crie um pequeno momento mágico.
+        `;
+    },
+
+    generateDreamInterpretationPrompt: (dream: string) => {
+        return `
+        Você é um intérprete de sonhos sábio, sensível e conhecedor da simbologia dos sonhos, inspirado na astrologia, tarot e psicologia arquetípica.
+        
+        Um usuário descreveu o seguinte sonho:
+        
+        "${dream}"
+        
+        Com base nesse relato, ofereça uma interpretação simbólica e acolhedora. 
+        Use uma linguagem poética e reflexiva, como se estivesse trazendo uma mensagem do inconsciente.
+        
+        Destaque os possíveis significados dos símbolos principais e finalize com uma breve mensagem ou conselho que inspire o usuário a refletir sobre sua vida desperta.
+        
+        Limite sua resposta a no máximo 4 parágrafos curtos.
+        `;
+    }
 };

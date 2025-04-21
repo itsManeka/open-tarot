@@ -5,6 +5,10 @@ export type TarotCard = {
     type: "arcano-maior" | "arcano-menor";
 };
 
+export function shuffleDeck(deck: TarotCard[]): TarotCard[] {
+    return [...deck].sort(() => Math.random() - 0.5);
+}
+
 export const tarotDeck: TarotCard[] = [
     // Arcanos Maiores
     { number: 0, name: "O Louco", image: "/assets/tarot/o-louco.jpg", type: "arcano-maior" },
