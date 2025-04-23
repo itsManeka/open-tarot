@@ -17,14 +17,12 @@
 }
 
 .daily-card-box {
-    margin-top: 10px;
+    margin: 10px auto 10px;
     display: flex;
     gap: 20px;
     flex-direction: row;
     align-items: start;
     border-radius: 8px;
-    padding: 0;
-    margin: 10px;
 }
 
 .daily-card-info-box {
@@ -34,7 +32,7 @@
     justify-content: left;
     align-items: start;
     border-radius: 8px;
-    padding: 10px;
+    padding: 0;
 }
 
 .daily-card-image {
@@ -70,12 +68,40 @@
 }
 
 @media (max-width: 600px) {
+    .daily-card-content h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .daily-card-box {
         flex-direction: column;
+        align-items: center;
+    }
+
+    .daily-card-info-box {
+        text-align: justify;
+        align-items: center;
     }
 
     .daily-card-loading-image {
         width: 150px;
         height: 150px;
     }
+}
+
+.shareable-wrapper .daily-card-content h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shareable-wrapper .daily-card-box {
+    flex-direction: column;
+    align-items: center;
+}
+
+.shareable-wrapper .daily-card-info-box {
+    text-align: justify;
+    align-items: center;
 }

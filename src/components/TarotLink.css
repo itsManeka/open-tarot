@@ -22,7 +22,6 @@
     color: #e0e0e0;
     width: 100%;
     box-sizing: border-box;
-    max-width: 500px;
 }
 
 .tarotlink-box {
@@ -71,9 +70,23 @@
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+    .tarotlink-content h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .tarotlink-box {
         display: flex;
         flex-direction: column;
+    }
+
+    .tarotlink-subcontent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: justify;
+        align-items: center;
     }
 }

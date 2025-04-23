@@ -59,3 +59,7 @@ coverage/
 
 # Miscellaneous
 *.lock
+
+# Certificados
+localhost-key.pem
+localhost.pem

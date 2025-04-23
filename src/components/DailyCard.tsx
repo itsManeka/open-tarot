@@ -6,10 +6,11 @@ import { PromptHelper } from "../utils/promptHelper";
 import './DailyCard.css';
 import { getBrazilDate } from '../utils/dateHelper';
 import { shuffleDeck, TarotCard, tarotDeck } from '../data/tarotDeck';
+import ShareableWrapper from './ShareableWrapper';
 
 export default function DailyCard() {
     const [prediction, setPrediction] = useState('');
-    const [card, setCard] = useState<TarotCard|undefined>(undefined);
+    const [card, setCard] = useState<TarotCard | undefined>(undefined);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -63,20 +64,25 @@ export default function DailyCard() {
                     />
                 </div>
             ) : (
-                <div className="daily-card-content">
-                    <h2>Carta do dia</h2>
-                    <div className="daily-card-box">
-                        <img
-                            src={`${card?.image}`}
-                            alt={`Carta do dia: ${card?.name}`}
-                            className="daily-card-image"
-                        />
-                        <div className="daily-card-info-box">
-                            <p className="daily-card-nome">{card?.name}</p>
-                            <p>{prediction || 'Os astros ainda não revelaram a carta do dia.'}</p>
+                <ShareableWrapper
+                    title='Carta do dia'
+                    text='Minha carta do dia em opentarot.net'
+                >
+                    <div className="daily-card-content">
+                        <h2>Carta do dia</h2>
+                        <div className="daily-card-box">
+                            <img
+                                src={`${card?.image}`}
+                                alt={`Carta do dia: ${card?.name}`}
+                                className="daily-card-image"
+                            />
+                            <div className="daily-card-info-box">
+                                <p className="daily-card-nome">{card?.name}</p>
+                                <p>{prediction || 'Os astros ainda não revelaram a carta do dia.'}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </ShareableWrapper>
             )}
         </div>
     );

@@ -13,6 +13,7 @@
     "@google/generative-ai": "^0.24.0",
     "@react-google-maps/api": "^2.20.6",
     "firebase": "^11.6.0",
+    "html2canvas": "^1.4.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-firebase-hooks": "^5.1.1",

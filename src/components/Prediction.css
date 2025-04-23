@@ -58,6 +58,21 @@
 }
 
 @media (max-width: 600px) {
+    .prediction-content h2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .prediction-signo-box {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .prediction-map-content {
+        text-align: justify;
+    }
+
     .prediction-signo-image {
         width: 25px;
         height: 25px;
@@ -69,4 +84,28 @@
         width: 150px;
         height: 150px;
     }
+}
+
+.shareable-wrapper .prediction-content h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shareable-wrapper .prediction-signo-box {
+    justify-content: center;
+    align-items: center;
+}
+
+.shareable-wrapper .prediction-map-content {
+    text-align: justify;
+}
+
+.shareable-wrapper .prediction-signo-image {
+    width: 25px;
+    height: 25px;
+}
+
+.shareable-wrapper .prediction-signo-nome {
+    font-size: 1.5rem;
 }

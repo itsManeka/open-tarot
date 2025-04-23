@@ -8,6 +8,7 @@ import { sendMessageToAI } from "../services/aiEngine";
 import { PromptHelper } from "../utils/promptHelper";
 import './Prediction.css';
 import { getBrazilDate } from '../utils/dateHelper';
+import ShareableWrapper from './ShareableWrapper';
 
 export default function Prediction() {
     const [user] = useAuthState(auth);
@@ -71,26 +72,31 @@ export default function Prediction() {
                     />
                 </div>
             ) : (
-                <div className="prediction-content">
-                    <h2>Previsão diária</h2>
-                    {mapaAstral ? (
-                        <div className="prediction-map-content">
-                            <div className="prediction-signo-box">
-                                <img
-                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.solar).toLowerCase()}.svg`}
-                                    alt={`Signo Solar: ${mapaAstral.signos.solar}`}
-                                    className="prediction-signo-image"
-                                />
-                                <p className="prediction-signo-nome">{mapaAstral.signos.solar}</p>
+                <ShareableWrapper
+                    title='Previsão do dia'
+                    text={`Previsão do dia para o signo de ${mapaAstral.signos.solar} em opentarot.net`}
+                >
+                    <div className="prediction-content">
+                        <h2>Previsão do dia</h2>
+                        {mapaAstral ? (
+                            <div className="prediction-map-content">
+                                <div className="prediction-signo-box">
+                                    <img
+                                        src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.solar).toLowerCase()}.svg`}
+                                        alt={`Signo Solar: ${mapaAstral.signos.solar}`}
+                                        className="prediction-signo-image"
+                                    />
+                                    <p className="prediction-signo-nome">{mapaAstral.signos.solar}</p>
+                                </div>
+                                <p>{prediction || 'Nenhuma previsão disponível no momento.'}</p>
                             </div>
-                            <p>{prediction || 'Nenhuma previsão disponível no momento.'}</p>
-                        </div>
-                    ) : (
-                        <div className="prediction-map-content">
-                            <p>Preencha o <Link to="/profile" className="prediction-info-link">seu perfil</Link> com data, horário e local de nascimento para saber a previsão diária para seu signo.</p>
-                        </div>
-                    )}
-                </div>
+                        ) : (
+                            <div className="prediction-map-content">
+                                <p>Preencha o <Link to="/profile" className="prediction-info-link">seu perfil</Link> com data, horário e local de nascimento para saber a previsão diária para seu signo.</p>
+                            </div>
+                        )}
+                    </div>
+                </ShareableWrapper>
             )}
         </div>
     );

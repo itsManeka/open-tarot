@@ -9,7 +9,7 @@
     flex-direction: column;
     padding: 1rem;
     gap: 1rem;
-    z-index: 1499;
+    z-index: 1498;
     box-shadow: -2px 0 6px rgba(0, 0, 0, 0.4);
     padding-top: 80px;
     transform: translateX(100%); /* Inicialmente fora da tela */
