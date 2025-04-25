@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { useTokens } from "../context/TokenProvider";
 import './Question.css';
 
 export default function Question() {
@@ -10,6 +11,9 @@ export default function Question() {
     const navigate = useNavigate();
     const [user] = useAuthState(auth);
     const [isProfileExists, setIsProfileExists] = useState(false);
+    const [message, setMessage] = useState('');
+    
+    const { tokens } = useTokens();
     
     useEffect(() => {
         if (!user) return;
@@ -27,6 +31,11 @@ export default function Question() {
     }, [user]);
 
     const continuar = async () => {
+        if (!tokens || tokens < 1) {
+            setMessage("Você não tem fichas suficientes.");
+            setTimeout(() => setMessage(''), 3000);
+            return;
+        }
         navigate('/tarot', { state: { question } });
     };
 
@@ -35,7 +44,11 @@ export default function Question() {
             <div className="question-header">
                 <h2 className="question-title">
                     Sobre qual assunto você quer saber?
-                </h2><br />
+                </h2>
+                <div className='question-token-cost'>
+                    <img src='/assets/statics/token.svg' className='question-token-image'/>
+                    <p>A consulta custa <strong>1</strong> ficha</p>
+                </div>
                 {!isProfileExists && (
                     <p className="question-info">
                         Dica: preencha o <Link to="/profile" className="question-info-link">seu perfil</Link> para deixar a leitura mais precisa.
@@ -53,8 +66,11 @@ export default function Question() {
                 onClick={continuar}
                 disabled={!question.trim()} /* Desabilita o botão se a pergunta estiver vazia */
             >
-                Continuar
+                Consultar
             </button>
+            {message && (
+                <small className='question-message-error'>{message}</small>
+            )}
         </div>
     );
 }

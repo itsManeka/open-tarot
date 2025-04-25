@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import Prediction from '../components/Prediction';
-import TarotLink from '../components/TarotLink';
+import Shortcut from '../components/Shortcut';
 import NewsGrid from '../components/NewsGrid';
 import './Home.css';
 import DailyCard from '../components/DailyCard';
+import TokenStatus from '../components/TokenStatus';
+import { ShortcutHelper } from '../utils/shortcutHelper';
 
 export default function Home() {
 
@@ -17,13 +19,23 @@ export default function Home() {
                 </p>
             </div>
             <div className="home-cards-container">
+                <TokenStatus />
+            </div>
+            <div className="home-cards-container">
                 <DailyCard />
             </div>
             <div className="home-cards-container">
                 <Prediction />
             </div>
             <div className="home-cards-container">  
-                <TarotLink />
+                <Shortcut
+                    {...ShortcutHelper.getTarotShorcut()}
+                />
+            </div>
+            <div className="home-cards-container">  
+                <Shortcut
+                    {...ShortcutHelper.getDreamShortcut()}
+                />
             </div>
             <div className="home-cards-container">
                 <NewsGrid />

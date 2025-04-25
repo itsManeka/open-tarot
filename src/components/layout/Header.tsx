@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useTokens } from "../../context/TokenProvider";
 import './styles/Header.css'
 
 type HeaderProps = {
@@ -11,6 +12,8 @@ type HeaderProps = {
 export default function Header({ user, profileName, menuOpen, setMenuOpen }: HeaderProps) {
     const location = useLocation();
     const isLoginPage = location.pathname === "/login";
+
+    const { tokens } = useTokens();
 
     if (isLoginPage) return null;
 
@@ -27,6 +30,14 @@ export default function Header({ user, profileName, menuOpen, setMenuOpen }: Hea
                 </Link>
             </div>
             <div className="user-container">
+                {user && (
+                    <>
+                        <div className="token-display">
+                            <img src="/assets/statics/token.svg" className="header-token-icon" />
+                            <span>{tokens}</span>
+                        </div>
+                    </>
+                )}
                 <h1 className="layout-divisor">|</h1>
                 <Link
                     to={user ? "/" : "/login"}

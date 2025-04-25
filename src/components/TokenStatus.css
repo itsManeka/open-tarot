@@ -1,0 +1,123 @@
+.token-status-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.token-status-content {
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    color: #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.token-button-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.token-status-loading-image {
+    margin-top: 40px;
+    width: 200px;
+    height: 200px;
+}
+
+.token-status-button {
+    background-color: #bb86fc;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    font-family: inherit;
+}
+
+.token-status-button:hover {
+    background-color: #9a67ea;
+}
+
+.token-status-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.token-status-button:disabled {
+    background-color: #5e35b1;
+    cursor: not-allowed;
+    transform: scale(1.03);
+}
+
+.token-status-snackbar {
+    margin-top: 12px;
+    background-color: #5e35b1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #e1e1e1;
+}
+
+.token-status-progress-container {
+    height: 10px;
+    background-color: #9e6efc;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.token-status-progress-bar {
+    height: 10px;
+    background: linear-gradient(90deg, #bb86fc, #d5b6ff);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+    transition: width 1s ease-in-out;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.token-status-loading-content {
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.token-status-img {
+    width: 40px;
+    height: 40px;
+}
+
+@media (max-width: 600px) {
+    .token-status-content {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    .token-status-content h2,
+    .token-status-content p{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .token-status-image {
+        width: 150px;
+        height: 150px;
+    }
+}

@@ -74,7 +74,8 @@ export default function Prediction() {
             ) : (
                 <ShareableWrapper
                     title='Previsão do dia'
-                    text={`Previsão do dia para o signo de ${mapaAstral.signos.solar} em opentarot.net`}
+                    text={`Previsão do dia para o signo de ${mapaAstral?.signos.solar || ''} em opentarot.net`}
+                    showButtons={!!mapaAstral}
                 >
                     <div className="prediction-content">
                         <h2>Previsão do dia</h2>

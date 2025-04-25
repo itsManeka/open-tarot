@@ -7,11 +7,13 @@ interface ShareableWrapperProps {
     title?: string;
     text?: string;
     siteName?: string;
+    showButtons?: boolean
 }
 
 const ShareableWrapper: React.FC<ShareableWrapperProps> = ({
     children,
-    siteName = 'opentarot.net'
+    siteName = 'opentarot.net',
+    showButtons = true
 }) => {
     const hiddenRef = useRef<HTMLDivElement>(null);
 
@@ -129,23 +131,25 @@ const ShareableWrapper: React.FC<ShareableWrapperProps> = ({
             </div>
 
             {/* Botões */}
-            <div className='shareable-button-container'>
-                <button
-                    onClick={handleDownload}
-                    className='shareable-button'
-                >
-                    <img className='shareable-button-image' src={`/assets/statics/download.svg`}></img>
-                </button>
-
-                {canShare && (
+            {showButtons && (
+                <div className='shareable-button-container'>
                     <button
-                        onClick={handleNativeShare}
+                        onClick={handleDownload}
                         className='shareable-button'
                     >
-                        <img className='shareable-button-image' src={`/assets/statics/share.svg`}></img>
+                        <img className='shareable-button-image' src={`/assets/statics/download.svg`}></img>
                     </button>
-                )}
-            </div>
+
+                    {canShare && (
+                        <button
+                            onClick={handleNativeShare}
+                            className='shareable-button'
+                        >
+                            <img className='shareable-button-image' src={`/assets/statics/share.svg`}></img>
+                        </button>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

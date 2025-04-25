@@ -1,12 +1,14 @@
-.tarotlink-container {
+.shortcut-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
-    gap: 20px;
+    gap: 10px;
     box-sizing: border-box;
 }
 
-.tarotlink-content {
+.shortcut-content {
+    align-items: center;
     border-radius: 8px;
     background-color: #1e1e1e;
     padding: 20px 40px 20px 40px;
@@ -16,7 +18,8 @@
     box-sizing: border-box;
 }
 
-.tarotlink-subcontent {
+.shortcut-subcontent {
+    align-items: center;
     border-radius: 8px;
     background-color: #1e1e1e;
     color: #e0e0e0;
@@ -24,22 +27,22 @@
     box-sizing: border-box;
 }
 
-.tarotlink-box {
+.shortcut-box {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
 }
 
-.tarotlink-image {
+.shortcut-image {
     width: 100%;
-    max-width: 280px;
+    max-width: 110px;
     height: auto;
 }
 
 /* Botão */
-.tarotlink-button {
-    margin-top: 20px;
+.shortcut-button {
+    margin-top: 5px;
     background-color: #bb86fc; /* Roxo claro */
     color: #121212; /* Texto escuro */
     padding: 10px 20px;
@@ -51,38 +54,37 @@
     transition: background-color 0.3s;
 }
 
-.tarotlink-button:hover {
+.shortcut-button:hover {
     background-color: #9a67ea;
 }
 
-.tarotlink-button:hover:not(:disabled) {
+.shortcut-button:hover:not(:disabled) {
     transform: translateY(-2px);
 }
 
-.tarotlink-button:disabled {
+.shortcut-button:disabled {
     background-color: #5e35b1;
     cursor: not-allowed;
 }
 
-.tarotlink-button:focus {
+.shortcut-button:focus {
     outline: 2px solid #bb86fc;
     outline-offset: 2px;
 }
 
-/* Responsividade */
 @media (max-width: 600px) {
-    .tarotlink-content h2 {
+    .shortcut-content h2 {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .tarotlink-box {
+    .shortcut-box {
         display: flex;
         flex-direction: column;
     }
 
-    .tarotlink-subcontent {
+    .shortcut-subcontent {
         display: flex;
         flex-direction: column;
         justify-content: center;

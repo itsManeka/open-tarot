@@ -8,6 +8,7 @@ import { tarotDeck, TarotCard } from "../data/tarotDeck";
 import { sendMessageToAI } from "../services/aiEngine";
 import { PromptHelper } from "../utils/promptHelper";
 import "./Tarot.css";
+import { useTokens  } from "../context/TokenProvider";
 
 type RevealedCard = {
     card: TarotCard;
@@ -27,6 +28,9 @@ export default function Tarot() {
     const [revealedCards, setRevealedCards] = useState<RevealedCard[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    
+    const { useToken, tokens } = useTokens();
 
     useEffect(() => {
         if (!question) {
@@ -61,6 +65,7 @@ export default function Tarot() {
         try {
             await addDoc(collection(db, "readings"), {
                 uid: user.uid,
+                type: "tarot",
                 timestamp: Timestamp.now(),
                 cards: revealedCards.map((c) => ({
                     number: c.card.number,
@@ -98,10 +103,28 @@ export default function Tarot() {
     }
 
     const handleReveal = async () => {
+        if (currentIndex == 0) {
+            if (!tokens || tokens < 1) {
+                setMessage("Você não tem fichas suficientes.");
+                setTimeout(() => setMessage(''), 3000);
+                return;
+            }
+        }
+
         if (currentIndex >= selectedCards.length) return;
         const currentCard = selectedCards[currentIndex];
 
         setIsLoading(true);
+
+        if (currentIndex == 0) {
+            const success = await useToken();
+            if (!success) {
+                setMessage("Ocorreu um erro ao realizar a consulta, favor recarregar a página e tentar novamente.");
+                setTimeout(() => setMessage(''), 3000);
+                setIsLoading(false);
+                return;
+            }
+        }
 
         const prompt = PromptHelper.generateTarotPrompt(
             question || "Sem pergunta",
@@ -194,6 +217,9 @@ export default function Tarot() {
                     </button>
                 </div>
             )}
+            {message && (
+                <small className='tarot-message-error'>{message}</small>
+            )}
 
             {/* Botão para salvar no histórico */}
             {isFinalized && !isSaved && (
@@ -209,7 +235,7 @@ export default function Tarot() {
                         onClick={newReading}
                         className="tarot-reveal-button"
                     >
-                        Nova Leitura
+                        Nova leitura
                     </button>
                 </div>
             )}

@@ -50,3 +50,10 @@ export function formatDateTimeForDisplay(dateStrOrDate: string | Date): string {
         hour12: false,
     })
 }
+
+export function formatCountdown(ms: number): string {
+    const h = Math.floor(ms / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
+};

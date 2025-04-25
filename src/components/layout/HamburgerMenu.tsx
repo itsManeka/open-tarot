@@ -23,6 +23,7 @@ export default function HamburgerMenu({ user, isAdm, menuOpen, setMenuOpen }: Ha
             {user ? (
                 <>
                     <Link to="/question" onClick={() => setMenuOpen(false)}>Tiragem</Link>
+                    <Link to="/dream" onClick={() => setMenuOpen(false)}>Sonhos</Link>
                     <Link to="/history" onClick={() => setMenuOpen(false)}>Histórico</Link>
                     <Link to="/profile" onClick={() => setMenuOpen(false)}>Perfil</Link>
                     {isAdm && (

@@ -12,13 +12,29 @@
     text-align: center;
 }
 
+.history-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.history-type-filter {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #2a2a2a;
+    color: #fff;
+    box-sizing: border-box;
+}
+
 .history-filter {
     width: 100%;
     padding: 10px 15px;
     font-size: 1rem;
     border-radius: 8px;
     border: none;
-    margin-bottom: 30px;
     background-color: #2a2a2a;
     color: #fff;
     box-sizing: border-box;
@@ -50,6 +66,24 @@
     gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 10px;
+}
+
+.history-type-tag {
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.history-type-tag.tarot {
+    background-color: #bb86fc;
+    color: #1e1e1e;
+}
+
+.history-type-tag.dream {
+    background-color: #03dac6;
+    color: #1e1e1e;
 }
 
 .history-date {
@@ -111,7 +145,13 @@
 }
 
 /* Responsivo */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+    .history-filters {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
     .history-reading-header {
         flex-direction: column;
         align-items: flex-start;
