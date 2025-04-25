@@ -8,6 +8,7 @@ import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 import './Profile.css';
 import { StringHelper } from '../utils/stringHelper';
 import Loading from "../components/Loading";
+import { convertBrazilDateTimeToUTC, convertBrazilDateToUTC } from "../utils/dateHelper";
 
 const apiKey = import.meta.env.VITE_MAPS_API_KEY;
 const libraries: ('places')[] = ['places'];
@@ -106,12 +107,15 @@ export default function Profile() {
                 const latitude = location.lat();
                 const longitude = location.lng();
 
+                const utDataNascimento = convertBrazilDateToUTC(dataNascimento);
+                const utHorarioNascimento = convertBrazilDateTimeToUTC(dataNascimento, horarioNascimento);
+
                 const res = await fetch(`${import.meta.env.VITE_ASTRO_API}/mapa-astral`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        date: dataNascimento,
-                        time: horarioNascimento,
+                        date: utDataNascimento,
+                        time: utHorarioNascimento,
                         lat: latitude,
                         lng: longitude
                     }),

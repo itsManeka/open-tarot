@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export function getBrazilDate(): string {
     const hoje = new Date();
     const dataFormatada = hoje
@@ -57,3 +59,27 @@ export function formatCountdown(ms: number): string {
     const s = Math.floor((ms % 60000) / 1000);
     return `${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
 };
+
+
+export function convertBrazilDateTimeToUTC(dateStr: string, timeStr: string): string {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const [hour, minute] = timeStr.split(':').map(Number);
+
+    const dateInBrazil = DateTime.fromObject(
+        { year, month, day, hour, minute },
+        { zone: 'America/Sao_Paulo' }
+    );
+
+    return dateInBrazil.toUTC().toFormat('HH:mm');
+}
+
+export function convertBrazilDateToUTC(dateStr: string): string {
+    const [year, month, day] = dateStr.split('-').map(Number);
+
+    const dateInBrazil = DateTime.fromObject(
+        { year, month, day, hour: 12 },
+        { zone: 'America/Sao_Paulo' }
+    );
+
+    return dateInBrazil.toUTC().toISODate() ?? '';
+}
