@@ -9,6 +9,7 @@ import { sendMessageToAI } from "../services/aiEngine";
 import { PromptHelper } from "../utils/promptHelper";
 import "./Tarot.css";
 import { useTokens  } from "../context/TokenProvider";
+import AmzBanner from "../components/AmzBanner";
 
 type RevealedCard = {
     card: TarotCard;
@@ -219,6 +220,14 @@ export default function Tarot() {
             )}
             {message && (
                 <small className='tarot-message-error'>{message}</small>
+            )}
+
+            {isFinalized && (
+                <div className="tarot-question-box">
+                    <AmzBanner
+                        query="tarot"
+                    />
+                </div>
             )}
 
             {/* Botão para salvar no histórico */}

@@ -9,6 +9,7 @@ import { PageContent } from "../types/types";
 import { SOCIAL_BASES } from "../types/enums";
 import { NiceHelmet } from "../components/NiceHelmet";
 import { formatDateForDisplay } from "../utils/dateHelper";
+import AmzBanner from "../components/AmzBanner";
 
 export default function InfoPage() {
     const [user, loading] = useAuthState(auth);
@@ -90,6 +91,12 @@ export default function InfoPage() {
                     ))}
                 </div>
             )) : <p>Sem conteúdo.</p>}
+            
+            {content.tags?.length > 0 && (
+                <AmzBanner
+                    query={content.tags[0]}
+                />
+            )}
 
             {/* Rodapé com descrição + redes sociais */}
             {content.footer?.description && (

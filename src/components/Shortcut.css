@@ -40,11 +40,10 @@
     height: auto;
 }
 
-/* Botão */
 .shortcut-button {
     margin-top: 5px;
-    background-color: #bb86fc; /* Roxo claro */
-    color: #121212; /* Texto escuro */
+    background-color: #bb86fc;
+    color: #121212;
     padding: 10px 20px;
     border: none;
     border-radius: 8px;

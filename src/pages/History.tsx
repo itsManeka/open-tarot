@@ -12,6 +12,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./History.css";
 import { tarotDeck } from "../data/tarotDeck";
+import AmzBanner from "../components/AmzBanner";
 
 type SavedCard = {
     name: string;
@@ -177,6 +178,9 @@ export default function History() {
                             </div>
                         </>
                     )}
+                    <AmzBanner
+                        query={"cards" in reading ? "tarot" : "sonhos"}
+                    />
                 </div>
             ))}
         </div>

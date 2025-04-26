@@ -107,15 +107,15 @@
     margin-right: 5px;
 }
 
-.info-section-editor-button button:hover:not(:disabled) {
+.info-section-editor-button:hover:not(:disabled) {
     transform: translateY(-2px);
 }
 
-.info-section-editor-button button:hover {
+.info-section-editor-button:hover {
     background-color: #a75efc;
 }
 
-.info-section-editor-button button:disabled {
+.info-section-editor-button:disabled {
     background-color: #888;
     cursor: not-allowed;
 }

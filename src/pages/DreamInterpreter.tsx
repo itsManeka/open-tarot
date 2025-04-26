@@ -7,6 +7,7 @@ import { useTokens } from '../context/TokenProvider';
 import { PromptHelper } from '../utils/promptHelper';
 import { sendMessageToAI } from '../services/aiEngine';
 import './DreamInterpreter.css'
+import AmzBanner from '../components/AmzBanner';
 
 export default function DreamInterpreter() {
     const navigate = useNavigate();
@@ -133,6 +134,14 @@ export default function DreamInterpreter() {
                     </div>
                 </div>
             )}
+
+            <div className="dream-interpretations-container">
+                <div className='dream-interpretation-ad-box'>
+                    <AmzBanner
+                        query='sonhos'
+                    />
+                </div>
+            </div>
 
             {snackbar && <div className={`dream-snackbar ${snackbarStatus}`}>{snackbar}</div>}
 

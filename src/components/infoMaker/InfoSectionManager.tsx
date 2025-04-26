@@ -16,7 +16,7 @@ interface InfoSectionManagerProps {
 
 export default function InfoSectionManager({ sections, title, newSectionHeading, newSectionBody, onNewSectionHeader, onNewSectionBody, onAddSection, onCleanSection, onChangeSection}: InfoSectionManagerProps) {
     return(
-        <form className="info-section-manager-container">
+        <div className="info-section-manager-container">
             <InfoSectionEditor sections={sections} title={title} onChange={onChangeSection} />
 
             <label>
@@ -48,6 +48,6 @@ export default function InfoSectionManager({ sections, title, newSectionHeading,
                     Limpar seção atual
                 </button>
             </div>
-        </form>
+        </div>
     );
 }
