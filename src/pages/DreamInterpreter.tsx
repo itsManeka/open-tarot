@@ -8,6 +8,7 @@ import { PromptHelper } from '../utils/promptHelper';
 import { sendMessageToAI } from '../services/aiEngine';
 import './DreamInterpreter.css'
 import AmzBanner from '../components/AmzBanner';
+import Loading from '../components/Loading';
 
 export default function DreamInterpreter() {
     const navigate = useNavigate();
@@ -22,7 +23,8 @@ export default function DreamInterpreter() {
     const [isLoading, setIsLoading] = useState(false);
     const [snackbar, setSnackbar] = useState<string | null>(null);
     const [snackbarStatus, setSnackbarStatus] = useState("ok");
-    const { useToken, tokens } = useTokens();
+
+    const { useToken, tokens, loading } = useTokens();
         
     useEffect(() => {
         if (!user) return;
@@ -40,7 +42,10 @@ export default function DreamInterpreter() {
     }, [user]);
 
     const handleInterpretation = async () => {
-        if (!tokens || tokens < 1) {
+        if (tokens == null || tokens == undefined) {
+            showSnackbar("Aguarde um momento até que suas fichas sejam carregadas.", "error");
+            return;
+        } else if (tokens < 1) {
             showSnackbar("Você não tem fichas suficientes.", "error");
             return;
         }
@@ -96,6 +101,10 @@ export default function DreamInterpreter() {
         setSnackbarStatus(status);
         setTimeout(() => setSnackbar(null), 3000);
     };
+        
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <div className='dream-container'>

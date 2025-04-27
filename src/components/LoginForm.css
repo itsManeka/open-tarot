@@ -1,4 +1,3 @@
-/* Contêiner do formulário */
 .login-form {
     background-color: #1e1e1e;
     padding: 30px;
@@ -13,14 +12,12 @@
     gap: 15px;
 }
 
-/* Título */
 .login-form h3 {
     color: #ffffff;
     margin-bottom: 10px;
     text-align: center;
 }
 
-/* Campos de entrada */
 .login-form-input {
     width: 100%;
     padding: 12px;
@@ -39,7 +36,6 @@
     box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.3);
 }
 
-/* Botões */
 .login-form-button {
     width: 100%;
     padding: 12px;
@@ -57,6 +53,20 @@
     background-color: #a56de2;
 }
 
+.login-form-button:disabled {
+    background-color: #5e35b1;
+    cursor: not-allowed;
+}
+
+.login-form-button:focus {
+    outline: 2px solid #bb86fc;
+    outline-offset: 2px;
+}
+
+.login-form-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
 .login-form-button.google {
     background-color: #4285f4;
     color: white;
@@ -66,7 +76,14 @@
     background-color: #357ae8;
 }
 
-/* Links de alternância entre login e cadastro */
+.login-form-button.google:disabled {
+    background-color: #174388;
+}
+
+.login-form-button.google:focus {
+    outline: 2px solid #4285f4;
+}
+
 .login-form-links {
     text-align: center;
     margin-bottom: 5px;
@@ -88,10 +105,33 @@
     text-decoration: underline;
 }
 
-/* Texto "ou" */
 .login-form-or {
     text-align: center;
     margin: 5px 0;
     color: #757575;
     font-size: 0.9rem;
+}
+
+.login-form-error {
+    text-align: center;
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+}
+
+.login-form-status {
+    text-align: center;
+    color: #03dac6;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+}
+
+.login-form-alert {
+    color: #fff262;
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
 }

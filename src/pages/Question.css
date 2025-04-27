@@ -43,14 +43,13 @@
     font-style: italic;
 }
 
-/* Caixa de texto */
 .question-textarea {
     padding: 15px;
     font-size: 1rem;
     font-family: inherit;
-    color: #e0e0e0; /* Texto claro */
-    background-color: #1e1e1e; /* Fundo escuro */
-    border: 1px solid #bb86fc; /* Borda roxa */
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    border: 1px solid #bb86fc;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;

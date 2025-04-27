@@ -22,6 +22,7 @@ export type PageContent = {
     author: string;
     tags: string[];
     footer: Footer;
+    components: string[];
 };
 
 export type PageWithId = PageContent & { id: string };

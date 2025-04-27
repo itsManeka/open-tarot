@@ -1,4 +1,3 @@
-/* Página genérica de informações */
 .info-page {
     display: flex;
     flex-direction: column;
@@ -9,7 +8,6 @@
     color: #e0e0e0;
 }
 
-/* Imagem Header */
 .info-page img {
     display: block;
     position: relative;
@@ -21,7 +19,6 @@
     margin-bottom: 0;
 }
 
-/* Título principal */
 .info-page h1 {
     font-size: 2.5rem;
     color: #bb86fc;
@@ -33,7 +30,6 @@
     max-width: 100vw;
 }
 
-/* Tags */
 .info-page-tags {
     display: flex;
     flex-wrap: wrap;

@@ -79,7 +79,7 @@ export default function Tarot() {
             setIsSaved(true);
         } catch (error: any) {
             console.error("Erro ao salvar tiragem:", error.message);
-            alert("Erro ao salvar tiragem: " + error.message);
+            showMessage("Erro ao salvar tiragem.");
         }
         setIsLoading(false);
     };
@@ -105,9 +105,11 @@ export default function Tarot() {
 
     const handleReveal = async () => {
         if (currentIndex == 0) {
-            if (!tokens || tokens < 1) {
-                setMessage("Você não tem fichas suficientes.");
-                setTimeout(() => setMessage(''), 3000);
+            if (tokens == null || tokens == undefined) {
+                showMessage("Aguarde um momento até que suas fichas sejam carregadas.");
+                return;
+            } else if (tokens < 1) {
+                showMessage("Você não tem fichas suficientes.");
                 return;
             }
         }
@@ -120,8 +122,7 @@ export default function Tarot() {
         if (currentIndex == 0) {
             const success = await useToken();
             if (!success) {
-                setMessage("Ocorreu um erro ao realizar a consulta, favor recarregar a página e tentar novamente.");
-                setTimeout(() => setMessage(''), 3000);
+                showMessage("Ocorreu um erro ao realizar a consulta, favor recarregar a página e tentar novamente.");
                 setIsLoading(false);
                 return;
             }
@@ -145,6 +146,11 @@ export default function Tarot() {
         setCurrentIndex(currentIndex + 1);
         setIsLoading(false);
     };
+
+    const showMessage = async (message: string) => {
+        setMessage(message);
+        setTimeout(() => setMessage(''), 3000);
+    }
 
     return (
         <div className="tarot-container">

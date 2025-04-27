@@ -5,6 +5,7 @@ import { auth, db } from '../services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { useTokens } from "../context/TokenProvider";
 import './Question.css';
+import Loading from '../components/Loading';
 
 export default function Question() {
     const [question, setQuestion] = useState('');
@@ -13,7 +14,7 @@ export default function Question() {
     const [isProfileExists, setIsProfileExists] = useState(false);
     const [message, setMessage] = useState('');
     
-    const { tokens } = useTokens();
+    const { tokens, loading } = useTokens();
     
     useEffect(() => {
         if (!user) return;
@@ -31,13 +32,25 @@ export default function Question() {
     }, [user]);
 
     const continuar = async () => {
-        if (!tokens || tokens < 1) {
-            setMessage("Você não tem fichas suficientes.");
-            setTimeout(() => setMessage(''), 3000);
+        if (tokens == null || tokens == undefined) {
+            showMessage("Aguarde um momento até que suas fichas sejam carregadas.");
+            return;
+        } else if (tokens < 1) {
+            showMessage("Você não tem fichas suficientes.");
             return;
         }
+
         navigate('/tarot', { state: { question } });
     };
+
+    const showMessage = async (message: string) => {
+        setMessage(message);
+        setTimeout(() => setMessage(''), 3000);
+    }
+    
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <div className="question-container">

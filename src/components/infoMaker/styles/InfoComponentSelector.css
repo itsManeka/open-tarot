@@ -1,0 +1,111 @@
+.info-component-selector-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-component-selector-container label {
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 1rem;
+    color: #e0e0e0;
+    box-sizing: border-box;
+}
+
+.info-component-selector-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.info-component-selector-list {
+    margin-top: 0;
+}
+
+.info-component-selector-list ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-component-selector-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2b2b2b;
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+}
+
+.info-component-selector-input {
+    font-family: inherit;
+    border-radius: 8px;
+    font-size: 1rem;    
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #bb86fc;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.info-component-selector-input:focus {
+    border-color: #03dac6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
+}
+
+.info-component-selector-input:disabled {
+    background-color: #2c2c2c;
+    color: #757575;
+}
+
+.info-component-selector-input::placeholder {
+    color: #757575;
+}
+
+.info-component-selector-button {
+    margin-top: 4px 0;
+    background-color: #bb86fc;
+    color: #121212;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.info-component-selector-button:hover {
+    background-color: #9a67ea;
+}
+
+.info-component-selector-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.info-component-selector-button:disabled {
+    background-color: #5e35b1;
+    transform: scale(1.03);
+    cursor: not-allowed;
+}
+
+.info-component-selector-button.remove {
+    background-color: #ff6b6b;
+}
+
+.info-component-selector-button.remove:hover {
+    background-color: #ff4848;
+}
+
+.info-component-selector-button.remove:disabled {
+    background-color: #888;
+}

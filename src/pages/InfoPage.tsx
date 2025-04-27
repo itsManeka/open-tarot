@@ -10,6 +10,7 @@ import { SOCIAL_BASES } from "../types/enums";
 import { NiceHelmet } from "../components/NiceHelmet";
 import { formatDateForDisplay } from "../utils/dateHelper";
 import AmzBanner from "../components/AmzBanner";
+import ContactForm from "../components/ContactForm";
 
 export default function InfoPage() {
     const [user, loading] = useAuthState(auth);
@@ -63,7 +64,6 @@ export default function InfoPage() {
             <img src={content.img} alt={content.title} className="info-page-cover" />
             <h1>{content.title}</h1>
 
-            {/* Tags */}
             {content.tags?.length > 0 && (
                 <div className="info-page-tags">
                     {content.tags.map((tag, i) => (
@@ -72,7 +72,6 @@ export default function InfoPage() {
                 </div>
             )}
 
-            {/* Info autor + data */}
             <div className="info-page-meta">
                 {content.author && <span>Por {content.author}</span>}
                 {content.createdAt && (
@@ -82,7 +81,6 @@ export default function InfoPage() {
                 )}
             </div>
 
-            {/* Seções */}
             {content.sections?.length ? content.sections.map((section, i) => (
                 <div key={i} className="info-page-section">
                     <h2>{section.heading}</h2>
@@ -92,6 +90,11 @@ export default function InfoPage() {
                 </div>
             )) : <p>Sem conteúdo.</p>}
             
+            
+            {content.components?.length > 0 && content.components.map((component, i) => (
+                component === "contato" ? <ContactForm key={i} /> : null
+            ))}
+
             {content.tags?.length > 0 && (
                 <AmzBanner
                     query={content.tags[0]}

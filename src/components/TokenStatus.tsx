@@ -71,7 +71,7 @@ export default function TokenStatus() {
                     </div>
                     {countdown ? (
                         <p>
-                            Nova ficha em: <strong>{countdown}</strong>
+                            Nova ficha em: {`${countdown}`}
                         </p>
                     ) : (
                         <p>

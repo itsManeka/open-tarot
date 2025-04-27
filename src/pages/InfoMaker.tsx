@@ -9,6 +9,7 @@ import InfoSectionManager from "../components/infoMaker/InfoSectionManager";
 import InfoFooterEditor from "../components/infoMaker/InfoFooterEditor"
 import InfoMakerLabelInput from "../components/infoMaker/InfoMakerLabelInput";
 import InfoMakerTag from "../components/infoMaker/InfoMakerTag";
+import InfoComponentSelector from '../components/infoMaker/InfoComponentSelector';
 import { formatDateForDisplay } from "../utils/dateHelper";
 
 export default function InfoMaker() {
@@ -43,6 +44,8 @@ export default function InfoMaker() {
     const [authorName, setAuthorName] = useState("");
 
     const [tags, setTags] = useState<string[]>([]);
+
+    const [components, setComponents] = useState<string[]>([]);
 
     const [newSocial, setNewSocial] = useState<SocialLink>({
         type: "site",
@@ -133,6 +136,7 @@ export default function InfoMaker() {
             author: authorName || "Open Tarot",
             tags,
             footer,
+            components
         };
 
         try {
@@ -168,6 +172,7 @@ export default function InfoMaker() {
             setNewSectionHeading("");
             setNewSectionBody("");
             setFooter({ description: "", socialLinks: [] });
+            setComponents([]);
             setCreatedAt(new Date().toISOString())
         } else {
             const selectedDoc = await getDoc(doc(db, "pages", value));
@@ -182,6 +187,7 @@ export default function InfoMaker() {
                 setSections(data.sections || []);
                 setTags(data.tags || []);
                 setFooter(data.footer || { description: "", socialLinks: [] });
+                setComponents(data.components || []);
 
                 const createdAt = data.createdAt;
                 setCreatedAt(createdAt);
@@ -211,28 +217,28 @@ export default function InfoMaker() {
                     label="ID do documento:"
                     value={customId}
                     onChange={async (e) => {
-                                const raw = e.target.value;
-                                const cleaned = StringHelper.sanitizeId(raw);
-                                setCustomId(cleaned);
-                                setIdTouched(true);
+                        const raw = e.target.value;
+                        const cleaned = StringHelper.sanitizeId(raw);
+                        setCustomId(cleaned);
+                        setIdTouched(true);
 
-                                if (cleaned) {
-                                    const docRef = doc(db, "pages", cleaned);
-                                    const snapshot = await getDoc(docRef);
-                                    setCustomIdExists(snapshot.exists());
-                                } else {
-                                    setCustomIdExists(false);
-                                }
+                        if (cleaned) {
+                            const docRef = doc(db, "pages", cleaned);
+                            const snapshot = await getDoc(docRef);
+                            setCustomIdExists(snapshot.exists());
+                        } else {
+                            setCustomIdExists(false);
+                        }
                     }}
                     placeholder="ex: como-funciona"
-                    validation={!StringHelper.isValidId(customId) ? "error" : customIdExists ? "alert" : "success" }
+                    validation={!StringHelper.isValidId(customId) ? "error" : customIdExists ? "alert" : "success"}
                     message={idTouched
-                                ? !StringHelper.isValidId(customId)
-                                    ? "ID inválido (use apenas letras minúsculas, números e hífens)"
-                                    : customIdExists
-                                        ? "Este ID já existe. Escolha outro."
-                                        : "ID válido e disponível"
-                                : null}
+                        ? !StringHelper.isValidId(customId)
+                            ? "ID inválido (use apenas letras minúsculas, números e hífens)"
+                            : customIdExists
+                                ? "Este ID já existe. Escolha outro."
+                                : "ID válido e disponível"
+                        : null}
                 />
             )}
 
@@ -259,7 +265,7 @@ export default function InfoMaker() {
                     <ImageUploader imageLoaded={imageLoaded} />
                 )}
             </label>
-            
+
             <label>
                 Visibilidade:
                 <select
@@ -273,7 +279,7 @@ export default function InfoMaker() {
                     <option value="institutional">Institucional</option>
                 </select>
             </label>
-            
+
             <InfoMakerLabelInput label="Título:" value={title} placeholder="Ex: A história do Tarot" onChange={async (e) => setTitle(e.target.value)} />
             <InfoMakerLabelInput label="Nome do autor (opcional):" value={authorName} placeholder="Ex: Márcia Sensitiva" onChange={async (e) => setAuthorName(e.target.value)} />
 
@@ -287,6 +293,11 @@ export default function InfoMaker() {
                 onNewSectionBody={setNewSectionBody}
                 onNewSectionHeader={setNewSectionHeading}
                 onChangeSection={setSections}
+            />
+
+            <InfoComponentSelector
+                components={components}
+                setComponents={setComponents}
             />
 
             <InfoMakerTag
