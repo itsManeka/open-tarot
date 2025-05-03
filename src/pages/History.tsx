@@ -50,8 +50,7 @@ export default function History() {
         if (!user) return;
 
         const q = query(
-            collection(db, "readings"),
-            where("uid", "==", user.uid),
+            collection(db, "users", user.uid, "readings"),
             orderBy("timestamp", "desc")
         );
 
@@ -70,7 +69,8 @@ export default function History() {
 
     const handleDelete = async (id: string) => {
         if (!confirm("Tem certeza que deseja excluir esta tiragem?")) return;
-        await deleteDoc(doc(db, "readings", id));
+        if (!user) return;
+        await deleteDoc(doc(db, "users", user.uid, "readings", id));
         fetchReadings();
     };
 

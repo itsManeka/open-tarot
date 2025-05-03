@@ -24,6 +24,7 @@ export default function HamburgerMenu({ user, isAdm, menuOpen, setMenuOpen }: Ha
                 <>
                     <Link to="/question" onClick={() => setMenuOpen(false)}>Tiragem</Link>
                     <Link to="/dream" onClick={() => setMenuOpen(false)}>Sonhos</Link>
+                    <Link to="/astrology" onClick={() => setMenuOpen(false)}>Astrologia</Link>
                     <Link to="/history" onClick={() => setMenuOpen(false)}>Histórico</Link>
                     <Link to="/profile" onClick={() => setMenuOpen(false)}>Perfil</Link>
                     {isAdm && (
@@ -31,6 +32,7 @@ export default function HamburgerMenu({ user, isAdm, menuOpen, setMenuOpen }: Ha
                     )}
                     <Link to="/news" onClick={() => setMenuOpen(false)}>Publicações</Link>
                     <Link to="/info/como-funciona" onClick={() => setMenuOpen(false)}>Como funciona</Link>
+                    <Link to="/info/contato" onClick={() => setMenuOpen(false)}>Contato</Link>
                     <button onClick={handleLogout}>Sair</button>
                 </>
             ) : (
@@ -38,6 +40,7 @@ export default function HamburgerMenu({ user, isAdm, menuOpen, setMenuOpen }: Ha
                     <Link to="/login" onClick={() => setMenuOpen(false)}>Faça Login</Link>
                     <Link to="/news" onClick={() => setMenuOpen(false)}>Publicações</Link>
                     <Link to="/info/como-funciona" onClick={() => setMenuOpen(false)}>Como funciona</Link>
+                    <Link to="/info/contato" onClick={() => setMenuOpen(false)}>Contato</Link>
                 </>
             )}
         </nav>

@@ -46,7 +46,6 @@
     font-size: 0.85rem;
 }
 
-/* Meta (autor + data) */
 .info-page-meta {
     display: flex;
     gap: 12px;
@@ -55,7 +54,6 @@
     margin-bottom: 20px;
 }
 
-/* Seções */
 .info-page .info-page-section {
     background-color: #1e1e1e;
     border-radius: 12px;
@@ -63,14 +61,12 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Título das seções */
 .info-page .info-page-section h2 {
     font-size: 1.5rem;
     color: #bb86fc;
     margin-bottom: 10px;
 }
 
-/* Parágrafos */
 .info-page .info-page-section p {
     font-size: 1rem;
     line-height: 1.6;
@@ -78,13 +74,11 @@
     color: #ddd;
 }
 
-/* Links */
 .info-page .info-page-section a {
     color: #bb86fc;
     text-decoration: underline;
 }
 
-/* Rodapé */
 .info-page-footer {
     margin-top: 40px;
     padding-top: 20px;
@@ -96,7 +90,6 @@
     color: #ccc;
 }
 
-/* Ícones sociais */
 .info-page-social-links {
     display: flex;
     gap: 12px;
@@ -122,7 +115,6 @@
     outline-offset: 2px;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .info-page {
         margin-top: 0;

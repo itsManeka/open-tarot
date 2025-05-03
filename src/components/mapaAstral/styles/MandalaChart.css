@@ -1,0 +1,29 @@
+.mandala-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+.mandala-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.zodiac-symbol {
+    fill: #333;
+    font-weight: bold;
+}
+
+.house-cusp-line {
+    stroke: #ccc;
+    stroke-dasharray: 2, 2;
+}
+
+.house-number {
+    fill: #666;
+    font-family: sans-serif;
+}

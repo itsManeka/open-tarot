@@ -33,4 +33,8 @@ export const StringHelper = {
             currency: 'BRL',
         }).format(Number(value));
     },
+
+    formatSignPosition: (grau: number) => {
+        return `${grau.toFixed(0)}°`;
+    },
 }

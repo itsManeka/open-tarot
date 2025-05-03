@@ -1,0 +1,116 @@
+.houses-table {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px;
+    gap: 5px;
+    margin: 0;
+    color: #e0e0e0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.houses-table-sign-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 10px;
+    align-content: center;
+    align-items: center;
+    width: 60%;
+    align-self: center;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+}
+
+.houses-table-sign-box {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.houses-table-sign-box-img {
+    width: 50x;
+    height: 50px;
+    margin-bottom: 5px;
+}
+
+.houses-table-sign-box-text {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.houses-table-sign-box-text.a {
+    color: #999;
+}
+
+.houses-table-sign-box-text.b {
+    color: #e0e0e0;
+}
+
+.houses-table-section {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.houses-table-section-item-box {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.houses-table-section-item {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    color: #e0e0e0;
+    padding: 5px 20px;
+    height: 40px;
+    background-color: #1e1e1e;
+    border-radius: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    flex: 0;
+    box-sizing: border-box;
+}
+
+.houses-table-section-item.house {
+    flex: 1;
+}
+
+.houses-table-star-img {
+    margin-left: -30px;
+    width: 50px;
+    height: 50px;
+}
+
+.houses-table-sign-img {
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 600px) {
+    .houses-table-sign-box-img {
+        width: 40x;
+        height: 40px;
+    }
+
+    .houses-table-sign-section {
+        gap: 5px;
+        width: 100%;
+    }
+
+    .houses-table-sign-box-text {
+        font-size: 0.6rem;
+        text-align: center;
+    }
+}

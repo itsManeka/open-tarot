@@ -1,20 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useEffect } from 'react';
-import { auth } from '../services/firebase';
 import LoginForm from '../components/LoginForm';
 import NewsGrid from '../components/NewsGrid';
 import './Login.css';
 
 export default function Login() {
-    const [user] = useAuthState(auth);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user) {
-            navigate('/');
-        }
-    }, [user, navigate]);
 
     const onClickAbout = async () => {
         navigate('/info/historia-do-tarot')

@@ -1,21 +1,22 @@
 import React from "react";
+import Loading from "../components/Loading";
+
 import { auth, db } from '../services/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
-import './Profile.css';
-import { StringHelper } from '../utils/stringHelper';
-import Loading from "../components/Loading";
 import { convertBrazilDateTimeToUTC, convertBrazilDateToUTC } from "../utils/dateHelper";
+
+import './Profile.css';
 
 const apiKey = import.meta.env.VITE_MAPS_API_KEY;
 const libraries: ('places')[] = ['places'];
 
 export default function Profile() {
-    const [mapaAstral, setMapaAstral] = useState<any | null>(null);
-    const [dadosOriginais, setDadosOriginais] = useState({ dataNascimento: '', horarioNascimento: '', localNascimento: '' });
+    const [dadosOriginais, setDadosOriginais] = useState({ dataNascimento: '', horarioNascimento: '', localNascimento: '', nome: '' });
+    
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
     const [pronomes, setPronomes] = useState<string[]>([]);
@@ -23,12 +24,16 @@ export default function Profile() {
     const [horarioNascimento, setHorarioNascimento] = useState('');
     const [localNascimento, setLocalNascimento] = useState('');
     const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
-    const [isEditing, setIsEditing] = useState(false);
-    const [message, setMessage] = useState('');
-    const [errMessage, setErrMessage] = useState('');
+    
+    const [messages, setMessages] = useState<string[]>([]);
+    const [errMessages, setErrMessages] = useState<string[]>([]);
     const [errors, setErrors] = useState({ nome: '', dataNascimento: '', horarioNascimento: '' });
+
     const [user] = useAuthState(auth);
+
     const [isLoading, setIsLoading] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
+
     const navigate = useNavigate();
 
     const { isLoaded } = useJsApiLoader({
@@ -45,7 +50,7 @@ export default function Profile() {
         setIsLoading(true);
 
         const fetchProfile = async () => {
-            const profileRef = doc(db, 'profile', user.uid);
+            const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
             const profileSnap = await getDoc(profileRef);
 
             if (profileSnap.exists()) {
@@ -69,22 +74,28 @@ export default function Profile() {
         setDadosOriginais({
             dataNascimento,
             horarioNascimento,
-            localNascimento
+            localNascimento,
+            nome
         });
-
-        const carregarMapaAstral = async () => {
-            const mapaRef = doc(db, 'mapas_astro', user.uid);
-            const mapaSnap = await getDoc(mapaRef);
-
-            if (mapaSnap.exists()) {
-                setMapaAstral(mapaSnap.data());
-            }
-        };
-
-        carregarMapaAstral();
 
         setIsLoading(false);
     }, [user, navigate]);
+
+    const showMessage = async (message: string) => {
+        setMessages((prevMessages) => [...prevMessages, message]);
+    
+        setTimeout(() => {
+            setMessages((prevMessages) => prevMessages.filter((msg) => msg !== message));
+        }, 3000);
+    };
+
+    const showErrMessages = async (message: string) => {
+        setErrMessages((prevMessages) => [...prevMessages, message]);
+    
+        setTimeout(() => {
+            setErrMessages((prevMessages) => prevMessages.filter((msg) => msg !== message));
+        }, 3000);
+    }
 
     const buscarMapaAstral = async () => {
         if (!user) return;
@@ -110,27 +121,26 @@ export default function Profile() {
                 const utDataNascimento = convertBrazilDateToUTC(dataNascimento);
                 const utHorarioNascimento = convertBrazilDateTimeToUTC(dataNascimento, horarioNascimento);
 
-                const res = await fetch(`${import.meta.env.VITE_ASTRO_API}/mapa-astral`, {
+                const token = await user.getIdToken();
+                const res = await fetch(`${import.meta.env.VITE_ASTRO_API}/calcular`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json',
+                                Authorization: `Bearer ${token}` },
                     body: JSON.stringify({
                         date: utDataNascimento,
                         time: utHorarioNascimento,
                         lat: latitude,
-                        lng: longitude
+                        lng: longitude,
+                        name: nome,
                     }),
                 });
 
                 const data = await res.json();
-
-                return data;
+                showMessage(data.message);
             }
-
-            return null;
         } catch (err) {
             console.error('Erro ao buscar mapa astral', err);
-            setErrMessage('Não foi possível calcular o mapa astral.');
-            return null;
+            showErrMessages('Não foi possível calcular o mapa astral.');
         }
     };
 
@@ -180,7 +190,7 @@ export default function Profile() {
             return;
         }
 
-        const profileRef = doc(db, 'profile', user.uid);
+        const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
         await setDoc(profileRef, {
             nome,
             sobrenome,
@@ -193,30 +203,24 @@ export default function Profile() {
         if (
             dataNascimento !== dadosOriginais.dataNascimento ||
             horarioNascimento !== dadosOriginais.horarioNascimento ||
-            localNascimento !== dadosOriginais.localNascimento
+            localNascimento !== dadosOriginais.localNascimento ||
+            nome !== dadosOriginais.nome
         ) {
-            setMessage('Calculando mapa astral (Pode demorar alguns segundos)...');
-
-            const novoMapa = await buscarMapaAstral();
-            if (novoMapa) {
-                const mapaRef = doc(db, 'mapas_astro', user.uid);
-                await setDoc(mapaRef, novoMapa);
-                setMapaAstral(novoMapa);
-            }
+            showMessage('O calculo do seu mapa astral logo será iniciado...');
+            buscarMapaAstral();
         }
 
         setDadosOriginais({
             dataNascimento,
             horarioNascimento,
-            localNascimento
+            localNascimento,
+            nome
         });
 
-        setMessage('Perfil atualizado com sucesso!');
+        showMessage('Perfil atualizado com sucesso!');
         setIsEditing(false);
 
         setIsLoading(false);
-
-        setTimeout(() => setMessage(''), 3000);
     };
 
     const onLoadAutocomplete = (autocompleteInstance: google.maps.places.Autocomplete) => {
@@ -281,6 +285,7 @@ export default function Profile() {
                                 className="profile-tag-input"
                                 placeholder="Digite e pressione Enter"
                                 onKeyDown={adicionarPronome}
+                                enterKeyHint="done"
                             />
                         )}
                     </div>
@@ -321,52 +326,8 @@ export default function Profile() {
                     </Autocomplete>
                 </label>
             </div>
-            {mapaAstral && (
-                <div className="profile-mapa-astral-signos">
-                    {mapaAstral?.signos && (
-                        <>
-                            <div className="profile-mapa-astral-item">
-                                <p className="profile-mapa-astral-posicao">Sol</p>
-                                <img
-                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.solar).toLowerCase()}.svg`}
-                                    alt={`Signo Solar: ${mapaAstral.signos.solar}`}
-                                    className="profile-mapa-astral-image"
-                                />
-                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.solar}</p>
-                            </div>
-                            <div className="profile-mapa-astral-item">
-                                <p className="profile-mapa-astral-posicao">Lua</p>
-                                <img
-                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.lunar).toLowerCase()}.svg`}
-                                    alt={`Signo Lunar: ${mapaAstral.signos.lunar}`}
-                                    className="profile-mapa-astral-image"
-                                />
-                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.lunar}</p>
-                            </div>
-                            <div className="profile-mapa-astral-item">
-                                <p className="profile-mapa-astral-posicao">Asc</p>
-                                <img
-                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.ascendente).toLowerCase()}.svg`}
-                                    alt={`Ascendente: ${mapaAstral.signos.ascendente}`}
-                                    className="profile-mapa-astral-image"
-                                />
-                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.ascendente}</p>
-                            </div>
-                            <div className="profile-mapa-astral-item">
-                                <p className="profile-mapa-astral-posicao">MdC</p>
-                                <img
-                                    src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.meioDoCeu).toLowerCase()}.svg`}
-                                    alt={`Meio do Céu: ${mapaAstral.signos.meioDoCeu}`}
-                                    className="profile-mapa-astral-image"
-                                />
-                                <p className="profile-mapa-astral-nome">{mapaAstral.signos.meioDoCeu}</p>
-                            </div>
-                        </>
-                    )}
-                </div>
-            )}
-            {errMessage && <p className="profile-error-message">{errMessage}</p>}
-            {message && <p className="profile-message">{message}</p>}
+            {messages && messages.map((message, index) => (<small key={index} className="profile-message">{message}</small>))}
+            {errMessages && errMessages.map((message, index) => (<small key={index} className="profile-error-message">{message}</small>))}
             <div className="profile-buttons">
                 {isEditing ? (
                     <button

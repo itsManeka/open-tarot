@@ -42,6 +42,18 @@
 
 .dream-info-link {
     font-style: italic;
+    cursor: pointer;
+    color: #bb86fc;
+    transition: color 0.2s ease;
+}
+
+.dream-info-link:hover {
+    color: #d5aaff;
+}
+
+.dream-info-link.active {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .dream-token-cost {

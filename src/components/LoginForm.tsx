@@ -26,7 +26,7 @@ export default function LoginForm() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) {
+        if (user && user.emailVerified) {
             navigate('/');
         }
     }, [user, navigate]);
@@ -62,7 +62,7 @@ export default function LoginForm() {
                 return;
             }
 
-            const profileRef = doc(db, 'profile', user.uid);
+            const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
             const profileSnap = await getDoc(profileRef);
 
             if (profileSnap.exists()) {
@@ -94,10 +94,10 @@ export default function LoginForm() {
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
             if (userCredential.user) {
                 await sendEmailVerification(userCredential.user);
                 handleVerification(userCredential.user);
+                await auth.signOut();
                 setIsRegister(false);
                 setStatus({general: 'Cadastro realizado! Verifique seu e-mail antes de continuar.'});
                 return;
@@ -121,7 +121,7 @@ export default function LoginForm() {
 
             const user = auth.currentUser;
             if (user) {
-                const profileRef = doc(db, 'profile', user.uid);
+                const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
                 const profileSnap = await getDoc(profileRef);
 
                 if (profileSnap.exists()) {
@@ -226,7 +226,7 @@ export default function LoginForm() {
                     Entrar
                 </span>
                 {' | '}
-                <span onClick={() => setIsRegister(true)} className={isRegister ? 'active' : ''}>
+                <span onClick={() => {setIsRegister(true); setShowResendVerification(false)}} className={isRegister ? 'active' : ''}>
                     Cadastrar
                 </span>
             </div>

@@ -12,7 +12,6 @@ import { ShortcutHelper } from '../utils/shortcutHelper';
 import './Home.css';
 
 export default function Home() {
-
     return (
         <div className="home-page">
             <div className="home-header">

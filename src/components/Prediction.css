@@ -109,3 +109,27 @@
 .shareable-wrapper .prediction-signo-nome {
     font-size: 1.5rem;
 }
+
+.prediction-info {
+    margin: 0;
+    padding: 0;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #757575;
+}
+
+.prediction-info-link {
+    font-style: italic;
+    cursor: pointer;
+    color: #bb86fc;
+    transition: color 0.2s ease;
+}
+
+.prediction-info:hover {
+    color: #d5aaff;
+}
+
+.prediction-info.active {
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -1,0 +1,65 @@
+.astrological-chart-container {
+    max-width: 900px;
+    margin: 40px auto 40px;
+    padding: 0 20px;
+    color: #e0e0e0;
+}
+
+.astrological-chart-tab-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.astrological-chart-tab-buttons button {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #bb86fc;
+    background: transparent;
+    color: #bb86fc;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.astrological-chart-tab-buttons button:hover {
+    background-color: #bb86fc22;
+    border-color: #d5b6ff; 
+}
+
+.astrological-chart-tab-buttons button.active {
+    background-color: #bb86fc;
+    color: #121212;
+}
+
+.astrological-chart-tab-buttons button:focus {
+    outline: 2px solid #bb86fc;
+    outline-offset: 2px;
+}
+
+.astrological-chart-info {
+    margin: 50px 50px;
+    padding: auto;
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: center;
+    color: #757575;
+}
+
+.astrological-chart-info-link {
+    font-style: italic;
+    cursor: pointer;
+    color: #bb86fc;
+    transition: color 0.2s ease;
+}
+
+.astrological-chart-info-link:hover {
+    color: #d5aaff;
+}
+
+.astrological-chart-info-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}

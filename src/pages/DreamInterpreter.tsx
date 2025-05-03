@@ -30,7 +30,7 @@ export default function DreamInterpreter() {
         if (!user) return;
 
         const fetchProfile = async () => {
-            const profileRef = doc(db, 'profile', user.uid);
+            const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
             const profileSnap = await getDoc(profileRef);
 
             if (profileSnap.exists()) {
@@ -70,8 +70,7 @@ export default function DreamInterpreter() {
 
         setIsLoading(true);
         try {
-            await addDoc(collection(db, "readings"), {
-                uid: user.uid,
+            await addDoc(collection(db, "users", user.uid, "readings"), {
                 type: "dream",
                 timestamp: Timestamp.now(),
                 description,

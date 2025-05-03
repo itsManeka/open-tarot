@@ -1,0 +1,108 @@
+.unifiedbar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0;
+    color: #e0e0e0;
+    box-sizing: border-box;
+}
+
+.unifiedbar-text {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #e0e0e0;
+}
+
+.unifiedbar-bar {
+    display: flex;
+    height: 36px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #444;
+}
+
+.unifiedbar-bar-segment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    background-color: #2b2b2b;
+    position: relative;
+    transition: width 0.4s ease;
+    border-right: 3px solid #121212;
+}
+
+.unifiedbar-bar-segment:last-child {
+    border-right: none;
+}
+
+.unifiedbar-bar-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.unifiedbar-bar-labels {
+    display: flex;
+    margin-top: 6px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.unifiedbar-bar-label {
+    text-align: center;
+}
+
+.unifiedbar-section {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.unifiedbar-item-box {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.unifiedbar-item {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    color: #e0e0e0;
+    padding: 5px 10px;
+    height: 40px;
+    background-color: #1e1e1e;
+    border-radius: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    flex: 0;
+    box-sizing: border-box;
+}
+
+.unifiedbar-item.all {
+    flex: 1;
+}
+
+.unifiedbar-icon {
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 600px) {
+    .unifiedbar-text {
+        font-size: 1rem;
+    }
+
+    .unifiedbar-item-box {
+        font-size: 0.7rem;
+    }
+}

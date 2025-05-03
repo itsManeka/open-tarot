@@ -1,4 +1,3 @@
-/* Contêiner principal */
 .profile-container {
     display: flex;
     flex-direction: column;
@@ -12,7 +11,6 @@
     box-sizing: border-box;
 }
 
-/* Título */
 .profile-title {
     font-size: 2rem;
     font-weight: bold;
@@ -20,7 +18,6 @@
     color: #bb86fc;
 }
 
-/* Formulário */
 .profile-form {
     display: flex;
     flex-direction: column;
@@ -91,26 +88,19 @@
     cursor: not-allowed;
 }
 
-/* Mensagem de sucesso */
 .profile-message {
-    margin-top: 1rem;
     font-size: 1rem;
     color: #03dac6;
-    /* Verde claro */
 }
 
-/* Estilo para mensagens de erro */
 .profile-error-message {
     color: #ff6b6b;
-    /* Vermelho claro */
     font-size: 0.9rem;
     margin-top: 5px;
 }
 
-/* Estilo para inputs com erro */
 .profile-input-error {
     border-color: #ff6b6b;
-    /* Vermelho claro */
 }
 
 /* Contêiner de tags */
@@ -169,74 +159,9 @@
     box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
 }
 
-/* Contêiner dos signos */
-.profile-mapa-astral-signos {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0.5rem;
-    width: 100%;
-}
-
-/* Item individual do signo */
-.profile-mapa-astral-item {
-    align-items: center;
-    width: 100px;
-}
-
-/* Posição do signo (Sol, Lua, etc.) */
-.profile-mapa-astral-posicao {
-    font-size: 0.9rem;
-    color: #bb86fc;
-}
-
-/* Imagem do signo */
-.profile-mapa-astral-image {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    border-radius: 50%;
-}
-
-/* Nome do signo */
-.profile-mapa-astral-nome {
-    font-size: 0.9rem;
-    color: #e0e0e0;
-}
-
 .profile-input,
 .profile-button,
 .profile-tag,
 .profile-remove-tag-button {
     transition: all 0.3s ease;
-}
-
-@media (max-width: 600px) {
-    .profile-mapa-astral-signos {
-        display: flex;
-        flex-direction: row;
-        gap: 0;
-        justify-content: center;
-    }
-    
-    .profile-mapa-astral-image {
-        width: 35px;
-        height: 35px;
-        object-fit: contain;
-        border-radius: 50%;
-    }
-
-    .profile-mapa-astral-item {
-        margin-bottom: 1rem;
-        width: 70px;
-    }
-
-    .profile-mapa-astral-nome {
-        font-size: 0.7rem;
-    }
-
-    .profile-mapa-astral-posicao {
-        font-size: 0.7rem;
-    }
 }

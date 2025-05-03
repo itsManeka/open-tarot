@@ -12,7 +12,7 @@ import ShareableWrapper from './ShareableWrapper';
 
 export default function Prediction() {
     const [user] = useAuthState(auth);
-    const [mapaAstral, setMapaAstral] = useState<any | null>(null);
+    const [signo, setSigno] = useState<any | null>(null);
     const [prediction, setPrediction] = useState('');
     const [isLoading, setIsLoading] = useState(true);
 
@@ -27,25 +27,28 @@ export default function Prediction() {
 
                 const hoje = getBrazilDate();
                 
-                const mapaRef = doc(db, 'mapas_astro', user.uid);
+                const mapaRef = doc(db, 'users', user.uid, 'mapa_astral', 'data');
                 const mapaSnap = await getDoc(mapaRef);
 
                 if (mapaSnap.exists()) {
-                    setMapaAstral(mapaSnap.data());
-                    const signo = mapaSnap.data().signos.solar;
+                    const data = mapaSnap.data()
+                    const result = data.mapa.astros.find((astro: any) => astro.nome === "Sol");
+                    const signoEncontrado = result.signo; 
+                    
+                    setSigno(signoEncontrado);
 
-                    const predictRef = doc(db, 'daily_predictions', `${signo}_${hoje}`);
+                    const predictRef = doc(db, 'daily_predictions', `${signoEncontrado}_${hoje}`);
                     const predictSnap = await getDoc(predictRef);
 
                     if (predictSnap.exists()) {
                         const predictionData = predictSnap.data();
                         setPrediction(predictionData.prediction);
                     } else {
-                        const prompt = PromptHelper.generateSignPredictionPrompt(signo);
+                        const prompt = PromptHelper.generateSignPredictionPrompt(signoEncontrado);
                         const novaPredicao = await sendMessageToAI(prompt);
                         await setDoc(predictRef, {
                             prediction: novaPredicao,
-                            signo: signo,
+                            signo: signoEncontrado,
                             data: hoje
                         });
                         setPrediction(novaPredicao);
@@ -74,26 +77,28 @@ export default function Prediction() {
             ) : (
                 <ShareableWrapper
                     title='Previsão do dia'
-                    text={`Previsão do dia para o signo de ${mapaAstral?.signos.solar || ''} em opentarot.net`}
-                    showButtons={!!mapaAstral}
+                    text={`Previsão do dia para o signo de ${signo || ''} em opentarot.net`}
+                    showButtons={!signo}
                 >
                     <div className="prediction-content">
                         <h2>Previsão do dia</h2>
-                        {mapaAstral ? (
+                        {signo ? (
                             <div className="prediction-map-content">
                                 <div className="prediction-signo-box">
                                     <img
-                                        src={`/assets/signos/${StringHelper.strNormalize(mapaAstral.signos.solar).toLowerCase()}.svg`}
-                                        alt={`Signo Solar: ${mapaAstral.signos.solar}`}
+                                        src={`/assets/signos/${StringHelper.strNormalize(signo).toLowerCase()}.svg`}
+                                        alt={`Signo Solar: ${signo}`}
                                         className="prediction-signo-image"
                                     />
-                                    <p className="prediction-signo-nome">{mapaAstral.signos.solar}</p>
+                                    <p className="prediction-signo-nome">{signo}</p>
                                 </div>
                                 <p>{prediction || 'Nenhuma previsão disponível no momento.'}</p>
                             </div>
                         ) : (
                             <div className="prediction-map-content">
-                                <p>Preencha o <Link to="/profile" className="prediction-info-link">seu perfil</Link> com data, horário e local de nascimento para saber a previsão diária para seu signo.</p>
+                                <p className="prediction-info">
+                                    Preencha o <Link to="/profile" className="prediction-info-link">seu perfil</Link> com data, horário e local de nascimento para saber a previsão diária para seu signo.
+                                </p>
                             </div>
                         )}
                     </div>

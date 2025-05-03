@@ -64,8 +64,7 @@ export default function Tarot() {
 
         setIsLoading(true);
         try {
-            await addDoc(collection(db, "readings"), {
-                uid: user.uid,
+            await addDoc(collection(db, "users", user.uid, "readings"), {
                 type: "tarot",
                 timestamp: Timestamp.now(),
                 cards: revealedCards.map((c) => ({

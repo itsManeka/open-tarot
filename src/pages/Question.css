@@ -41,6 +41,18 @@
 
 .question-info-link {
     font-style: italic;
+    cursor: pointer;
+    color: #bb86fc;
+    transition: color 0.2s ease;
+}
+
+.question-info-link:hover {
+    color: #d5aaff;
+}
+
+.question-info-link.active {
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .question-textarea {

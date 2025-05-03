@@ -38,6 +38,7 @@ export default function InfoMakerTag({tags, setTags} : InfoMakerTagProps) {
                         setNewTag("");
                     }
                 }}
+                enterKeyHint="done"
                 className="info-maker-tag-input"
                 placeholder="Pressione Enter para adicionar"
             />

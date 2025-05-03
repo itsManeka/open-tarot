@@ -20,7 +20,7 @@ export default function Question() {
         if (!user) return;
 
         const fetchReadings = async () => {
-            const profileRef = doc(db, 'profile', user.uid);
+            const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
             const profileSnap = await getDoc(profileRef);
 
             if (profileSnap.exists()) {
