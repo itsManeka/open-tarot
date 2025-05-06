@@ -1,12 +1,49 @@
+import { AstrologicalChartData } from "../types/astrologicalChartsTypes";
+import { UserProfile } from "../types/types";
 import { getBrazilDateTime } from "./dateHelper";
 
+const diasDaSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+const coresDoDia = ['azul', 'verde', 'vermelho', 'dourado', 'roxo', 'prata', 'laranja', 'amarelo', 'branco', 'rosa'];
+
+const getUserPrompt = (userProfile?: UserProfile) => {
+    let userPrompt = '';
+    if (userProfile) {
+        userPrompt = `Me chamo ${userProfile.nome}${userProfile.pronomes?.length ? ` (pronomes: ${userProfile.pronomes.join(', ')})` : ""}. Use essa informação com sutileza, apenas se necessário.`;
+    }
+    return userPrompt;
+}
+
+const getAstroPrompt = (userAstrologicalChart?: AstrologicalChartData) => {
+    let astroPrompt = '';
+    if (userAstrologicalChart) {
+        let astros = [];
+
+        const sol = userAstrologicalChart.astros.find(astro => astro.nome === "Sol");
+        if (sol) astros.push(`Sol em ${sol.signo}`);
+
+        const lua = userAstrologicalChart.astros.find(astro => astro.nome === "Lua");
+        if (lua) astros.push(`Lua em ${lua.signo}`);
+        
+        const asc = userAstrologicalChart.astros.find(astro => astro.nome === "Ascendente");
+        if (asc) astros.push(`Ascendente em ${asc.signo}`);
+
+        if (astros.length > 0) astroPrompt = astros.join(', ') + ".";
+    }
+    return astroPrompt;
+}
+
 export const PromptHelper = {
-    generateTarotPrompt: (question: string, revealedCards: { name: string; interpretation: string }[], currentCardName: string, isFinalCard: boolean) => {
+    generateTarotPrompt: (question: string, userProfile: UserProfile | undefined, userAstrologicalChart: AstrologicalChartData | undefined, revealedCards: { name: string; interpretation: string }[], currentCardName: string, isFinalCard: boolean) => {
+        const userPrompt = getUserPrompt(userProfile);
+        const astroPrompt = getAstroPrompt(userAstrologicalChart);
+
         const previousContext = revealedCards
             .map((c, i) => `Carta ${i + 1}: ${c.name} - ${c.interpretation}`)
             .join("\n");
 
         return `
+        ${userPrompt}
+
         Você é um sábio e experiente leitor de Tarot, conhecido por suas leituras profundas e intuitivas. Uma pessoa buscou sua orientação com a seguinte pergunta:
 
         "${question}"
@@ -31,16 +68,15 @@ export const PromptHelper = {
         - Foque apenas na interpretação clara e direta das cartas em relação à pergunta e ao contexto.
 
         Traga sabedoria, clareza e orientação, como faria um verdadeiro mestre do Tarot.
-        `;
+
+        ${astroPrompt ? `Considere que essa pessoa tem o seguinte perfil astrológico: ${astroPrompt}. Isso pode influenciar a forma como as cartas se manifestam e se relacionam com sua jornada, mas use essa informação com sutileza e apenas se necessário.` : ""}
+        `.trim();
     },
 
     generateSignPredictionPrompt: (sign: string) => {
         const data = getBrazilDateTime();
-        const diasDaSemana = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
         const hoje = new Date();
         const diaSemana = diasDaSemana[hoje.getDay()];
-
-        const coresDoDia = ['azul', 'verde', 'vermelho', 'dourado', 'roxo', 'prata', 'laranja'];
         const cor = coresDoDia[Math.floor(Math.random() * coresDoDia.length)];
 
         return `
@@ -81,8 +117,13 @@ export const PromptHelper = {
         `;
     },
 
-    generateDreamInterpretationPrompt: (dream: string) => {
+    generateDreamInterpretationPrompt: (dream: string, userProfile: UserProfile | undefined, userAstrologicalChart: AstrologicalChartData | undefined) => {
+        const userPrompt = getUserPrompt(userProfile);
+        const astroPrompt = getAstroPrompt(userAstrologicalChart);
+
         return `
+        ${userPrompt}
+
         Você é um intérprete de sonhos sábio, sensível e conhecedor da simbologia dos sonhos, inspirado na astrologia, tarot e psicologia arquetípica.
         
         Um usuário descreveu o seguinte sonho:
@@ -95,6 +136,8 @@ export const PromptHelper = {
         Destaque os possíveis significados dos símbolos principais e finalize com uma breve mensagem ou conselho que inspire o usuário a refletir sobre sua vida desperta.
         
         Limite sua resposta a no máximo 4 parágrafos curtos.
-        `;
+
+        ${astroPrompt ? `Leve em conta que o usuário tem esse perfil astrológico: ${astroPrompt}. Considere como isso pode influenciar os símbolos e temas presentes no sonho, mas use essa informação com sutileza e apenas se necessário.` : ""}
+        `.trim();
     }
 };

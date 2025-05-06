@@ -3,6 +3,7 @@ import { Atributes, Distributions, Numerology, STARS_IMG } from "../../types/ast
 import UnifiedBar from "./UnifiedBar";
 
 import './styles/Details.css'
+import ShareableWrapper from "../ShareableWrapper";
 
 interface DetailsProps {
     distributions: Distributions;
@@ -46,49 +47,65 @@ export function Details({distributions, atributes, numerology} : DetailsProps) {
 
     return (
         <div className="details-table">
+            <h2 className="details-table-title">Detalhes</h2>
             {bars.map((bar, index) => (
-                <UnifiedBar key={index} title={bar.title} data={bar.data} />
+                <ShareableWrapper
+                    title="Mapa Astral"
+                    text="Distribuições do Mapa Astral"
+                >
+                    <UnifiedBar key={index} title={bar.title} data={bar.data} />
+                </ShareableWrapper>
             ))}
-            <p className="details-table-category-name">Atributos</p>
-            <div className="details-table-section">
-                <div className="details-table-section-item-box">
-                    {atributes.regentes.map((regente, index) => (
-                        <img key={index} className="details-table-star-img" src={`/assets/astrology/${STARS_IMG[regente]}.svg`} />
-                    ))}
-                    <div className="details-table-section-item flex">
-                        {atributes.regentes.join(" • ")}
-                    </div>
-                    <div className="details-table-section-item">
-                        Regentes
-                    </div>
-                </div>
-                <div className="details-table-section-item-box">
-                    <img className="details-table-star-img" src={`/assets/signos/${StringHelper.strNormalize(atributes.tonica).toLowerCase()}.svg`} />
-                    <div className="details-table-section-item flex">
-                        {atributes.tonica}
-                    </div>
-                    <div className="details-table-section-item">
-                        Tônica
-                    </div>
-                </div>
-            </div>
-            <p className="details-table-category-name">Numerologia</p>
-            <div className="details-table-section">
-                <div className="details-table-section-item-box">
-                    <div className="details-table-section-item-number-box">
-                        <div className="details-table-section-item-numerology">
-                            {numerology.caminhoDaVida.representacao}
+            <ShareableWrapper
+                title="Mapa Astral"
+                text="Atributos do Mapa Astral"
+            >
+                <p className="details-table-category-name">Atributos</p>
+                <div className="details-table-section">
+                    <div className="details-table-section-item-box" data-snapshot-img="download">
+                        {atributes.regentes.map((regente, index) => (
+                            <img key={index} className="details-table-star-img" src={`/assets/astrology/${STARS_IMG[regente]}.svg`} />
+                        ))}
+                        <div className="details-table-section-item flex">
+                            {atributes.regentes.join(" • ")}
                         </div>
-                        Caminho de Vida
-                    </div>
-                    <div className="details-table-section-item-number-box">
-                        <div className="details-table-section-item-numerology">
-                            {numerology.numeroDestino}
+                        <div className="details-table-section-item">
+                            Regentes
                         </div>
-                        Destino
+                    </div>
+                    <div className="details-table-section-item-box"  data-snapshot-img="download">
+                        <img className="details-table-star-img" src={`/assets/signos/${StringHelper.strNormalize(atributes.tonica).toLowerCase()}.svg`} />
+                        <div className="details-table-section-item flex">
+                            {atributes.tonica}
+                        </div>
+                        <div className="details-table-section-item">
+                            Tônica
+                        </div>
                     </div>
                 </div>
-            </div>
+            </ShareableWrapper>
+            <ShareableWrapper
+                title="Mapa Astral"
+                text="Numerologia do Mapa Astral"
+            >
+                <p className="details-table-category-name">Numerologia</p>
+                <div className="details-table-section">
+                    <div className="details-table-section-item-box">
+                        <div className="details-table-section-item-number-box">
+                            <div className="details-table-section-item-numerology">
+                                {numerology.caminhoDaVida.representacao}
+                            </div>
+                            Caminho de Vida
+                        </div>
+                        <div className="details-table-section-item-number-box">
+                            <div className="details-table-section-item-numerology">
+                                {numerology.numeroDestino}
+                            </div>
+                            Destino
+                        </div>
+                    </div>
+                </div>
+            </ShareableWrapper>
         </div>
     );
 }

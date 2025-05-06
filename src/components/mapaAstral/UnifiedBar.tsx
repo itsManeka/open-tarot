@@ -22,6 +22,7 @@ export default function UnifiedBar({ data, title }: UnifiedBarProps) {
                                 width: `${percent}%`,
                                 backgroundColor: `${item.color}`
                             }}
+                            data-snapshot-img="download"
                         >
                             <img className="unifiedbar-bar-icon" src={item.icon} />
                         </div>
@@ -47,7 +48,7 @@ export default function UnifiedBar({ data, title }: UnifiedBarProps) {
                     const percent = ((item.value / total) * 100).toFixed(0);
                     return (
                         <div key={index} className="unifiedbar-item-box">
-                            <div className="unifiedbar-item">
+                            <div className="unifiedbar-item"  data-snapshot-img="download">
                                 <img className="unifiedbar-icon" src={item.icon} />
                             </div>
                             <div className="unifiedbar-item all">

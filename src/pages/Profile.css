@@ -52,7 +52,6 @@
     color: #757575;
 }
 
-/* Botões */
 .profile-buttons {
     display: flex;
     justify-content: center;
@@ -62,9 +61,7 @@
 
 .profile-button {
     background-color: #bb86fc;
-    /* Roxo claro */
     color: #121212;
-    /* Texto escuro */
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
@@ -103,7 +100,6 @@
     border-color: #ff6b6b;
 }
 
-/* Contêiner de tags */
 .profile-tags-container {
     display: flex;
     flex-wrap: wrap;
@@ -111,7 +107,6 @@
     margin-top: 0.5rem;
 }
 
-/* Estilo das tags */
 .profile-tag {
     display: flex;
     align-items: center;
@@ -126,7 +121,6 @@
     background-color: #9a67ea;
 }
 
-/* Botão para remover tags */
 .profile-remove-tag-button {
     background: none;
     border: none;
@@ -141,7 +135,11 @@
     color: #ff6b6b;
 }
 
-/* Campo de entrada para novas tags */
+.profile-remove-tag-button:disabled {
+    color: #121212;
+    cursor: default;
+}
+
 .profile-tag-input {
     border: 1px solid #bb86fc;
     border-radius: 8px;
@@ -154,9 +152,9 @@
 
 .profile-input:focus,
 .profile-tag-input:focus {
-    border-color: #03dac6;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
+    border-color: #d5aaff;
+    box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.3);
 }
 
 .profile-input,

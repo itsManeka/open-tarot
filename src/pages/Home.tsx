@@ -10,10 +10,15 @@ import TokenStatus from '../components/TokenStatus';
 import { ShortcutHelper } from '../utils/shortcutHelper';
 
 import './Home.css';
+import { NiceHelmet } from '../components/NiceHelmet';
 
 export default function Home() {
     return (
         <div className="home-page">
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Home"}]}
+            />
             <div className="home-header">
                 <img src="/vite.svg" alt="Logo" className="home-site-logo" />
                 <h1 className="home-site-title">Open Tarot</h1>

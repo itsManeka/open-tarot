@@ -42,6 +42,17 @@
     color: #d0aaff;
 }
 
+.hamburger-menu-notification-badge {
+    position: absolute;
+    top: 325px;
+    right: 50px;
+    width: 8px;
+    height: 8px;
+    background-color: #bb86fc;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #2b2b2b;
+}
+
 @media (max-width: 480px) {
     .hamburger-menu {
         padding-top: 60px;
@@ -51,5 +62,10 @@
     .hamburger-menu a,
     .hamburger-menu button {
         font-size: 0.7rem;
+    }
+
+    .hamburger-menu-notification-badge {
+        top: 260px;
+        right: 45px;
     }
 }

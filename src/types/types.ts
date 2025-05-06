@@ -35,3 +35,12 @@ export type ImageOption = {
     label: string;
     url: string;
 };
+
+export type UserProfile = {
+    dataNascimento: string;
+    horarioNascimento: string;
+    localNascimento: string;
+    nome: string;
+    sobrenome: string;
+    pronomes: string[];
+};

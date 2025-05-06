@@ -1,15 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTokens } from "../../context/TokenProvider";
 import './styles/Header.css'
+import MenuButton from "./MenuButton";
 
 type HeaderProps = {
     user: any;
     profileName: string;
     menuOpen: boolean;
+    hasNotifications: boolean;
     setMenuOpen: (value: boolean) => void;
 };
 
-export default function Header({ user, profileName, menuOpen, setMenuOpen }: HeaderProps) {
+export default function Header({ user, profileName, menuOpen, hasNotifications, setMenuOpen }: HeaderProps) {
     const location = useLocation();
     const isLoginPage = location.pathname === "/login";
 
@@ -54,12 +56,11 @@ export default function Header({ user, profileName, menuOpen, setMenuOpen }: Hea
                 >
                     {user ? profileName : "Visitante"}
                 </Link>
-                <button
-                    className="hamburger-button"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    ☰
-                </button>
+                <MenuButton
+                    menuOpen={menuOpen}
+                    hasNotifications={hasNotifications}
+                    setMenuOpen={setMenuOpen}
+                />
             </div>
         </header>
     );

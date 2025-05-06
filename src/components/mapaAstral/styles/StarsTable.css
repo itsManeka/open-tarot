@@ -11,6 +11,13 @@
     box-sizing: border-box;
 }
 
+.stars-table-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #bb86fc;
+    text-align: center;
+}
+
 .stars-table-section {
     display: flex;
     flex-direction: column;

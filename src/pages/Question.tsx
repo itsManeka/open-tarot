@@ -4,15 +4,19 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { useTokens } from "../context/TokenProvider";
-import './Question.css';
 import Loading from '../components/Loading';
+import { NiceHelmet } from '../components/NiceHelmet';
+
+import './Question.css';
 
 export default function Question() {
-    const [question, setQuestion] = useState('');
     const navigate = useNavigate();
+
+    const [question, setQuestion] = useState('');
     const [user] = useAuthState(auth);
-    const [isProfileExists, setIsProfileExists] = useState(false);
     const [message, setMessage] = useState('');
+
+    const [isProfileExists, setIsProfileExists] = useState(true);
     
     const { tokens, loading } = useTokens();
     
@@ -54,6 +58,10 @@ export default function Question() {
 
     return (
         <div className="question-container">
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Sobre qual assunto você quer saber?"}]}
+            />
             <div className="question-header">
                 <h2 className="question-title">
                     Sobre qual assunto você quer saber?
@@ -77,7 +85,7 @@ export default function Question() {
             <button
                 className="question-button"
                 onClick={continuar}
-                disabled={!question.trim()} /* Desabilita o botão se a pergunta estiver vazia */
+                disabled={!question.trim()}
             >
                 Consultar
             </button>

@@ -6,6 +6,7 @@ import NewsCard from '../components/NewsCard';
 import Loading from '../components/Loading';
 import { useAuthState } from "react-firebase-hooks/auth";
 import './News.css';
+import { NiceHelmet } from '../components/NiceHelmet';
 
 type PageWithId = PageContent & { id: string };
 
@@ -69,6 +70,10 @@ export default function News() {
 
     return (
         <div className="news-container">
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Publicações"}]}
+            />
             <h1 className="news-title">Publicações</h1>
 
             <div className="news-tag-filter">

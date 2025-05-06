@@ -1,18 +1,11 @@
 import { useEffect, useState } from "react";
 import { db, auth } from "../services/firebase";
-import {
-    collection,
-    query,
-    where,
-    getDocs,
-    orderBy,
-    deleteDoc,
-    doc
-} from "firebase/firestore";
+import { collection, query, getDocs, orderBy, deleteDoc, doc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import "./History.css";
 import { tarotDeck } from "../data/tarotDeck";
 import AmzBanner from "../components/AmzBanner";
+import { NiceHelmet } from "../components/NiceHelmet";
 
 type SavedCard = {
     name: string;
@@ -91,6 +84,10 @@ export default function History() {
 
     return (
         <div className="history-container">
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Histórico"}]}
+            />
             <h2 className="history-title">Histórico</h2>
 
             <div className="history-filters">

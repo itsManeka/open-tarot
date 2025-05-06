@@ -1,5 +1,6 @@
 import { StringHelper } from "../../utils/stringHelper";
 import { Stars, STARS_IMG } from "../../types/astrologicalChartsTypes";
+import ShareableWrapper from "../ShareableWrapper";
 
 import "./styles/StarsTable.css";
 
@@ -25,31 +26,37 @@ export function StarsTable({ stars }: StarsTableProps) {
 
     return (
         <div className="stars-table">
+            <h2 className="stars-table-title">Astros</h2>
             {starsClassification.map(({ category, itens }) =>
                 itens.length > 0 && (
-                    <div key={category} className="stars-table-section">
-                        <p className="stars-table-category-name">{category}</p>
-                        {itens.map((star) => (
-                            <div key={star.nome} className="stars-table-section-item-box">
-                                <div className="stars-table-section-item star">
-                                    <img className="stars-table-star-img" src={`/assets/astrology/${STARS_IMG[star.nome]}.svg`} />
-                                    {star.nome}
+                    <ShareableWrapper
+                        title="Mapa Astral"
+                        text={`Astros da categoria ${category}`}
+                    >
+                        <div key={category} className="stars-table-section">
+                            <p className="stars-table-category-name">{category}</p>
+                            {itens.map((star) => (
+                                <div key={star.nome} className="stars-table-section-item-box">
+                                    <div className="stars-table-section-item star" data-snapshot-img="download">
+                                        <img className="stars-table-star-img" src={`/assets/astrology/${STARS_IMG[star.nome]}.svg`} />
+                                        {star.nome}
+                                    </div>
+                                    <div className="stars-table-section-item" data-snapshot-img="download">
+                                        <img className="stars-table-sign-img" src={`/assets/signos/${StringHelper.strNormalize(star.signo).toLowerCase()}.svg`} />
+                                        {star.signo}
+                                    </div>
+                                    <div className="stars-table-section-item">
+                                        {StringHelper.formatSignPosition(star.grau)}
+                                    </div>
+                                    <div className="stars-table-section-item icons" data-snapshot-img="download">
+                                        <img className="stars-table-icon-img" src={`/assets/elements/${star.elemento}.svg`} />
+                                        <img className="stars-table-icon-img" src={`/assets/modalitys/${star.modalidade}.svg`} />
+                                        <img className="stars-table-icon-img" src={`/assets/polaritys/${star.polaridade}.svg`} />
+                                    </div>
                                 </div>
-                                <div className="stars-table-section-item">
-                                    <img className="stars-table-sign-img" src={`/assets/signos/${StringHelper.strNormalize(star.signo).toLowerCase()}.svg`} />
-                                    {star.signo}
-                                </div>
-                                <div className="stars-table-section-item">
-                                    {StringHelper.formatSignPosition(star.grau)}
-                                </div>
-                                <div className="stars-table-section-item icons">
-                                    <img className="stars-table-icon-img" src={`/assets/elements/${star.elemento}.svg`} />
-                                    <img className="stars-table-icon-img" src={`/assets/modalitys/${star.modalidade}.svg`} />
-                                    <img className="stars-table-icon-img" src={`/assets/polaritys/${star.polaridade}.svg`} />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    </ShareableWrapper>
                 )
             )}
         </div>

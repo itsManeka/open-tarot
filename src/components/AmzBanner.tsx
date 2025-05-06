@@ -3,6 +3,8 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { useCarouselScroll } from "../hooks/useCarouselScroll";
 import { StringHelper } from "../utils/stringHelper";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import './AmzBanner.css';
 
 type Product = {
@@ -15,6 +17,7 @@ type Product = {
 };
 
 export default function AmzBanner({ query }: { query: string }) {
+    const queryTrim = query.trim();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -24,9 +27,13 @@ export default function AmzBanner({ query }: { query: string }) {
     useCarouselScroll(carouselRef);
 
     useEffect(() => {
+        if (!queryTrim || queryTrim == '') {
+            return
+        }
+
         const fetchAds = async () => {
             try {
-                const docRef = doc(db, "amazonAds", query);
+                const docRef = doc(db, "amazonAds", queryTrim);
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
@@ -41,7 +48,7 @@ export default function AmzBanner({ query }: { query: string }) {
                     }
                 }
 
-                const res = await fetch(`${import.meta.env.VITE_AMZ_ADS_API}/search?query=${query}&itemCount=10`);
+                const res = await fetch(`${import.meta.env.VITE_AMZ_ADS_API}/search?query=${queryTrim}&itemCount=10`);
                 const data = await res.json();
 
                 setProducts(data);
@@ -55,12 +62,12 @@ export default function AmzBanner({ query }: { query: string }) {
         };
 
         fetchAds();
-    }, [query]);
+    }, [queryTrim]);
 
     const startScrolling = (distance: number) => {
         scrollInterval.current = setInterval(() => {
             carouselRef.current?.scrollBy({ left: distance, behavior: "smooth" });
-        }, 100); // Ajuste o intervalo para controlar a velocidade
+        }, 100);
     };
 
     const stopScrolling = () => {
@@ -77,20 +84,20 @@ export default function AmzBanner({ query }: { query: string }) {
             <div className="ad-header">
                 <button
                     className="amz-scroll-btn"
-                    onMouseDown={() => startScrolling(-10)} // Scroll para a esquerda
+                    onMouseDown={() => startScrolling(-10)}
                     onMouseUp={stopScrolling}
-                    onMouseLeave={stopScrolling} // Garante que o scroll pare ao sair do botão
+                    onMouseLeave={stopScrolling}
                 >
-                    &#x25C0;
+                    <ChevronLeft />
                 </button>
                 <p className="ad-label">Publicidade</p>
                 <button
                     className="amz-scroll-btn"
-                    onMouseDown={() => startScrolling(10)} // Scroll para a direita
+                    onMouseDown={() => startScrolling(10)}
                     onMouseUp={stopScrolling}
-                    onMouseLeave={stopScrolling} // Garante que o scroll pare ao sair do botão
+                    onMouseLeave={stopScrolling}
                 >
-                    &#x25B6;
+                    <ChevronRight />
                 </button>
             </div>
             <div className="amazon-carousel-wrapper" ref={carouselRef}>

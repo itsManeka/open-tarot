@@ -78,13 +78,13 @@ export default function Prediction() {
                 <ShareableWrapper
                     title='Previsão do dia'
                     text={`Previsão do dia para o signo de ${signo || ''} em opentarot.net`}
-                    showButtons={!signo}
+                    showButtons={signo? true : false}
                 >
                     <div className="prediction-content">
                         <h2>Previsão do dia</h2>
                         {signo ? (
                             <div className="prediction-map-content">
-                                <div className="prediction-signo-box">
+                                <div className="prediction-signo-box" data-snapshot-img="download">
                                     <img
                                         src={`/assets/signos/${StringHelper.strNormalize(signo).toLowerCase()}.svg`}
                                         alt={`Signo Solar: ${signo}`}

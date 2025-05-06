@@ -3,8 +3,9 @@ export const StringHelper = {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     },
 
-    loremIpsum: () => {
-        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    loremIpsum: (n?: number) => {
+        const count = n ?? 1;
+        return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.".repeat(count);
     },
 
     sanitizeId: (value: string) => {
@@ -37,4 +38,31 @@ export const StringHelper = {
     formatSignPosition: (grau: number) => {
         return `${grau.toFixed(0)}°`;
     },
+
+    mostFrequentWord: (texto: string) => {
+        const palavras = texto
+            .toLowerCase()
+            .replace(/[^\w\s]/g, '')
+            .split(/\s+/);
+
+        const contagem: Record<string, number> = {};
+
+        for (const palavra of palavras) {
+            if (palavra.length > 3) {
+                contagem[palavra] = (contagem[palavra] || 0) + 1;
+            }
+        }
+
+        let maisFrequente = '';
+        let max = 0;
+
+        for (const [palavra, quantidade] of Object.entries(contagem)) {
+            if (quantidade > max) {
+                max = quantidade;
+                maisFrequente = palavra;
+            }
+        }
+
+        return maisFrequente;
+    }
 }

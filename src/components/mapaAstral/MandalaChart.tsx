@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stars, Houses, STARS_IMG } from '../../types/astrologicalChartsTypes';
 import './styles/MandalaChart.css';
+import ShareableWrapper from '../ShareableWrapper';
 
 interface MandalaChartProps {
     stars: Stars[];
@@ -67,94 +68,106 @@ export function MandalaChart({ stars, houses }: MandalaChartProps) {
     });
 
     return (
-        <div className="mandala-container">
-            <svg width={SVG_SIZE} height={SVG_SIZE} viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} className="mandala-svg">
-                <circle cx={CENTER} cy={CENTER} r={ZODIAC_RADIUS + 15} fill="none" stroke="#ccc" />
-                <circle cx={CENTER} cy={CENTER} r={HOUSE_LABEL_RADIUS - 5} fill="none" stroke="#ccc" />
+        <ShareableWrapper
+            title='Mapa Astral'
+            text={`Mandala do mapa astral em opentarot.net`}
+            showButtons={true}
+        >
+            <div className="mandala-container" data-snapshot-img="download">
+                <h2 className="mandala-title">Mandala</h2>
+                <svg width={SVG_SIZE} height={SVG_SIZE} viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} className="mandala-svg">
+                    <circle cx={CENTER} cy={CENTER} r={ZODIAC_RADIUS + 15} fill="none" stroke="#ccc" />
+                    <circle cx={CENTER} cy={CENTER} r={HOUSE_LABEL_RADIUS - 5} fill="none" stroke="#ccc" />
 
-                <g className="zodiac-signs">
                     {zodiacSegments.map((sign) => (
-                        <image
-                            key={sign.name}
-                            href={`/assets/signos/${sign.symbol}.svg`}
-                            x={sign.x -15}
-                            y={sign.y -15}
-                            width={30}
-                            height={30}
-                        />
-                    ))}
-                </g>
-
-                <g className="house-cusps">
-                    {sortedHouses.map((house, index) => {
-                        const { x: cuspX, y: cuspY } = getCoords(house.grauZodiaco, HOUSE_CUSP_RADIUS);
-
-                        const nextHouse = sortedHouses[(index + 1) % 12];
-                        let endDegree = nextHouse?.grauZodiaco;
-                        
-                        if (endDegree < house.grauZodiaco) {
-                            endDegree += 360;
-                        }
-
-                        const midDegree = (typeof endDegree === 'number' && typeof house.grauZodiaco === 'number')
-                            ? (house.grauZodiaco + endDegree) / 2
-                            : house.grauZodiaco;
-
-                        const { x: labelX, y: labelY } = getCoords(midDegree, HOUSE_SYMBOL_RADIUS);
-
-                        return (
-                            <React.Fragment key={`house-${house.casa}`}>
-                                <line
-                                    x1={CENTER}
-                                    y1={CENTER}
-                                    x2={cuspX}
-                                    y2={cuspY}
-                                    stroke="#aaa"
-                                    strokeWidth="1"
-                                    className="house-cusp-line"
-                                />
-                                
-                                <svg className="house-number" width="60" height="60" xmlns="http://www.w3.org/2000/svg" x={labelX - 30} y={labelY - 30}>
-                                    <circle cx={30} cy={30} r={15} fill="#bb86fc" />
-                                    <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" fill="#121212" fontSize={HOUSE_LABEL_SIZE} >
-                                        C{house.casa}
-                                    </text>
-                                </svg>
-                            </React.Fragment>
-                        );
-                    })}
-                </g>
-
-                <g className="planets">
-                    {stars.map((star, i) => {
-                        const nearbyPlanets = stars.filter(other => 
-                            Math.abs(other.grauZodiaco - star.grauZodiaco) < 10 && other.nome !== star.nome
-                        );
-
-                        const indexInGroup = nearbyPlanets
-                            .concat(star)
-                            .sort((a, b) => a.nome.localeCompare(b.nome))
-                            .findIndex(p => p.nome === star.nome);
-
-                        const randomJitter = Math.random() * 5;
-
-                        const adjustedRadius = PLANET_RADIUS - indexInGroup * 24 + randomJitter;
-
-                        const { x, y } = getCoords(star.grauZodiaco, adjustedRadius);
-
-                        return (
+                        <g className="zodiac-signs" role='img' aria-label={sign.name}>
+                            <title>{sign.name}</title>
                             <image
-                                key={`planet-${star.nome}-${i}`}
-                                href={`/assets/astrology/${STARS_IMG[star.nome]}.svg`}
-                                x={x - 15}
-                                y={y - 15}
+                                key={sign.name}
+                                href={`/assets/signos/${sign.symbol}.svg`}
+                                x={sign.x -15}
+                                y={sign.y -15}
                                 width={30}
                                 height={30}
                             />
-                        );
-                    })}
-                </g>
-            </svg>
-        </div>
+                        </g>
+                    ))}
+
+                    <g className="house-cusps">
+                        {sortedHouses.map((house, index) => {
+                            const { x: cuspX, y: cuspY } = getCoords(house.grauZodiaco, HOUSE_CUSP_RADIUS);
+
+                            const nextHouse = sortedHouses[(index + 1) % 12];
+                            let endDegree = nextHouse?.grauZodiaco;
+                            
+                            if (endDegree < house.grauZodiaco) {
+                                endDegree += 360;
+                            }
+
+                            const midDegree = (typeof endDegree === 'number' && typeof house.grauZodiaco === 'number')
+                                ? (house.grauZodiaco + endDegree) / 2
+                                : house.grauZodiaco;
+
+                            const { x: labelX, y: labelY } = getCoords(midDegree, HOUSE_SYMBOL_RADIUS);
+
+                            return (
+                                <React.Fragment key={`house-${house.casa}`}>
+                                    <line
+                                        x1={CENTER}
+                                        y1={CENTER}
+                                        x2={cuspX}
+                                        y2={cuspY}
+                                        stroke="#aaa"
+                                        strokeWidth="1"
+                                        className="house-cusp-line"
+                                    />
+                                    
+                                    <svg className="house-number" width="60" height="60" xmlns="http://www.w3.org/2000/svg" x={labelX - 30} y={labelY - 30}>
+                                        <title>Casa {house.casa}</title>
+                                        <circle cx={30} cy={30} r={15} fill="#bb86fc" />
+                                        <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" fill="#121212" fontSize={HOUSE_LABEL_SIZE} >
+                                            C{house.casa}
+                                        </text>
+                                    </svg>
+                                </React.Fragment>
+                            );
+                        })}
+                    </g>
+
+                    <g className="planets">
+                        {stars.map((star, i) => {
+                            const nearbyPlanets = stars.filter(other => 
+                                Math.abs(other.grauZodiaco - star.grauZodiaco) < 10 && other.nome !== star.nome
+                            );
+
+                            const indexInGroup = nearbyPlanets
+                                .concat(star)
+                                .sort((a, b) => a.nome.localeCompare(b.nome))
+                                .findIndex(p => p.nome === star.nome);
+
+                            const randomJitter = Math.random() * 5;
+
+                            const adjustedRadius = PLANET_RADIUS - indexInGroup * 24 + randomJitter;
+
+                            const { x, y } = getCoords(star.grauZodiaco, adjustedRadius);
+
+                            return (
+                                <g role='img' aria-label={star.nome}>
+                                    <title>{star.nome}</title>
+                                    <image
+                                        key={`planet-${star.nome}-${i}`}
+                                        href={`/assets/astrology/${STARS_IMG[star.nome]}.svg`}
+                                        x={x - 15}
+                                        y={y - 15}
+                                        width={30}
+                                        height={30}
+                                    />
+                                </g>
+                            );
+                        })}
+                    </g>
+                </svg>
+            </div>
+        </ShareableWrapper>
     );
 }

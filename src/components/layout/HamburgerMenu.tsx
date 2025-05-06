@@ -6,10 +6,11 @@ type HamburgerMenuProps = {
     user: any;
     isAdm: boolean;
     menuOpen: boolean;
+    hasNotifications: boolean;
     setMenuOpen: (value: boolean) => void;
 };
 
-export default function HamburgerMenu({ user, isAdm, menuOpen, setMenuOpen }: HamburgerMenuProps) {
+export default function HamburgerMenu({ user, isAdm, menuOpen, hasNotifications, setMenuOpen }: HamburgerMenuProps) {
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -26,6 +27,12 @@ export default function HamburgerMenu({ user, isAdm, menuOpen, setMenuOpen }: Ha
                     <Link to="/dream" onClick={() => setMenuOpen(false)}>Sonhos</Link>
                     <Link to="/astrology" onClick={() => setMenuOpen(false)}>Astrologia</Link>
                     <Link to="/history" onClick={() => setMenuOpen(false)}>Histórico</Link>
+                    <Link to="/notification" onClick={() => setMenuOpen(false)}>
+                        Notificações
+                        {hasNotifications && (
+                            <span className="hamburger-menu-notification-badge" />
+                        )}
+                    </Link>
                     <Link to="/profile" onClick={() => setMenuOpen(false)}>Perfil</Link>
                     {isAdm && (
                         <Link to="/infomaker" onClick={() => setMenuOpen(false)}>Publicar</Link>

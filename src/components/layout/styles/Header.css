@@ -6,7 +6,7 @@
     padding: 0.5rem 1rem;
     position: sticky;
     top: 0;
-    z-index: 1500;
+    z-index: 1499;
 }
 
 .app-container {
@@ -53,18 +53,6 @@
     font-weight: normal;
 }
 
-.hamburger-button {
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: #bb86fc;
-}
-
-.hamburger-button:hover {
-    transform: scale(1.2);
-}
-
 .token-display {
     display: flex;
     align-items: center;
@@ -99,10 +87,6 @@
     .layout-home,
     .user-name {
         font-size: 0.58rem;
-    }
-
-    .hamburger-button {
-        font-size: 1rem;
     }
     
     .token-display {

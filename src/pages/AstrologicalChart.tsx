@@ -13,10 +13,11 @@ import './AstrologicalChart.css';
 import { Details } from "../components/mapaAstral/Details";
 import { MandalaChart } from "../components/mapaAstral/MandalaChart";
 import { Link } from "react-router-dom";
+import { NiceHelmet } from "../components/NiceHelmet";
 
-export function AstrologicalChart() {
+export default function AstrologicalChart() {
     const [mapa, setMapa] = useState<AstrologicalChartData | null>(null);
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const [isLoading, setIsLoading] = useState(true);
 
     const views = ["Astros", "Casas", "Detalhes", "Mandala"] as const;
@@ -51,7 +52,8 @@ export function AstrologicalChart() {
         trackMouse: true,
     });
 
-    if (isLoading) return (<Loading />);
+    if (isLoading || loading) return (<Loading />);
+    
     if (!mapa) return (
         <p className="astrological-chart-info">
             Preencha o <Link to="/profile" className="astrological-chart-info-link">seu perfil</Link> com data, horário e local de nascimento para que seu mapa astral seja calculado.
@@ -60,6 +62,10 @@ export function AstrologicalChart() {
 
     return (
         <div className="astrological-chart-container" {...handlers}>
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Mapa astral"}]}
+            />
             <div className="astrological-chart-tab-buttons">
                 {views.map((view, idx) => (
                     <button

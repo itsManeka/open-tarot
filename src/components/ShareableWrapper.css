@@ -7,7 +7,7 @@
     overflow: hidden;
     z-index: -1;
     pointer-events: none;
-    background-color: #1e1e1e;
+    background-color: #121212;
     padding: 24px 100px;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,13 @@
     align-items: center;
 }
 
-/* Footer do compartilhamento */
+.shareable-wrapper-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .shareable-wrapper-footer {
     margin-top: 20px;
     text-align: center;
@@ -35,6 +41,7 @@
 }
 
 .shareable-button {
+    position: inherit;
     padding: 5px 10px;
     background-color: #bb86fc;
     color: #000;

@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import NewsGrid from '../components/NewsGrid';
 import './Login.css';
+import { NiceHelmet } from '../components/NiceHelmet';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -12,6 +13,10 @@ export default function Login() {
 
     return (
         <div className="login-page">
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Login"}]}
+            />
             <div className="login-left">
                 <img src="/vite.svg" alt="Logo" className="login-logo" />
                 <h1 className="login-title">Open Tarot</h1>

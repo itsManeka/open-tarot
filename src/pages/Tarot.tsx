@@ -1,15 +1,20 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { db } from "../services/firebase";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, Timestamp, doc, getDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../services/firebase"
 import { useEffect, useState, useRef } from "react";
 import { tarotDeck, TarotCard } from "../data/tarotDeck";
 import { sendMessageToAI } from "../services/aiEngine";
 import { PromptHelper } from "../utils/promptHelper";
-import "./Tarot.css";
 import { useTokens  } from "../context/TokenProvider";
 import AmzBanner from "../components/AmzBanner";
+import { NiceHelmet } from "../components/NiceHelmet";
+import { UserProfile } from '../types/types';
+import { AstrologicalChartData } from '../types/astrologicalChartsTypes';
+import Loading from "../components/Loading";
+
+import "./Tarot.css";
 
 type RevealedCard = {
     card: TarotCard;
@@ -18,18 +23,27 @@ type RevealedCard = {
 
 export default function Tarot() {
     const scrollRef = useRef<HTMLDivElement>(null);
+
+    const [user] = useAuthState(auth);
     const location = useLocation();
     const navigate = useNavigate();
+
     const question = location.state?.question;
-    const [conclusion, setConclusion] = useState("");
+
+    const [isLoading, setIsLoading] = useState(false);
     const [isFinalized, setIsFinalized] = useState(false);
-    const [user] = useAuthState(auth);
     const [isSaved, setIsSaved] = useState(false);
+
+    const [conclusion, setConclusion] = useState("");
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [message, setMessage] = useState('');
+
+    const [userProfile, setUserProfile] = useState<UserProfile>();
+    const [userAstrologicalChart, setUserAstrologicalChart] = useState<AstrologicalChartData>();
+    const [isFetching, setisFetching] = useState(false);
+
     const [selectedCards, setSelectedCards] = useState<TarotCard[]>([]);
     const [revealedCards, setRevealedCards] = useState<RevealedCard[]>([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
-    const [message, setMessage] = useState('');
     
     const { useToken, tokens } = useTokens();
 
@@ -49,6 +63,44 @@ export default function Tarot() {
             scrollRef.current?.scrollIntoView({ behavior: "smooth" });
         }
     }, [revealedCards, isSaved, isFinalized]);
+            
+    useEffect(() => {
+        if (!user) return;
+        
+        setisFetching(true);
+
+        const fetchProfile = async () => {
+            try {
+                const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
+                const profileSnap = await getDoc(profileRef);
+
+                if (profileSnap.exists()) {
+                    setUserProfile(profileSnap.data() as UserProfile);
+                }
+            } catch (e) {
+                console.error("Erro ao carregar perfil.");
+            }
+        };
+
+        fetchProfile();
+        
+        const fetchMapa = async () => {
+            try {
+                const mapaRef = doc(db, "users", user.uid, "mapa_astral", "data");
+                const mapaSnap = await getDoc(mapaRef);
+
+                if (mapaSnap.exists()) {
+                    setUserAstrologicalChart(mapaSnap.data().mapa as AstrologicalChartData);
+                }
+            } catch (e) {
+                console.error("Erro ao carregar mapa astral.");
+            }
+        };
+
+        fetchMapa();
+        
+        setisFetching(false);
+    }, [user]);
 
     const newReading = async () => {
         navigate('/question');
@@ -88,6 +140,8 @@ export default function Tarot() {
 
         const prompt = PromptHelper.generateTarotPrompt(
             question || "Sem pergunta",
+            userProfile,
+            userAstrologicalChart,
             revealedCards.map((c) => ({
                 name: c.card.name,
                 interpretation: c.interpretation,
@@ -129,6 +183,8 @@ export default function Tarot() {
 
         const prompt = PromptHelper.generateTarotPrompt(
             question || "Sem pergunta",
+            userProfile,
+            userAstrologicalChart,
             revealedCards.map((c) => ({
                 name: c.card.name,
                 interpretation: c.interpretation,
@@ -150,18 +206,24 @@ export default function Tarot() {
         setMessage(message);
         setTimeout(() => setMessage(''), 3000);
     }
+            
+    if (isFetching) {
+        return <Loading />
+    }
 
     return (
         <div className="tarot-container">
-            {/* Título no topo */}
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Leitura de Tarot"}]}
+            />
+            
             <h2 className="tarot-titulo">Leitura</h2>
 
-            {/* Pergunta */}
             <div className="tarot-question-box">
                 <p className="tarot-question-text">{question || "Sem pergunta definida"}</p>
             </div>
 
-            {/* Cartas */}
             <div className="tarot-table-box">
                 <div className="tarot-cards-container">
                     {selectedCards.map((card, index) => {
@@ -194,8 +256,7 @@ export default function Tarot() {
                     })}
                 </div>
             </div>
-
-            {/* Interpretações */}
+            
             <div className="tarot-interpretations-container">
                 {revealedCards.map((c, i) => (
                     <div key={i} className="tarot-interpretation-box">
@@ -210,8 +271,7 @@ export default function Tarot() {
                     </div>
                 )}
             </div>
-
-            {/* Botão para revelar próxima carta */}
+            
             {!isFinalized && (
                 <div className="tarot-button-container" ref={scrollRef}>
                     <button
@@ -234,8 +294,7 @@ export default function Tarot() {
                     />
                 </div>
             )}
-
-            {/* Botão para salvar no histórico */}
+            
             {isFinalized && !isSaved && (
                 <div className="tarot-button-container" ref={scrollRef}>
                     <button

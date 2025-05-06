@@ -14,7 +14,8 @@ import DreamInterpreter from './pages/DreamInterpreter';
 import AdmGuard from './components/AdmGuard';
 import { TokenProvider } from './context/TokenProvider';
 import AuthAction from './pages/AuthAction';
-import { AstrologicalChart } from './pages/AstrologicalChart';
+import AstrologicalChart from './pages/AstrologicalChart';
+import Notifications from './pages/Notifications';
 
 export default function App() {
     return (
@@ -87,6 +88,14 @@ export default function App() {
                             element={
                                 <AuthGuard>
                                     <DreamInterpreter />
+                                </AuthGuard>
+                            }
+                        />
+                        <Route
+                            path="/notification"
+                            element={
+                                <AuthGuard>
+                                    <Notifications />
                                 </AuthGuard>
                             }
                         />

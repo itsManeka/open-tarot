@@ -45,9 +45,9 @@
 }
 
 .info-maker-tag-input:focus {
-    border-color: #03dac6;
     outline: none;
-    box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.4);
+    border-color: #d5aaff;
+    box-shadow: 0 0 0 2px rgba(187, 134, 252, 0.3);
 }
 
 .info-maker-tag-button {

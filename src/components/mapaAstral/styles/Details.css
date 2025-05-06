@@ -9,6 +9,13 @@
     box-sizing: border-box;
 }
 
+.details-table-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #bb86fc;
+    text-align: center;
+}
+
 .details-table-category-name {
     font-size: 1.5rem;
     color: #e0e0e0;

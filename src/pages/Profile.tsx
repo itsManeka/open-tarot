@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 import { convertBrazilDateTimeToUTC, convertBrazilDateToUTC } from "../utils/dateHelper";
+import { UserProfile } from "../types/types";
+import { NiceHelmet } from "../components/NiceHelmet";
 
 import './Profile.css';
 
@@ -15,10 +17,11 @@ const apiKey = import.meta.env.VITE_MAPS_API_KEY;
 const libraries: ('places')[] = ['places'];
 
 export default function Profile() {
-    const [dadosOriginais, setDadosOriginais] = useState({ dataNascimento: '', horarioNascimento: '', localNascimento: '', nome: '' });
+    const [dadosOriginais, setDadosOriginais] = useState<UserProfile>({ dataNascimento: '', horarioNascimento: '', localNascimento: '', nome: '', sobrenome: '', pronomes: [] });
     
     const [nome, setNome] = useState('');
     const [sobrenome, setSobrenome] = useState('');
+    const [currentPronome, setCurrentPronome] = useState('');
     const [pronomes, setPronomes] = useState<string[]>([]);
     const [dataNascimento, setDataNascimento] = useState('');
     const [horarioNascimento, setHorarioNascimento] = useState('');
@@ -35,6 +38,8 @@ export default function Profile() {
     const [isEditing, setIsEditing] = useState(false);
 
     const navigate = useNavigate();
+
+    const today = new Date().toISOString().split("T")[0];
 
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: apiKey,
@@ -75,11 +80,23 @@ export default function Profile() {
             dataNascimento,
             horarioNascimento,
             localNascimento,
-            nome
+            nome,
+            sobrenome,
+            pronomes,
         });
 
         setIsLoading(false);
     }, [user, navigate]);
+
+    const handleCancelar = async () => {
+        setIsEditing(false)
+        setDataNascimento(dadosOriginais.dataNascimento);
+        setHorarioNascimento(dadosOriginais.horarioNascimento);
+        setLocalNascimento(dadosOriginais.localNascimento);
+        setNome(dadosOriginais.nome);
+        setSobrenome(dadosOriginais.sobrenome);
+        setPronomes(dadosOriginais.pronomes);
+    } 
 
     const showMessage = async (message: string) => {
         setMessages((prevMessages) => [...prevMessages, message]);
@@ -167,11 +184,9 @@ export default function Profile() {
     const adicionarPronome = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            const novoPronome = e.currentTarget.value.trim().toLowerCase();
-
-            if (novoPronome && pronomes.length < 3 && !pronomes.includes(novoPronome)) {
-                setPronomes([...pronomes, novoPronome]);
-                e.currentTarget.value = '';
+            if (currentPronome && pronomes.length < 3 && !pronomes.includes(currentPronome)) {
+                setPronomes([...pronomes, currentPronome]);
+                setCurrentPronome('');
             }
         }
     };
@@ -214,7 +229,9 @@ export default function Profile() {
             dataNascimento,
             horarioNascimento,
             localNascimento,
-            nome
+            nome,
+            sobrenome,
+            pronomes
         });
 
         showMessage('Perfil atualizado com sucesso!');
@@ -240,6 +257,10 @@ export default function Profile() {
 
     return (
         <div className="profile-container">
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Meu Perfil"}]}
+            />
             <h2 className="profile-title">Meu Perfil</h2>
             <div className="profile-form">
                 <label>
@@ -247,7 +268,8 @@ export default function Profile() {
                     <input
                         type="text"
                         value={nome}
-                        onChange={(e) => setNome(e.target.value)}
+                        maxLength={30}
+                        onChange={(e) => setNome(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))}
                         disabled={!isEditing}
                         className={`profile-input ${errors.nome ? 'input-error' : ''}`}
                     />
@@ -258,7 +280,8 @@ export default function Profile() {
                     <input
                         type="text"
                         value={sobrenome}
-                        onChange={(e) => setSobrenome(e.target.value)}
+                        maxLength={40}
+                        onChange={(e) => setSobrenome(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))}
                         disabled={!isEditing}
                         className="profile-input"
                     />
@@ -282,9 +305,12 @@ export default function Profile() {
                         {isEditing && pronomes.length < 3 && (
                             <input
                                 type="text"
+                                value={currentPronome}
+                                maxLength={10}
                                 className="profile-tag-input"
                                 placeholder="Digite e pressione Enter"
                                 onKeyDown={adicionarPronome}
+                                onChange={(e) => setCurrentPronome(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "").toLowerCase())}
                                 enterKeyHint="done"
                             />
                         )}
@@ -298,6 +324,7 @@ export default function Profile() {
                         onChange={(e) => setDataNascimento(e.target.value)}
                         disabled={!isEditing}
                         className={`profile-input ${errors.dataNascimento ? 'input-error' : ''}`}
+                        max={today}
                     />
                     {errors.dataNascimento && <span className="profile-error-message">{errors.dataNascimento}</span>}
                 </label>
@@ -330,12 +357,20 @@ export default function Profile() {
             {errMessages && errMessages.map((message, index) => (<small key={index} className="profile-error-message">{message}</small>))}
             <div className="profile-buttons">
                 {isEditing ? (
-                    <button
-                        onClick={salvarDados}
-                        disabled={isLoading}
-                        className="profile-button">
-                        {isLoading ? "Carregando" : "Salvar"}
-                    </button>
+                    <>
+                        <button
+                            onClick={salvarDados}
+                            disabled={isLoading}
+                            className="profile-button">
+                            {isLoading ? "Carregando" : "Salvar"}
+                        </button>
+                        <button
+                            onClick={handleCancelar}
+                            disabled={isLoading}
+                            className="profile-button">
+                            {isLoading ? "Carregando" : "Cancelar"}
+                        </button>
+                    </>
                 ) : (
                     <button
                         onClick={() => setIsEditing(true)}

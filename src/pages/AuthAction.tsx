@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getAuth, applyActionCode, verifyPasswordResetCode } from "firebase/auth";
 import { useSearchParams } from "react-router-dom";
 import './AuthAction.css';
+import { NiceHelmet } from "../components/NiceHelmet";
 
 const AuthAction = () => {
     const auth = getAuth();
@@ -49,6 +50,10 @@ const AuthAction = () => {
 
     return (
         <div className="auth-action-container">
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Validação de e-mail"}]}
+            />
             <h1>{message}</h1>
             {message.includes("sucesso") && (
                 <button

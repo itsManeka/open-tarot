@@ -1,0 +1,40 @@
+.menu-button-container {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.hamburger-button {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #e0e0e0;
+}
+
+.hamburger-button:hover {
+    color: #d0aaff;
+    transform: scale(1.2);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    width: 8px;
+    height: 8px;
+    background-color: #bb86fc;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #2b2b2b;
+}
+
+@media (max-width: 480px) {
+    .hamburger-button {
+        font-size: 1rem;
+    }
+
+    .notification-badge {
+        top: 10px;
+        right: 20px;
+    }
+}

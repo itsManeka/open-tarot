@@ -1,26 +1,36 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../services/firebase';
 import { collection, doc, getDoc, addDoc, Timestamp } from 'firebase/firestore';
 import { useTokens } from '../context/TokenProvider';
 import { PromptHelper } from '../utils/promptHelper';
 import { sendMessageToAI } from '../services/aiEngine';
-import './DreamInterpreter.css'
 import AmzBanner from '../components/AmzBanner';
 import Loading from '../components/Loading';
+import { NiceHelmet } from '../components/NiceHelmet';
+import { StringHelper } from '../utils/stringHelper';
+import { UserProfile } from '../types/types';
+import { AstrologicalChartData } from '../types/astrologicalChartsTypes';
+
+import './DreamInterpreter.css'
 
 export default function DreamInterpreter() {
     const navigate = useNavigate();
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     const [description, setDescription] = useState('');
     const [interpretation, setInterpretation] = useState('');
+    const [mostFrequentWord, setMostFrequentWord] = useState('');
 
     const [user] = useAuthState(auth);
-    const [isProfileExists, setIsProfileExists] = useState(false);
+    const [userProfile, setUserProfile] = useState<UserProfile>();
+    const [userAstrologicalChart, setUserAstrologicalChart] = useState<AstrologicalChartData>();
+    const [isProfileExists, setIsProfileExists] = useState(true);
+    const [isFetching, setisFetching] = useState(false);
 
     const [saved, setSaved] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isInterpreting, setIsInterpreting] = useState(false);
     const [snackbar, setSnackbar] = useState<string | null>(null);
     const [snackbarStatus, setSnackbarStatus] = useState("ok");
 
@@ -28,18 +38,48 @@ export default function DreamInterpreter() {
         
     useEffect(() => {
         if (!user) return;
+        
+        setisFetching(true);
 
         const fetchProfile = async () => {
-            const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
-            const profileSnap = await getDoc(profileRef);
+            try {
+                const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
+                const profileSnap = await getDoc(profileRef);
 
-            if (profileSnap.exists()) {
-                setIsProfileExists(true);
+                if (profileSnap.exists()) {
+                    setUserProfile(profileSnap.data() as UserProfile);
+                    setIsProfileExists(true);
+                }
+            } catch (e) {
+                console.error("Erro ao carregar perfil.");
             }
         };
 
         fetchProfile();
+        
+        const fetchMapa = async () => {
+            try {
+                const mapaRef = doc(db, "users", user.uid, "mapa_astral", "data");
+                const mapaSnap = await getDoc(mapaRef);
+
+                if (mapaSnap.exists()) {
+                    setUserAstrologicalChart(mapaSnap.data().mapa as AstrologicalChartData);
+                }
+            } catch (e) {
+                console.error("Erro ao carregar mapa astral.");
+            }
+        };
+
+        fetchMapa();
+        
+        setisFetching(false);
     }, [user]);
+
+    useEffect(() => {
+        if (interpretation) {
+            scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [interpretation]);
 
     const handleInterpretation = async () => {
         if (tokens == null || tokens == undefined) {
@@ -50,25 +90,30 @@ export default function DreamInterpreter() {
             return;
         }
 
-        setIsLoading(true);
+        setIsInterpreting(true);
 
         const success = await useToken();
         if (!success) {
             showSnackbar("Ocorreu um erro ao realizar a interpretação, favor recarregar a página e tentar novamente.", "error");
-            setIsLoading(false);
+            setIsInterpreting(false);
             return;
         }
 
-        const prompt = PromptHelper.generateDreamInterpretationPrompt(description);
+        const prompt = PromptHelper.generateDreamInterpretationPrompt(description, userProfile, userAstrologicalChart);
         const interpretation = await sendMessageToAI(prompt);
+        handleFrequentWord(interpretation);
         setInterpretation(interpretation);
-        setIsLoading(false);
+        setIsInterpreting(false);
     };
+
+    const handleFrequentWord = async (texto: string) => {
+        setMostFrequentWord(StringHelper.mostFrequentWord(texto));
+    }
 
     const handleSave = async () => {
         if (!user) return;
 
-        setIsLoading(true);
+        setIsInterpreting(true);
         try {
             await addDoc(collection(db, "users", user.uid, "readings"), {
                 type: "dream",
@@ -81,7 +126,7 @@ export default function DreamInterpreter() {
             showSnackbar("Não foi possível salvar", "error");
         }
         setSaved(true);
-        setIsLoading(false);
+        setIsInterpreting(false);
     }
 
     const handleHistory = async () => {
@@ -101,12 +146,16 @@ export default function DreamInterpreter() {
         setTimeout(() => setSnackbar(null), 3000);
     };
         
-    if (loading) {
+    if (loading || isFetching) {
         return <Loading />
     }
 
     return (
         <div className='dream-container'>
+            <NiceHelmet
+                title={"Open Tarot"}
+                meta={[{name: "description", content: "Como foi o seu sonho?"}]}
+            />
             <div className="dream-header">
                 <h2 className="dream-title">Como foi o seu sonho?</h2>
                 <div className='dream-token-cost'>
@@ -128,7 +177,7 @@ export default function DreamInterpreter() {
                     placeholder="Descreva seu sonho"
                 />
             ) : (
-                <div className="dream-interpretations-container">
+                <div className="dream-interpretations-container" ref={scrollRef}>
                     <div className="dream-interpretation-box dream-interpretation-box-question">
                         <p>{description}</p>
                     </div>
@@ -143,43 +192,43 @@ export default function DreamInterpreter() {
                 </div>
             )}
 
-            <div className="dream-interpretations-container">
-                <div className='dream-interpretation-ad-box'>
-                    <AmzBanner
-                        query='sonhos'
-                    />
-                </div>
-            </div>
-
             {snackbar && <div className={`dream-snackbar ${snackbarStatus}`}>{snackbar}</div>}
 
             <div className="dream-button-container">
                 {!interpretation ? (
                     <button
                         onClick={handleInterpretation}
-                        disabled={isLoading || !description.trim()}
+                        disabled={isInterpreting || !description.trim()}
                         className="dream-button"
                     >
-                        {isLoading ? "Interpretando..." : "Interpretar"}
+                        {isInterpreting ? "Interpretando..." : "Interpretar"}
                     </button>
                 ) : (
                     <>
                         <button
                             onClick={saved ? handleHistory : handleSave}
-                            disabled={isLoading}
+                            disabled={isInterpreting}
                             className="dream-button"
                         >
-                            {saved ? "Ir para histórico" : isLoading ? "Salvando..." : "Salvar no histórico"}
+                            {saved ? "Ir para histórico" : isInterpreting ? "Salvando..." : "Salvar no histórico"}
                         </button>
                         <button
                             onClick={newInterpretation}
-                            disabled={isLoading}
+                            disabled={isInterpreting}
                             className="dream-button"
                         >
                             Nova interpretação
                         </button>
                     </>
                 )}
+            </div>
+
+            <div className="dream-interpretations-container">
+                <div className='dream-interpretation-ad-box'>
+                    <AmzBanner
+                        query={`sonhos ${mostFrequentWord}`}
+                    />
+                </div>
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 .houses-table {
     display: flex;
     flex-direction: column;
-    padding: 0px 10px;
+    padding: 0px 15px;
     gap: 5px;
     margin: 0;
     color: #e0e0e0;
@@ -9,15 +9,22 @@
     box-sizing: border-box;
 }
 
+.houses-table-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #bb86fc;
+    text-align: center;
+}
+
 .houses-table-sign-section {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     gap: 10px;
+    align-self: center;
     align-content: center;
     align-items: center;
     width: 60%;
-    align-self: center;
     margin-bottom: 30px;
     box-sizing: border-box;
 }
@@ -88,12 +95,16 @@
 }
 
 .houses-table-star-img {
-    margin-left: -30px;
     width: 50px;
     height: 50px;
+    font-family: inherit;
+    user-select: none;
+    pointer-events: auto;
+    cursor: default; 
 }
 
 .houses-table-sign-img {
+    margin-left: -15px;
     width: 30px;
     height: 30px;
 }
