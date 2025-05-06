@@ -64,7 +64,7 @@ const ShareableWrapper: React.FC<ShareableWrapperProps> = ({
                 };
             });
         };
-    
+        
         const swapSvgsForPngs = async () => {
             const wrappers = hiddenRef.current!.querySelectorAll('[data-snapshot-img]');
             for (const wrapper of wrappers) {
@@ -177,7 +177,7 @@ const ShareableWrapper: React.FC<ShareableWrapperProps> = ({
             return;
         }
 
-        const file = new File([imageBlob!], 'compartilhamento.png', { type: 'image/png' });
+        const file = new File([image?.blob!], 'compartilhamento.png', { type: 'image/png' });
 
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
             try {
