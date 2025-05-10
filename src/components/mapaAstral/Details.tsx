@@ -50,6 +50,7 @@ export function Details({distributions, atributes, numerology} : DetailsProps) {
             <h2 className="details-table-title">Detalhes</h2>
             {bars.map((bar, index) => (
                 <ShareableWrapper
+                    key={index} 
                     title="Mapa Astral"
                     text="Distribuições do Mapa Astral"
                 >

@@ -1,4 +1,4 @@
-import React, { /*useEffect,*/ useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
 import './ShareableWrapper.css';
 import { Download, Ellipsis, Share2 } from 'lucide-react';
@@ -21,20 +21,6 @@ const ShareableWrapper: React.FC<ShareableWrapperProps> = ({
     const [imageBlob, setImageBlob] = useState<Blob | null>(null);
     const [dataUrl, setDataUrl] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-
-    /*const [filteredChildren, setFilteredChildren] = useState<React.ReactNode>(null);
-
-    useEffect(() => {
-        // Filtra os elementos que possuem a classe "shareable"
-        const shareableChildren = React.Children.toArray(children).filter((child) => {
-            if (React.isValidElement(child)) {
-                return React.isValidElement(child) && (child as React.ReactElement<any>).props?.className?.includes('shareable');
-            }
-            return false;
-        });
-
-        setFilteredChildren(shareableChildren);
-    }, [children]);*/
 
     const generateImage = async () => {
         if (!hiddenRef.current) return;
@@ -120,6 +106,9 @@ const ShareableWrapper: React.FC<ShareableWrapperProps> = ({
             backgroundColor: null,
             useCORS: true,
             scale: 2,
+            ignoreElements: (element) => {
+                return element.hasAttribute('data-share-exclude');
+            }
         });
     
         restoreOriginalSvgs();

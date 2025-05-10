@@ -139,5 +139,36 @@ export const PromptHelper = {
 
         ${astroPrompt ? `Leve em conta que o usuário tem esse perfil astrológico: ${astroPrompt}. Considere como isso pode influenciar os símbolos e temas presentes no sonho, mas use essa informação com sutileza e apenas se necessário.` : ""}
         `.trim();
+    },
+
+    generateHouseInterpretationPrompt: ( houseNumber: number, sign: string, planetNames: string[], tags: string[], userProfile?: UserProfile, userAstrologicalChart?: AstrologicalChartData ) => {
+        const userPrompt = getUserPrompt(userProfile);
+        const astroPrompt = getAstroPrompt(userAstrologicalChart);
+        
+        return `
+        ${userPrompt}
+    
+        Você é um astrólogo experiente, especializado em interpretação simbólica e psicológica do mapa astral.
+    
+        O usuário deseja entender melhor a **Casa ${houseNumber}** do seu mapa astral.
+    
+        Aqui estão os dados relevantes:
+        - Casa astrológica: ${houseNumber}
+        - Signo que rege essa casa: ${sign}
+        - Planetas presentes nessa casa: ${planetNames.length > 0 ? planetNames.join(', ') : "nenhum planeta"}
+        - Temas: ${tags.length > 0 ? tags.join(', ') : "nenhum tema"}
+    
+        Ofereça uma interpretação profunda e simbólica sobre esses temas, considerando:
+        - O significado da casa em si
+        - As nuances trazidas pelo signo que a rege
+        - A influência dos planetas que ocupam essa casa (se houver)
+    
+        Sua resposta deve:
+        - Ter no máximo **4 parágrafos curtos**
+        - Ser acolhedora, instigante e compreensível, como se fosse escrita por um astrólogo sensível e experiente
+        - Ajudar o usuário a compreender como esse tema se manifesta na sua vida
+    
+        ${astroPrompt ? `O perfil astrológico geral da pessoa é: ${astroPrompt}. Considere usar isso com sutileza se fizer sentido.` : ""}
+        `.trim();
     }
 };

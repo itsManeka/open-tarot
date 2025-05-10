@@ -16,6 +16,31 @@
     text-align: center;
 }
 
+.houses-table-box {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+}
+
+.houses-table-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0px 20px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.houses-table-tag {
+    background-color: #333;
+    color: #bb86fc;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+}
+
 .houses-table-sign-section {
     display: flex;
     flex-direction: row;
@@ -39,6 +64,11 @@
     width: 50x;
     height: 50px;
     margin-bottom: 5px;
+}
+
+.houses-table-star-img {
+    width: 40px;
+    height: 40px;
 }
 
 .houses-table-sign-box-text {
@@ -94,7 +124,44 @@
     flex: 1;
 }
 
-.houses-table-star-img {
+.houses-table-section-item.button {
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: None;
+}
+
+.houses-table-button {
+    background-color: #bb86fc;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    font-family: inherit;
+}
+
+.houses-table-button:hover {
+    background-color: #9a67ea;
+}
+
+.houses-table-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.houses-table-button:disabled {
+    background-color: #5e35b1;
+    cursor: not-allowed;
+    transform: scale(1.03);
+}
+
+.houses-table-token-img {
+    width: 40px;
+    height: 40px;
+}
+
+.houses-table-house-img {
     width: 50px;
     height: 50px;
     font-family: inherit;
@@ -109,10 +176,98 @@
     height: 30px;
 }
 
+.houses-table-snackbar {
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: #e1e1e1;
+}
+
+.houses-table-snackbar.ok {
+    background-color: #5e35b1;
+}
+
+.houses-table-snackbar.error {
+    background-color: #ff6b6b;
+}
+
+.houses-table-interpretation-container {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.houses-table-interpretation-container.collapsed {
+    max-height: 100px;
+}
+
+.houses-table-interpretation-container.collapsed:hover {
+    max-height: 100px;
+    opacity: 70%;
+}
+
+.houses-table-interpretation-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    padding: 10px 20px;
+    gap: 10px;
+    background-color: #1e1e1e;
+    padding-left: 16px;
+    border-left: 4px solid #bb86fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    text-align: justify;
+    color: #e0e0e0;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 @media (max-width: 600px) {
-    .houses-table-sign-box-img {
-        width: 40x;
+    .houses-table {
+        gap: 5px;
+        padding: 0px auto;
+    }
+    
+    .houses-table-section {
+        padding: 20px 0;
+    }
+
+    .houses-table-house-img {
+        width: 40px;
         height: 40px;
+    }
+
+    .houses-table-section-item-box {
+        font-size: 0.7rem;
+        gap: 5px
+    }
+
+    .houses-table-section-item {
+        height: 26px;
+        padding: 5px 5px;
+    }
+
+    .houses-table-sign-box-img {
+        width: 30x;
+        height: 30px;
+    }
+
+    .houses-table-sign-img {
+        margin-left: -2px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .houses-table-star-img {
+        width: 25px;
+        height: 25px;
     }
 
     .houses-table-sign-section {
@@ -123,5 +278,28 @@
     .houses-table-sign-box-text {
         font-size: 0.6rem;
         text-align: center;
+    }
+
+    .houses-table-tags {
+        gap: 5px;
+    }
+    
+    .houses-table-tag {
+        font-size: 0.6rem;
+    }
+
+    .houses-table-button {
+        padding: 8px 14px;
+        font-size: 0.7rem;
+    }
+
+    .houses-table-snackbar {
+        padding: 8px 14px;
+        font-size: 0.7rem;
+    }
+
+    .houses-table-token-img {
+        width: 25px;
+        height: 25px;
     }
 }

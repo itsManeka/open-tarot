@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../services/firebase";
-import { doc, getDoc, collection, query, where, onSnapshot  } from "firebase/firestore";
+import { doc, collection, query, where, onSnapshot  } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Header from "./Header";
 import HamburgerMenu from "./HamburgerMenu";
@@ -24,46 +24,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const isLoginPage = location.pathname === "/login";
 
     useEffect(() => {
-        if (loading) return;
+        if (loading || !user) return;
 
-        setIsAdm(user?.uid === import.meta.env.VITE_UUID_ADM);
+        setIsAdm(user.uid === import.meta.env.VITE_UUID_ADM);
 
-        const fetchProfileName = async () => {
-            if (user) {
-                const profileRef = doc(db, "profile", user.uid);
-                const profileSnap = await getDoc(profileRef);
-
-                if (profileSnap.exists()) {
-                    const profileData = profileSnap.data();
-                    setProfileName(profileData.nome || "Visitante");
-                } else {
-                    const [firstName] = user.displayName?.split(" ") || user.email?.split("@") || ["Visitante"];
-                    setProfileName(firstName);
-                }
+        const profileRef = doc(db, "users", user.uid, "profile", "data");
+        const unsubscribeProfile = onSnapshot(profileRef, (docSnap) => {
+            if (docSnap.exists()) {
+                const profileData = docSnap.data();
+                setProfileName(profileData.nome || "Visitante");
+            } else {
+                const [firstName] = user.displayName?.split(" ") || user.email?.split("@") || ["Visitante"];
+                setProfileName(firstName);
             }
+        });
+
+        const notificationsRef = collection(db, "users", user.uid, "notifications");
+        const q = query(notificationsRef, where("read", "==", false));
+        const unsubscribeNotifications = onSnapshot(q, (snapshot) => {
+            const has = snapshot.size > 0;
+            setHasNotifications((prev) => prev !== has ? has : prev);
+        });
+
+        return () => {
+            unsubscribeProfile();
+            unsubscribeNotifications();
         };
-
-        fetchProfileName();
-
-        const fetchNotifications = async () => {
-            if (!user) return;
-    
-            const notificationsRef = collection(db, "users", user.uid, "notifications");
-    
-            const q = query(
-                notificationsRef,
-                where("read", "==", false)
-            );
-    
-            const unsubscribe = onSnapshot(q, (snapshot) => {
-                const has = snapshot.size > 0;
-                setHasNotifications((prev) => prev !== has ? has : prev);
-            });
-    
-            return () => unsubscribe();
-        };
-
-        fetchNotifications();
     }, [user, loading]);
     
     return (

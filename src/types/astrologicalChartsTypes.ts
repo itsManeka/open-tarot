@@ -66,6 +66,8 @@ export type AstrologicalChartData = {
     numerologia: Numerology;
 }
 
+export type HousesInterpretation = Record<string, string>;
+
 export const STARS_IMG: Record<string, string> = {
     "Sol": "sun", "Lua": "moon", "Mercúrio": "mercury", "Vênus": "venus",
     "Marte": "mars", "Júpiter": "jupiter", "Saturno": "saturn",
@@ -77,3 +79,18 @@ export const STARS_IMG: Record<string, string> = {
     "Descendente": "desc", "Meio do Céu": "mc",
     "Fundo do Céu": "ic", "Vertex": "vertex"
 }
+
+export const HOUSE_TAGS: Record<number, string[]> = {
+    1: ["identidade", "ego", "aparência", "começos"],
+    2: ["dinheiro", "posses", "autoestima", "valores"],
+    3: ["comunicação", "aprendizado", "irmãos", "cotidiano"],
+    4: ["família", "lar", "emoções", "raízes"],
+    5: ["criatividade", "romance", "filhos", "prazer"],
+    6: ["trabalho", "saúde", "rotina", "disciplina"],
+    7: ["relacionamentos", "casamento", "parcerias", "outro"],
+    8: ["intimidade", "transformação", "heranças", "sexualidade"],
+    9: ["filosofia", "viagens", "conhecimento", "espiritualidade"],
+    10: ["carreira", "status", "autoridade", "reputação"],
+    11: ["amizades", "futuro", "grupos", "inovação"],
+    12: ["espiritualidade", "inconsciente", "sacrifício", "isolamento"],
+};

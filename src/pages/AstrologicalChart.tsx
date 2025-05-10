@@ -9,16 +9,21 @@ import Loading from "../components/Loading";
 import { StarsTable } from "../components/mapaAstral/StarsTable";
 import { HousesTable } from "../components/mapaAstral/HousesTable";
 
-import './AstrologicalChart.css';
 import { Details } from "../components/mapaAstral/Details";
 import { MandalaChart } from "../components/mapaAstral/MandalaChart";
 import { Link } from "react-router-dom";
 import { NiceHelmet } from "../components/NiceHelmet";
 
+import { UserProfile } from "../types/types";
+
+import './AstrologicalChart.css';
+
 export default function AstrologicalChart() {
     const [mapa, setMapa] = useState<AstrologicalChartData | null>(null);
     const [user, loading] = useAuthState(auth);
     const [isLoading, setIsLoading] = useState(true);
+
+    const [userProfile, setUserProfile] = useState<UserProfile>();
 
     const views = ["Astros", "Casas", "Detalhes", "Mandala"] as const;
     const [viewIndex, setViewIndex] = useState(0);
@@ -27,6 +32,21 @@ export default function AstrologicalChart() {
 
     useEffect(() => {
         if (!user) return;
+        
+        const fetchProfile = async () => {
+            try {
+                const profileRef = doc(db, 'users', user.uid, 'profile', 'data');
+                const profileSnap = await getDoc(profileRef);
+
+                if (profileSnap.exists()) {
+                    setUserProfile(profileSnap.data() as UserProfile);
+                }
+            } catch (e) {
+                console.error("Erro ao carregar perfil.");
+            }
+        };
+
+        fetchProfile();
 
         const fetchMapa = async () => {
             setIsLoading(true);
@@ -85,8 +105,9 @@ export default function AstrologicalChart() {
             )}
             {currentView === "Casas" && (
                 <HousesTable
-                    houses={mapa.casas}
-                    stars={mapa.astros}
+                    user={user}
+                    map={mapa}
+                    profile={userProfile}
                 />
             )}
             {currentView === "Detalhes" && (
