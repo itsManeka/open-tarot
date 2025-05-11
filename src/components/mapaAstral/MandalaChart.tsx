@@ -80,7 +80,7 @@ export function MandalaChart({ stars, houses }: MandalaChartProps) {
                     <circle cx={CENTER} cy={CENTER} r={HOUSE_LABEL_RADIUS - 5} fill="none" stroke="#ccc" />
 
                     {zodiacSegments.map((sign) => (
-                        <g className="zodiac-signs" role='img' aria-label={sign.name}>
+                        <g key={sign.name} className="zodiac-signs" role='img' aria-label={sign.name}>
                             <title>{sign.name}</title>
                             <image
                                 key={sign.name}
@@ -152,7 +152,7 @@ export function MandalaChart({ stars, houses }: MandalaChartProps) {
                             const { x, y } = getCoords(star.grauZodiaco, adjustedRadius);
 
                             return (
-                                <g role='img' aria-label={star.nome}>
+                                <g key={star.nome} role='img' aria-label={star.nome}>
                                     <title>{star.nome}</title>
                                     <image
                                         key={`planet-${star.nome}-${i}`}

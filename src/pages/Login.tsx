@@ -3,6 +3,7 @@ import LoginForm from '../components/LoginForm';
 import NewsGrid from '../components/NewsGrid';
 import './Login.css';
 import { NiceHelmet } from '../components/NiceHelmet';
+import DailyCard from '../components/DailyCard';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function Login() {
                 <LoginForm />
             </div>
             <div className="login-info">
+                <DailyCard />
                 <div className="login-info-box">
                     <h3>A História do Tarot</h3>
                     <p>O Tarot é muito mais do que um simples conjunto de cartas com imagens misteriosas — ele é um símbolo da busca humana por autoconhecimento, significado e conexão com o invisível. Sua origem envolve enigmas, tradição e transformação cultural ao longo dos séculos.</p>

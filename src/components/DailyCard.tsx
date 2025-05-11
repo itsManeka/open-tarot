@@ -1,9 +1,10 @@
+import './DailyCard.css';
+
 import { db } from '../services/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { sendMessageToAI } from "../services/aiEngine";
 import { PromptHelper } from "../utils/promptHelper";
-import './DailyCard.css';
 import { getBrazilDate } from '../utils/dateHelper';
 import { shuffleDeck, TarotCard, tarotDeck } from '../data/tarotDeck';
 import ShareableWrapper from './ShareableWrapper';
@@ -72,7 +73,7 @@ export default function DailyCard() {
                         <h2>Carta do dia</h2>
                         <div className="daily-card-box">
                             <img
-                                src={`${card?.image}`}
+                                src={`${card ? card.image : "/assets/tarot/back.jpg" }`}
                                 alt={`Carta do dia: ${card?.name}`}
                                 className="daily-card-image"
                             />

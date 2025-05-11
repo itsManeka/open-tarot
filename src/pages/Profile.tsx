@@ -372,12 +372,20 @@ export default function Profile() {
                         </button>
                     </>
                 ) : (
-                    <button
-                        onClick={() => setIsEditing(true)}
-                        disabled={isLoading}
-                        className="profile-button">
-                        {isLoading ? "Carregando" : "Editar"}
-                    </button>
+                    <>
+                        <button
+                            onClick={() => setIsEditing(true)}
+                            disabled={isLoading}
+                            className="profile-button">
+                            {isLoading ? "Carregando" : "Editar"}
+                        </button>
+                        <button
+                            onClick={() => navigate("/")}
+                            disabled={isLoading}
+                            className="profile-button">
+                            {isLoading ? "Carregando" : "Ir para Home"}
+                        </button>
+                    </>
                 )}
             </div>
         </div>

@@ -30,6 +30,7 @@ export function StarsTable({ stars }: StarsTableProps) {
             {starsClassification.map(({ category, itens }) =>
                 itens.length > 0 && (
                     <ShareableWrapper
+                        key={category}
                         title="Mapa Astral"
                         text={`Astros da categoria ${category}`}
                     >
