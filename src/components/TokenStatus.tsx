@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { useTokens } from "../context/TokenProvider";
 import { formatCountdown } from '../utils/dateHelper';
 import './TokenStatus.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function TokenStatus() {
+    const navigate = useNavigate();
     const { nextClaim, claimToken, loading } = useTokens();
     const [snackbar, setSnackbar] = useState<string | null>(null);
     const [countdown, setCountdown] = useState<string>('');
@@ -79,16 +81,24 @@ export default function TokenStatus() {
                         </p>
                     )}
                     <div className='token-button-container'>
-                        <img
-                            src='/assets/statics/token.svg'
-                            className='token-status-img'
-                        />
+                        <div className='token-button-container left'>
+                            <img
+                                src='/assets/statics/token.svg'
+                                className='token-status-img'
+                            />
+                            <button
+                                onClick={handleClaim}
+                                disabled={progress < 1 || isLoading}
+                                className='token-status-button'
+                            >
+                                Resgatar ficha diária
+                            </button>
+                        </div>
                         <button
-                            onClick={handleClaim}
-                            disabled={progress < 1 || isLoading}
+                            onClick={() => navigate("/shop")}
                             className='token-status-button'
                         >
-                            Resgatar ficha diária
+                            Loja
                         </button>
                     </div>
                     {snackbar && <div className='token-status-snackbar'>{snackbar}</div>}

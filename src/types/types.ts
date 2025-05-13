@@ -44,3 +44,24 @@ export type UserProfile = {
     sobrenome: string;
     pronomes: string[];
 };
+
+export type StripeProduct = {
+    name: string;
+    description: string;
+    images: string[];
+}
+
+export type StripePrice = {
+    id: string;
+    product: StripeProduct;
+    unit_amount: number;
+    currency: string;
+}
+
+export type StripeSession = {
+    sessionId: string;
+    status: string;
+    product: StripeProduct;
+    amountTotal: number;
+    currency: string
+}

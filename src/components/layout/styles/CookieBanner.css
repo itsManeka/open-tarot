@@ -3,12 +3,12 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #1e1e1e; /* Fundo escuro */
-    color: #e0e0e0; /* Texto claro */
+    background: #1e1e1e;
+    color: #e0e0e0;
     font-size: 0.6rem;
     padding: 0.5rem;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    z-index: 800;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +25,7 @@
 }
 
 .cookiebanner-button {
-    background: #bb86fc; /* Cor de destaque */
+    background: #bb86fc;
     border: none;
     padding: 0.5rem;
     color: #1e1e1e; /* Texto escuro */

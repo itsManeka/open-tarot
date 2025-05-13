@@ -16,6 +16,9 @@ import { TokenProvider } from './context/TokenProvider';
 import AuthAction from './pages/AuthAction';
 import AstrologicalChart from './pages/AstrologicalChart';
 import Notifications from './pages/Notifications';
+import Shop from './pages/Shop';
+import Success from './pages/Success';
+import Canceled from './pages/Canceled';
 
 export default function App() {
     return (
@@ -96,6 +99,30 @@ export default function App() {
                             element={
                                 <AuthGuard>
                                     <Notifications />
+                                </AuthGuard>
+                            }
+                        />
+                        <Route
+                            path="/shop"
+                            element={
+                                <AuthGuard>
+                                    <Shop />
+                                </AuthGuard>
+                            }
+                        />
+                        <Route
+                            path="/success"
+                            element={
+                                <AuthGuard>
+                                    <Success />
+                                </AuthGuard>
+                            }
+                        />
+                        <Route
+                            path="/canceled"
+                            element={
+                                <AuthGuard>
+                                    <Canceled />
                                 </AuthGuard>
                             }
                         />

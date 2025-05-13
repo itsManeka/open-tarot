@@ -17,6 +17,7 @@ export default function Question() {
     const [message, setMessage] = useState('');
 
     const [isProfileExists, setIsProfileExists] = useState(true);
+    const [showShop, setShowShop] = useState(false);
     
     const { tokens, loading } = useTokens();
     
@@ -41,6 +42,7 @@ export default function Question() {
             return;
         } else if (tokens < 1) {
             showMessage("Você não tem fichas suficientes.");
+            setShowShop(true);
             return;
         }
 
@@ -82,13 +84,23 @@ export default function Question() {
                 onChange={e => setQuestion(e.target.value)}
                 placeholder="Digite a sua pergunta"
             />
-            <button
-                className="question-button"
-                onClick={continuar}
-                disabled={!question.trim()}
-            >
-                Consultar
-            </button>
+            <div className='question-button-container'>
+                <button
+                    className="question-button"
+                    onClick={continuar}
+                    disabled={!question.trim()}
+                >
+                    Consultar
+                </button>
+                {showShop &&
+                    <button
+                        className="question-button"
+                        onClick={() => navigate('/shop')}
+                    >
+                        Loja
+                    </button>
+                }
+            </div>
             {message && (
                 <small className='question-message-error'>{message}</small>
             )}

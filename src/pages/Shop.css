@@ -1,0 +1,110 @@
+.shop-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+
+.shop-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #bb86fc;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.shop-message {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #e1e1e1;
+    text-align: center;
+}
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+    gap: 24px;
+    justify-content: center;
+}
+
+.shop-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.shop-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6);
+}
+
+.shop-item-img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+}
+
+.shop-item-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+    line-clamp: 1;
+}
+
+.shop-item-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 0.95rem;
+    color: #cccccc;
+    margin-bottom: 10px;
+    line-clamp: 3;
+}
+
+.shop-item-price {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #bb86fc;
+    margin-bottom: 10px;
+}
+
+.shop-item-button {
+    background-color: #bb86fc;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.shop-item-button:hover {
+    background-color: #9a67ea;
+}
+
+.shop-item-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.shop-item-button:disabled {
+    background-color: #5e35b1;
+    transform: scale(1.03);
+    cursor: not-allowed;
+}

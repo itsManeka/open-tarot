@@ -16,6 +16,7 @@ import { db } from '../../services/firebase';
 import { PromptHelper } from '../../utils/promptHelper';
 import { sendMessageToAI } from '../../services/aiEngine';
 import { ArrowDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface HousesTableProps {
     user?: User | null;
@@ -24,11 +25,13 @@ interface HousesTableProps {
 }
 
 export function HousesTable({ user, map, profile }: HousesTableProps) {
+    const navigate = useNavigate();
     const { tokens, useToken, loading } = useTokens();
     const [isLoading, setIsLoading] = useState(false);
 
     const [snackbar, setSnackbar] = useState<string | null>(null);
     const [snackbarStatus, setSnackbarStatus] = useState("ok");
+    const [showShop, setShowShop] = useState(false);
 
     const [housesInterpretation, setHousesInterpretation] = useState<HousesInterpretation>()
     const [expandedHouses, setExpandedHouses] = useState<Record<number, boolean>>({});
@@ -78,6 +81,7 @@ export function HousesTable({ user, map, profile }: HousesTableProps) {
             return;
         } else if (tokens < 1) {
             showSnackbar("Você não tem fichas suficientes.", "error");
+            setShowShop(true);
             return;
         }
 
@@ -232,6 +236,14 @@ export function HousesTable({ user, map, profile }: HousesTableProps) {
                                 >
                                     {isLoading ? "Interpretando" : loading ? "Carregando fichas" : "Interpretar"}
                                 </button>
+                                {showShop &&
+                                    <button
+                                        onClick={() => navigate("/shop")}
+                                        className='houses-table-button'
+                                    >
+                                        Loja
+                                    </button>
+                                }
                                 {snackbar && <div className={`houses-table-snackbar ${snackbarStatus}`}>{snackbar}</div>}
                             </div>
                         )}

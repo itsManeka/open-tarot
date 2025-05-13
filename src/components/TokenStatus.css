@@ -20,6 +20,12 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    justify-content: space-between;
+}
+
+.token-button-container.left {
+    flex: 1;
+    justify-content: flex-start;
 }
 
 .token-status-loading-image {
@@ -116,8 +122,13 @@
         align-items: center;
     }
 
+    .token-status-button {
+        font-size: 0.7rem;
+        padding: 10px 18px;
+    }
+
     .token-status-image {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
     }
 }

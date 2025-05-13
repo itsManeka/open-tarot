@@ -28,10 +28,10 @@ export const StringHelper = {
         }
     },
 
-    formatPrice: (value: string | number) => {
+    formatPrice: (value: string | number, currency: string = 'BLR') => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
-            currency: 'BRL',
+            currency: currency.toUpperCase(),
         }).format(Number(value));
     },
 

@@ -33,6 +33,7 @@ export default function DreamInterpreter() {
     const [isInterpreting, setIsInterpreting] = useState(false);
     const [snackbar, setSnackbar] = useState<string | null>(null);
     const [snackbarStatus, setSnackbarStatus] = useState("ok");
+    const [showShop, setShowShop] = useState(false);
 
     const { useToken, tokens, loading } = useTokens();
         
@@ -87,6 +88,7 @@ export default function DreamInterpreter() {
             return;
         } else if (tokens < 1) {
             showSnackbar("Você não tem fichas suficientes.", "error");
+            setShowShop(true);
             return;
         }
 
@@ -196,13 +198,23 @@ export default function DreamInterpreter() {
 
             <div className="dream-button-container">
                 {!interpretation ? (
-                    <button
-                        onClick={handleInterpretation}
-                        disabled={isInterpreting || !description.trim()}
-                        className="dream-button"
-                    >
-                        {isInterpreting ? "Interpretando..." : "Interpretar"}
-                    </button>
+                    <>
+                        <button
+                            onClick={handleInterpretation}
+                            disabled={isInterpreting || !description.trim()}
+                            className="dream-button"
+                        >
+                            {isInterpreting ? "Interpretando..." : "Interpretar"}
+                        </button>
+                        {showShop &&
+                            <button
+                                onClick={() => navigate("/shop")}
+                                className="dream-button"
+                            >
+                                Loja
+                            </button>
+                        }
+                    </>
                 ) : (
                     <>
                         <button

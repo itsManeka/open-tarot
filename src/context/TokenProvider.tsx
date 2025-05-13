@@ -9,6 +9,7 @@ type TokenContextType = {
     loading: boolean;
     claimToken: () => Promise<boolean>;
     useToken: () => Promise<boolean>;
+    fetchTokens: () => Promise<boolean>;
 };
 
 const TokenContext = createContext<TokenContextType | null>(null);
@@ -24,11 +25,11 @@ export function TokenProvider({ children }: { children: React.ReactNode }) {
         try {
             if (!user) {
                 setLoading(false);
-                return;
+                return false;
             }
 
             const token = await user.getIdToken();
-            const res = await fetch(`${import.meta.env.VITE_TOKEN_API}/status`, {
+            const res = await fetch(`${import.meta.env.VITE_TOKEN_API}/tokens/status`, {
                 method: 'GET',
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -42,8 +43,11 @@ export function TokenProvider({ children }: { children: React.ReactNode }) {
             }
         } catch (e) {
             console.error('fetchTokens error:', e);
+            setLoading(false);
+            return false;
         }
         setLoading(false);
+        return true;
     };
 
     const claimToken = async () => {
@@ -51,7 +55,7 @@ export function TokenProvider({ children }: { children: React.ReactNode }) {
             if (!user) return false;
 
             const token = await user.getIdToken();
-            const res = await fetch(`${import.meta.env.VITE_TOKEN_API}/claim`, {
+            const res = await fetch(`${import.meta.env.VITE_TOKEN_API}/tokens/claim`, {
                 method: 'POST',
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -76,7 +80,7 @@ export function TokenProvider({ children }: { children: React.ReactNode }) {
         if (!user) return false;
 
         const token = await user.getIdToken();
-        const res = await fetch(`${import.meta.env.VITE_TOKEN_API}/use`, {
+        const res = await fetch(`${import.meta.env.VITE_TOKEN_API}/tokens/use`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
         });
@@ -110,7 +114,7 @@ export function TokenProvider({ children }: { children: React.ReactNode }) {
     }, [nextClaim]);
 
     return (
-        <TokenContext.Provider value={{ tokens, nextClaim, loading, claimToken, useToken }}>
+        <TokenContext.Provider value={{ tokens, nextClaim, loading, claimToken, useToken, fetchTokens }}>
             {children}
         </TokenContext.Provider>
     );

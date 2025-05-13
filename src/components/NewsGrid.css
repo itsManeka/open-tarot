@@ -23,7 +23,6 @@
     gap: 20px;
 }
 
-/* Item da grade */
 .newsgrid-item {
     display: flex;
     flex-direction: column;

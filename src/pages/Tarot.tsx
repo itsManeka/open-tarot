@@ -163,6 +163,7 @@ export default function Tarot() {
                 return;
             } else if (tokens < 1) {
                 showMessage("Você não tem fichas suficientes.");
+                setTimeout(() => navigate("/shop"), 3000);
                 return;
             }
         }

@@ -1,0 +1,59 @@
+.cancel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin: 0 auto;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+
+.cancel-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #bb86fc;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cancel-message {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cancel-button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.cancel-button {
+    background-color: #bb86fc;
+    color: #121212;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+    background-color: #9a67ea;
+}
+
+.cancel-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.cancel-button:disabled {
+    background-color: #5e35b1;
+    transform: scale(1.03);
+    cursor: not-allowed;
+}
