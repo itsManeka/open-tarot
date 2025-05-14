@@ -17,6 +17,13 @@
     text-align: center;
 }
 
+.success-message {
+    font-size: 1.4rem;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .success-item {
     display: flex;
     flex-direction: column;

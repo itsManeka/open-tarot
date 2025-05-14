@@ -1,14 +1,17 @@
+import "./Notifications.css";
+
 import { useEffect, useState } from "react";
+import { useTokens } from "../context/TokenProvider";
 import { collection, doc, onSnapshot, orderBy, query, updateDoc, } from "firebase/firestore";
 import { auth, db } from '../services/firebase';
 import { useAuthState } from "react-firebase-hooks/auth";
-import "./Notifications.css";
 import { NiceHelmet } from "../components/NiceHelmet";
 
 type Notification = {
     id: string;
     title: string;
     message: string;
+    type: string;
     read: boolean;
     createdAt?: any;
 };
@@ -17,6 +20,8 @@ export default function () {
     const [user] = useAuthState(auth);
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [expandedId, setExpandedId] = useState<string | null>(null);
+
+    const { fetchTokens } = useTokens();
 
     useEffect(() => {
         if (!user) return;
@@ -36,11 +41,15 @@ export default function () {
         return () => unsubscribe();
     }, [user]);
 
-    const toggleExpand = async (id: string, read: boolean) => {
-        setExpandedId(expandedId === id ? null : id);
+    const toggleExpand = async (notification: Notification) => {
+        setExpandedId(expandedId === notification.id ? null : notification.id);
 
-        if (!read && user) {
-            const ref = doc(db, "users", user.uid, "notifications", id);
+        if (!notification.read && user) {
+            if (notification.type && notification.type == "token") {
+                await fetchTokens();
+            }
+
+            const ref = doc(db, "users", user.uid, "notifications", notification.id);
             await updateDoc(ref, { read: true });
         }
     };
@@ -61,7 +70,7 @@ export default function () {
                     <li
                         key={n.id}
                         className={`notification-item ${n.read ? "read" : "unread"}`}
-                        onClick={() => toggleExpand(n.id, n.read)}
+                        onClick={() => toggleExpand(n)}
                     >
                         <div className="notification-header">
                             <span className={`notification-title ${n.read ? "read" : "unread"}`}>{n.title || "Nova notificação"}</span>

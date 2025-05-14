@@ -60,11 +60,13 @@ export default function Success() {
 
     return (
         <div className="success-container">
-            <h2 className="success-title">{
+            <h2 className="success-title">Pagamento concluído</h2>
+
+            <p className="success-message">{
                 status === "error" ?
-                    "Houve um erro ao verificar seu pagamento." :
-                    "Pagamento confirmado!"
-            }</h2>
+                    "Houve um erro ao verificar seu pagamento" :
+                    "Você será notificado assim que sua compra for processada"
+            }</p>
             
             {status === "success" && details && (
                 <div className="success-item">

@@ -75,8 +75,8 @@ export default function Shop() {
                 title={"Open Tarot"}
                 meta={[{name: "description", content: "Loja"}]}
             />
-            <h2 className="shop-title">Comprar Fichas</h2>
-            {prices ? (
+            <h2 className="shop-title">Comprar fichas</h2>
+            {prices && prices.length > 0 ? (
                 <div className="shop-grid">
                     {prices.map(price => (
                         <div key={price.id} className="shop-item">
@@ -85,8 +85,8 @@ export default function Shop() {
                                 src={price.product.images[0]}
                             />
                             <h3 className="shop-item-title">{price.product.name}</h3>
-                            <p className="shop-item-description">{price.product.description}</p>
-                            <p className="shop-item-price">{StringHelper.formatPrice(price.unit_amount / 100, price.currency)}</p>
+                            <h4 className="shop-item-description">{price.product.description}</h4>
+                            <h4 className="shop-item-price">{StringHelper.formatPrice(price.unit_amount / 100, price.currency)}</h4>
                             <button
                                 onClick={() => handleBuy(price.id)}
                                 disabled={isFetching || isBuying || loading}
