@@ -1,21 +1,19 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { auth } from './firebase';
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+export async function sendMessageToAI(prompt: string): Promise<string> {
+  const token = await auth.currentUser?.getIdToken();
+  if (!token) throw new Error('Usuario nao autenticado');
 
-export const sendMessageToAI = async (message: string) => {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const res = await fetch(`${import.meta.env.VITE_ASTRO_API}/ai/interpret`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ message: prompt })
+  });
 
-    const chat = model.startChat({
-        generationConfig: {
-            maxOutputTokens: 512,
-            temperature: 0.9,
-            topP: 0.95,
-            topK: 40,
-        },
-    });
-
-    const result = await chat.sendMessage(message);
-    const response = await result.response;
-
-    return response.text();
-};
+  if (!res.ok) throw new Error('Erro na interpretacao');
+  const data = await res.json();
+  return data.text;
+}
