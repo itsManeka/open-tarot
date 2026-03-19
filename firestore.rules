@@ -7,7 +7,7 @@ service cloud.firestore {
 
     match /amazonAds/{document=**} {
       allow read: if true;
-      allow write: if true;
+      allow write: if false;
     }
 
     match /daily_card/{document=**} {
